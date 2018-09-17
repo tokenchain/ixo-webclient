@@ -107,6 +107,7 @@ export interface Props {
 
 export class ProjectsHero extends React.Component<Props, State> {
 	state = {
+		daysTo2030: this.datediff(Date.now(), Date.parse('2030-01-01 00:00:00')),
 		statistics: {
 			claims: {
 				total: 0,
@@ -126,13 +127,6 @@ export class ProjectsHero extends React.Component<Props, State> {
 	getConfig() {
 		return [
 			{
-				title: 'MY ACTIVE PROJECTS',
-				type: StatType.decimal,
-				descriptor: [{ class: 'text', value: ' ' }],
-				amount: this.props.myProjectsCount,
-				onClick: () => this.props.showMyProjects(true),
-			},
-			{
 				title: 'TOTAL PROJECTS',
 				type: StatType.decimal,
 				descriptor: [{ class: 'text', value: ' ' }],
@@ -140,22 +134,27 @@ export class ProjectsHero extends React.Component<Props, State> {
 				onClick: () => this.props.showMyProjects(false),
 			},
 			{
-				title: 'TOTAL IMPACT CLAIMS',
-				type: StatType.fraction,
-				descriptor: [{ class: 'text', value: 'verified to date' }],
-				amount: [this.state.statistics.claims.totalSuccessful, this.state.statistics.claims.total],
+				title: 'TOTAL Submissions',
+				type: StatType.decimal,
+				descriptor: [{ class: 'text', value: 'submissions to date' }],
+				amount: this.state.statistics.claims.totalSubmitted,
 				onClick: () => this.props.showMyProjects(false),
 			},
 			{
-				title: 'TOTAL IXO IN CIRCULATION',
-				type: StatType.fraction,
-				descriptor: [{ class: 'text', value: 'IXO staked to date' }],
-				amount: [0, 0],
+				title: 'SDG Countdown to 2030',
+				type: StatType.decimal,
+				descriptor: [{ class: 'text', value: 'days remaining' }],
+				amount: this.state.daysTo2030,
 				onClick: () => this.props.showMyProjects(false),
 			}
 		];
 	}
 	
+	datediff(first: number, second: number) {
+		// Take the difference between the dates and divide by milliseconds per day.
+		// Round to nearest whole number to deal with DST.
+		return Math.round((second - first) / (1000 * 60 * 60 * 24));
+}
 	componentDidMount() {
 		this.handleGetGlobalData();
 	}

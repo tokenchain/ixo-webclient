@@ -154,7 +154,7 @@ export class Projects extends React.Component<Props, State> {
 					this.loadingProjects = false;
 				})
 				.catch((result: Error) => {
-					Toast.errorToast('Unable to connect IXO Explorer');
+					Toast.errorToast('Unable to connect to IXO Explorer');
 					this.loadingProjects = false;
 				});
 		}
