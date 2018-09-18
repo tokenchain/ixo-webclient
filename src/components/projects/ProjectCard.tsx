@@ -199,7 +199,7 @@ export class ProjectCard extends React.Component<Props, States> {
 						:
 							<Fragment>
 								<ProgressBar total={this.props.project.requiredClaims} approved={this.props.project.claimStats.currentSuccessful} rejected={this.props.project.claimStats.currentRejected}/>
-								<Progress>{this.props.project.claimStats.currentSuccessful} / <strong>{this.props.project.requiredClaims}</strong></Progress>
+								<Progress><strong>{this.props.project.claims.length}</strong></Progress>
 								<Impact>{this.props.project.impactAction}</Impact>
 							</Fragment>
 						}

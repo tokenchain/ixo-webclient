@@ -115,24 +115,24 @@ export const RegisterStatus: React.SFC<ParentProps> = (props) => {
 		}
 	};
 
-	const renderKYCPart = () => { 
-		if (props.role === AgentRoles.owners) {
-			return (
-				<CheckItem>
-					{getIcon(props.hasKYC)} The closed Beta is <ModalLink onClick={() => props.activeModal(ModalData.invite, true)}>by invitation </ModalLink> 
-					and requires <ModalLink onClick={() => props.activeModal(ModalData.kyc, true)}>registering as an ixo member.</ModalLink>
-				</CheckItem>
-			);
-		} else {
-			return null;
-		}
-	};
+	// const renderKYCPart = () => { 
+	// 	if (props.role === AgentRoles.owners) {
+	// 		return (
+	// 			<CheckItem>
+	// 				{getIcon(props.hasKYC)} The closed Beta is <ModalLink onClick={() => props.activeModal(ModalData.invite, true)}>by invitation </ModalLink> 
+	// 				and requires <ModalLink onClick={() => props.activeModal(ModalData.kyc, true)}>registering as an ixo member.</ModalLink>
+	// 			</CheckItem>
+	// 		);
+	// 	} else {
+	// 		return null;
+	// 	}
+	// };
 
-	if (props.hasKYC) {
+	if (props.role === AgentRoles.owners) {
 		return (
 		<StatusContainer>
 			<CheckItem>{getIcon(true)} You have successfully registered. 
-				<Start href="https://docs.google.com/forms/d/e/1FAIpQLSfv6TY-8Eurg6dcS-2YPeFIuT7nlPE5YGKj2SaRrPJ0vIf4ZA/viewform" target="_blank">LAUNCH A PROJECT</Start>
+				<Start href="https://docs.google.com/forms/d/e/1FAIpQLSfv6TY-8Eurg6dcS-2YPeFIuT7nlPE5YGKj2SaRrPJ0vIf4ZA/viewform" target="_blank">CREATE SUBMISSION</Start>
 			</CheckItem>
 		</StatusContainer>
 		);
@@ -161,7 +161,7 @@ export const RegisterStatus: React.SFC<ParentProps> = (props) => {
 	return (
 		<StatusContainer>
 			{getKeysafeText()}
-			{renderKYCPart()}
+			{/* {renderKYCPart()} */}
 		</StatusContainer>
 	);
 };

@@ -13,6 +13,8 @@ import { Fragment } from 'react';
 import QRComponent from '../common/QRComponent';
 // import FacebookProvider, { Share } from 'react-facebook';
 import { Helmet } from 'react-helmet';
+import ReactMd from 'react-md-file';
+
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
 const OverviewContainer = styled.section`
@@ -414,8 +416,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 						<div className="col-md-8">
 							<ProjectImage src={props.imageLink} onError={onProjectImageNotFound}/>
 							<Text>
-								<p>{props.project.longDescription} 
-								</p>
+								<ReactMd markdown={props.project.longDescription} />
 							</Text>
 							<Social>
 								{props.project.socialMedia.instagramLink && <a href={props.project.socialMedia.instagramLink} target="_blank"><i className="icon-instagram" /></a>}

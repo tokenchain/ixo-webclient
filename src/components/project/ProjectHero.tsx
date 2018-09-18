@@ -222,7 +222,7 @@ export const ProjectHero: React.SFC<Props> = ({project, match, isDetail, hasCapa
 							<Title>{project.title}</Title>
 							{handleSwitchDescription()}
 							{!isDetail && <Description>{project.shortDescription}</Description>}
-							{!isDetail && hasCapability([AgentRoles.serviceProviders]) && <AddClaim to={`/projects/${match.params.projectDID}/detail/new-claim`}>+ CAPTURE CLAIM</AddClaim>}
+							{!isDetail && hasCapability([AgentRoles.serviceProviders]) && <AddClaim to={`/projects/${match.params.projectDID}/detail/new-claim`}>+ SUBMIT A CLAIM</AddClaim>}
 							{!isDetail && hasCapability([AgentRoles.evaluators]) && <AddClaim to={`/projects/${match.params.projectDID}/detail/claims`}>EVALUATE CLAIMS</AddClaim>}
 						</ColLeft>
 						<ColRight className="col-lg-4 col-sm-12">
