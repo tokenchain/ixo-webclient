@@ -13,7 +13,7 @@ import MediaQuery from 'react-responsive';
 import { Button, ButtonTypes } from '../common/Buttons';
 import { Spinner } from '../common/Spinner';
 
-const keysafeImg = require('../../assets/images/register/ixo-keysafe.png');
+// const keysafeImg = require('../../assets/images/register/ixo-keysafe.png');
 const amplyImg = require('../../assets/images/register/ixo-amply.png');
 const keysafeIcon = require('../../assets/images/register/ixo-keysafeIco.png');
 
@@ -55,33 +55,33 @@ const Section = styled.div`
 	background: #F6F6F6;
 `;
 
-const RelativeCol = styled.div`
-	position: relative;
-`;
+// const RelativeCol = styled.div`
+// 	position: relative;
+// `;
 
-const BlueRow = styled.div`
-	background: ${props => props.theme.bg.gradientBlue};
-	margin-top: 0;
+// const BlueRow = styled.div`
+// 	background: ${props => props.theme.bg.gradientBlue};
+// 	margin-top: 0;
 
-	@media (min-width: ${deviceWidth.desktop}px){
-		padding-top: 70px;
-	}
+// 	@media (min-width: ${deviceWidth.desktop}px){
+// 		padding-top: 70px;
+// 	}
 
-	@media (min-width: ${deviceWidth.desktopLarge}px){
-		margin-top: -100px;
-	}
-`;
+// 	@media (min-width: ${deviceWidth.desktopLarge}px){
+// 		margin-top: -100px;
+// 	}
+// `;
 
-const KeySafe = styled.img`
-	margin-bottom: -50%;
-	max-width: 616px;
+// const KeySafe = styled.img`
+// 	margin-bottom: -50%;
+// 	max-width: 616px;
 
-	@media (min-width: ${deviceWidth.desktop}px){
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
-`;
+// 	@media (min-width: ${deviceWidth.desktop}px){
+// 		position: absolute;
+// 		top: 0;
+// 		right: 0;
+// 	}
+// `;
 
 const Amply = styled.img`
 	max-width: 100%;
@@ -308,13 +308,13 @@ If not, please send us an email, telling us a little about the project you would
 								<div className="col-lg-6"><Amply src={amplyImg} /></div>
 							</MediaQuery>
 							<SmallIconCol className="col-lg-6">
-								<TextBlock activeModal={this.toggleModal} title="Launch a test project" icon="icon-claims2" role={AgentRoles.owners} keysafe={this.state.hasKeySafe} KYC={this.state.hasKYC}>
-									<p>Become the founder of your own impact initiative (for testing).</p>
+								<TextBlock activeModal={this.toggleModal} title="SUBMIT YOUR VENTURE" icon="icon-claims2" role={AgentRoles.owners} keysafe={this.state.hasKeySafe} KYC={this.state.hasKYC}>
+									<p>Become the founder of your own impact initiative.</p>
 								</TextBlock>
 							</SmallIconCol>
 						</div>
 					</div>
-					<BlueRow>
+					{/* <BlueRow>
 						<div className="container">
 							<div className="row">
 								<div className="col-lg-6">
@@ -338,7 +338,7 @@ e.g. planting trees or educating children.</p>
 							</div>
 							<div className="col-lg-6"/>
 						</div>
-					</div>
+					</div> */}
 				</Section>
 			</div>
 		);

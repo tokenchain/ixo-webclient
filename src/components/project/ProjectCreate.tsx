@@ -1,13 +1,11 @@
+// require('dotenv').config();
 import * as React from 'react';
 import { ImageLoader, imageQuality } from '../common/ImageLoader';
 import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { decode as base64Decode } from 'base-64';
-import { blankProjectData, testProjectData } from '../../lib/commonData';
+import { countryLatLng } from '../../lib/commonData';
 import { Button, ButtonTypes } from '../common/Buttons';
-import { FileLoader } from '../common/FileLoader';
-import InputImage from '../form/InputImage';
 import { successToast, errorToast } from '../helpers/Toast';
 import { ErrorTypes } from '../../types/models';
 
@@ -55,6 +53,42 @@ export interface State {
 	fetchedFile: string;
 }	
 
+let defaultProject = {
+	title: '',
+	ownerName: '',
+	ownerEmail: '',
+	shortDescription: '',
+	longDescription: '',
+	impactAction: '',
+	projectLocation: '',
+	requiredClaims: 0,
+	autoApprove: ['SA'],
+	sdgs: [],
+	templates: {
+		claim: {
+			schema: '',
+			form: ''
+		}
+	},
+	evaluatorPayPerClaim: '0',
+	socialMedia: {
+		facebookLink: '',
+		instagramLink: '',
+		twitterLink: '',
+		webLink: ''
+	},
+	serviceEndpoint: process.env.REACT_APP_DEFAULT_PDS,
+	imageLink: '',
+	founder: {
+		name: '',
+		email: '',
+		countryOfOrigin: '',
+		shortDescription: '',
+		websiteURL: '',
+		logoLink: ''
+	}
+};
+
 export class ProjectCreate extends React.Component<StateProps, State> {
 
 	state = {
@@ -64,13 +98,14 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 			claimSchemaKey: null,
 			claimForm: '',
 			claimFormKey: null,
-			projectJson: blankProjectData,
-			project: JSON.parse(blankProjectData),
+			projectJson: JSON.stringify(defaultProject),
+			project: defaultProject,
 			fetchedImage: null,
 			fetchedFile: '',
 			};
 
 	handleCreateProject = () => {
+		console.log(this.state.project);
 		if (this.props.keysafe === null) {
 		errorToast('Please install IXO Credential Manager first.');
 		} else {
@@ -85,24 +120,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 						return res.result;
 					})
 				);
-				promises.push(
-					this.props.ixo.project.createPublic(this.state.claimSchema, this.state.project.serviceEndpoint).then((res: any) => {
-						successToast('Uploaded Schema successfully');
-						let newProject = this.state.project;
-						newProject.templates.claim.schema = res.result;
-						this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
-						return res.result;
-					})
-				);
-				promises.push(
-					this.props.ixo.project.createPublic(this.state.claimForm, this.state.project.serviceEndpoint).then((res: any) => {
-						successToast('Uploaded Form JSON successfully');
-						let newProject = this.state.project;
-						newProject.templates.claim.form = res.result;
-						this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
-						return res.result;
-					})
-				);
 				Promise.all(promises).then((results) => {
 					let projectObj: string = this.state.projectJson;
 					this.props.keysafe.requestSigning(projectObj, (error: any, signature: any) => {
@@ -111,7 +128,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							if (res.error) {
 								errorToast(res.error.message, ErrorTypes.message);
 							} else {
-								successToast('Project created successfully');
+								successToast('Venture submitted successfully');
 							}
 						});
 					});
@@ -183,22 +200,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		});
 	}
 
-	fetchFile = (event) => {
-		this.props.ixo.project.fetchPublic(this.state.claimSchemaKey, this.state.project.serviceEndpoint).then((res: any) => {
-			console.log('Fetched: ', res);
-			let fileContents = base64Decode(res.data);
-			this.setState({fetchedFile: fileContents});
-		});
-	}
-
-	fetchFormFile = (event) => {
-		this.props.ixo.project.fetchPublic(this.state.claimFormKey, this.state.project.serviceEndpoint).then((res: any) => {
-			console.log('Fetched: ', res);
-			let fileContents = base64Decode(res.data);
-			this.setState({fetchedFile: fileContents});
-		});
-	}
-
 	handlePropertyChanged = (prop: string, event: any) => {
 		let newProject = this.state.project;
 		newProject[prop] = event.target.value;
@@ -237,33 +238,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
-	loadTestData = () => {
-		this.setState({
-			projectJson: testProjectData,
-			project: JSON.parse(testProjectData)
-		});
-		console.log(this.state.projectJson);
-	}
-
-	renderDevPortion() {
-		if (process.env.REACT_APP_DEV) {
-			return (
-				<div>
-					<br /><br /><br />
-					<TextArea value={this.state.projectJson} onChange={this.handleProjectChange} />
-					<Button type={ButtonTypes.dark} onClick={this.fetchImage} >Fetch image</Button>
-					<img src={this.state.fetchedImage} />
-					<Button type={ButtonTypes.dark} onClick={this.fetchFile} >Fetch file</Button>
-					<Button type={ButtonTypes.dark} onClick={this.fetchFormFile} >Fetch Form file</Button>
-					<TextArea value={this.state.fetchedFile} />
-					<InputImage text="Choose a nice file" id="file1" imageWidth={400} onChange={(v) => console.log(v)}/>
-				</div>
-			);
-		} else {
-			return null;
-		}
-	}
-
 	render() {
 		return (
 			<div>
@@ -271,24 +245,24 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 					<div className="row">
 						<div className="col-md-12">
 							<br />
-							<Button type={ButtonTypes.gradient} onClick={() => this.loadTestData()} >Load Example Data</Button>
 							<Text placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
+							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
 							<Text placeholder="Title" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
 							<Text placeholder="Owner Name" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
 							<Text placeholder="Owner Email" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
 							<SmallTextArea placeholder="Short Description" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
 							<BigTextArea placeholder="Long Description" value={this.state.project.longDescription} onChange={(ev) => this.handlePropertyChanged('longDescription', ev)}/>
-							<Text placeholder="Impact Action (e.g. trees planted)" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
-							<Text placeholder="Required number of claims" value={this.state.project.requiredClaims} onChange={this.handleRequiredClaimsChanged}/>
+							<select value={this.state.project.projectLocation} onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}>
+							{countryLatLng.map( (v) => {
+								return (
+									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>
+								);
+							})}
+							</select>
 							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
-							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
+							<Text placeholder="Required number of claims" value={this.state.project.requiredClaims} onChange={this.handleRequiredClaimsChanged}/>
 							<br />
-							<FileLoader placeholder="Choose claim schema file" acceptType="application/json" selectedCallback={(dataUrl) => this.handleFileSelected('schema', dataUrl)}/>
-							<br />
-							<FileLoader placeholder="Choose claim form file" acceptType="application/json" selectedCallback={(dataUrl) => this.handleFileSelected('form', dataUrl)}/>
-							<br />
-							<Button type={ButtonTypes.gradient} onClick={this.handleCreateProject}>CREATE PROJECT</Button>
-							{this.renderDevPortion()}
+							<Button type={ButtonTypes.gradient} onClick={this.handleCreateProject}>SUBMIT VENTURE</Button>
 						</div>
 					</div>
 				</Container>
