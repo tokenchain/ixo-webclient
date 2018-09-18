@@ -215,6 +215,7 @@ export class Projects extends React.Component<Props, State> {
 			if (this.props.contentType === contentType.dashboard) {
 				return (
 					<ProjectsDashboard 
+						projects={this.state.projectList}
 						claims={this.state.claims} 
 						claimsTotalRequired={this.state.claimsTotalRequired}
 						agents={this.state.agents}

@@ -1,21 +1,21 @@
 export const SDGArray = [
-	{ ico: 'nopoverty', title: 'NO POVERTY' },
-	{ ico: 'zerohunger', title: 'ZERO HUNGER' },
-	{ ico: 'goodhealth', title: 'GOOD HEALTH AND WELL-BEING' },
-	{ ico: 'qualityeducation', title: 'QUALITY EDUCATION' },
-	{ ico: 'genderequality', title: 'GENDER EQUALITY' },
-	{ ico: 'cleanwater', title: 'CLEAN WATER AND SANITATION' },
-	{ ico: 'affordableenergy', title: 'AFFORDABLE AND CLEAN ENERGY' },
-	{ ico: 'decentwork', title: 'DECENT WORK AND ECONOMIC GROWTH' },
-	{ ico: 'industry', title: 'INDUSTRY, INNOVATION AND INFRASTRUCTURE' },
-	{ ico: 'reduced', title: 'REDUCED INEQUALITIES' },
-	{ ico: 'sustainablecities', title: 'SUSTAINABLE CITIES AND COMMUNITIES' },
-	{ ico: 'consumption', title: 'RESPONSIBLE CONSUMPTION AND PRODUCTION' },
-	{ ico: 'climateaction', title: 'CLIMATE ACTION' },
-	{ ico: 'lifebelowwater', title: 'LIFE BELOW WATER' },
-	{ ico: 'lifeonland', title: 'LIFE ON LAND' },
-	{ ico: 'peace', title: 'PEACE, JUSTICE AND STRONG INSTITUTIONS' },
-	{ ico: 'partnership', title: 'PARTNERSHIPS FOR THE GOALS' }
+	{ ico: 'nopoverty', title: 'NO POVERTY', color: '#D33A44' },
+	{ ico: 'zerohunger', title: 'ZERO HUNGER', color: '#D5A84F' },
+	{ ico: 'goodhealth', title: 'GOOD HEALTH AND WELL-BEING', color: '#629E51' },
+	{ ico: 'qualityeducation', title: 'QUALITY EDUCATION', color: '#B73336' },
+	{ ico: 'genderequality', title: 'GENDER EQUALITY', color: '#DC4E3A' },
+	{ ico: 'cleanwater', title: 'CLEAN WATER AND SANITATION', color: '#5DBDE2' },
+	{ ico: 'affordableenergy', title: 'AFFORDABLE AND CLEAN ENERGY', color: '#F3C546' },
+	{ ico: 'decentwork', title: 'DECENT WORK AND ECONOMIC GROWTH', color: '#962B45' },
+	{ ico: 'industry', title: 'INDUSTRY, INNOVATION AND INFRASTRUCTURE', color: '#E17240' },
+	{ ico: 'reduced', title: 'REDUCED INEQUALITIES', color: '#CD3681' },
+	{ ico: 'sustainablecities', title: 'SUSTAINABLE CITIES AND COMMUNITIES', color: '#EBA046' },
+	{ ico: 'consumption', title: 'RESPONSIBLE CONSUMPTION AND PRODUCTION', color: '#B88E40' },
+	{ ico: 'climateaction', title: 'CLIMATE ACTION', color: '#507D4C' },
+	{ ico: 'lifebelowwater', title: 'LIFE BELOW WATER', color: '#4896CF' },
+	{ ico: 'lifeonland', title: 'LIFE ON LAND', color: '#72B757' },
+	{ ico: 'peace', title: 'PEACE, JUSTICE AND STRONG INSTITUTIONS', color: '#31699B' },
+	{ ico: 'partnership', title: 'PARTNERSHIPS FOR THE GOALS', color: '#244868' }
 ];
 
 export const deviceWidth = {
