@@ -110,7 +110,7 @@ export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {
 		<Main className="col-md-6 d-flex align-items-center">
 			<a href={getIxoWorldRoute('')}><IXOLogo alt="IXO Logo" src={ixoLogo}/></a>
 			<HeaderLink exact={true} onClick={refreshProjects} to="/">Ventures</HeaderLink>
-			<HeaderBorderLink exact={true} to="/register">Launch a Venture</HeaderBorderLink>
+			<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
 			<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
 			<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
 		</Main>

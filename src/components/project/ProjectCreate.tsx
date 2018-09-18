@@ -34,6 +34,12 @@ const Container = styled.div`
 		margin: 0 10px 10px 10px;
 	}
 `;
+
+const LogoThumb = styled.img`
+	width: 30px;
+	height: 30px;
+`;
+
 export interface StateProps {
 	ixo: any;
 	keysafe?: any;
@@ -109,7 +115,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		if (this.props.keysafe === null) {
 		errorToast('Please install IXO Credential Manager first.');
 		} else {
-			if (this.state.croppedImg && this.state.claimSchema.length > 0 && this.state.claimForm.length > 0) {
+			if (this.state.croppedImg) {
 				let promises = [];
 				promises.push(
 					this.props.ixo.project.createPublic(this.state.croppedImg, this.state.project.serviceEndpoint).then((res: any) => {
@@ -206,6 +212,12 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
+	handleFounderPropertyChanged = (prop: string, event: any) => {
+		let newProject = this.state.project;
+		newProject.founder[prop] = event.target.value;
+		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
+	}
+
 	handleRequiredClaimsChanged = (event: any) => {
 		let newProject = this.state.project;
 		newProject.requiredClaims = parseInt(event.target.value.trim(), 10);
@@ -260,7 +272,19 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							})}
 							</select>
 							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
-							<Text placeholder="Required number of claims" value={this.state.project.requiredClaims} onChange={this.handleRequiredClaimsChanged}/>
+							<Text placeholder="Founder Name" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
+							<Text placeholder="Founder email" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
+							<Text placeholder="Founder ShortDescription" value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
+							<select value={this.state.project.founder.countryOfOrigin} onChange={(ev) => this.handleFounderPropertyChanged('founder', ev)}>
+							{countryLatLng.map( (v) => {
+								return (
+									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>
+								);
+							})}
+							</select>
+							<Text placeholder="Founder websiteURL" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
+							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
+							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" />
 							<br />
 							<Button type={ButtonTypes.gradient} onClick={this.handleCreateProject}>SUBMIT VENTURE</Button>
 						</div>
