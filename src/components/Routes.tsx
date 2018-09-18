@@ -10,6 +10,7 @@ import { Widgets } from './widgets/Widgets';
 import { Icons } from './common/Icons';
 import { RegisterConnected } from './register/RegisterContainer';
 import { NotFound } from './public/NotFound';
+import { About } from './public/About';
 import { Spinner } from './common/Spinner';
 import { ProjectSignAndCreateConnected } from './project/curation/ProjectSignAndCreate';
 import { ProjectCreateUploadPublicDocsConnected } from './project/curation/ProjectCreateUploadPublicDocs';
@@ -24,6 +25,7 @@ export const Routes: React.SFC<Routes.RouteProps> = props => {
 	return (
 		<Fragment>
 			<Switch>
+				<Route exact={true} path="/about" component={About} />
 				<Route exact={true} path="/json" component={ProjectForm} />
 				<Route exact={true} path="/spinner" component={Spinner} />
 				<Route exact={true} path="/widgets" component={Widgets} />

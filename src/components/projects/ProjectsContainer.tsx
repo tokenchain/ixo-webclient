@@ -210,7 +210,7 @@ export class Projects extends React.Component<Props, State> {
 
 	handleRenderProjectList() {
 		if (this.state.projectList === null) {
-			return <Spinner info="Loading Projects" />;
+			return <Spinner info="Loading Ventures" />;
 		} else {
 			if (this.props.contentType === contentType.dashboard) {
 				return (

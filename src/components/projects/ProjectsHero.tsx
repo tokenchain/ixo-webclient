@@ -127,17 +127,10 @@ export class ProjectsHero extends React.Component<Props, State> {
 	getConfig() {
 		return [
 			{
-				title: 'TOTAL PROJECTS',
+				title: 'TOTAL VENTURES',
 				type: StatType.decimal,
-				descriptor: [{ class: 'text', value: ' ' }],
+				descriptor: [{ class: 'text', value: 'submitted' }],
 				amount: this.state.statistics.totalProjects,
-				onClick: () => this.props.showMyProjects(false),
-			},
-			{
-				title: 'TOTAL Submissions',
-				type: StatType.decimal,
-				descriptor: [{ class: 'text', value: 'submissions to date' }],
-				amount: this.state.statistics.claims.totalSubmitted,
 				onClick: () => this.props.showMyProjects(false),
 			},
 			{
@@ -196,7 +189,7 @@ export class ProjectsHero extends React.Component<Props, State> {
 							<PositionController>
 								<Tabs
 									buttons={[
-										{ iconClass: 'icon-projects', path: '/', title: 'PROJECTS' },
+										{ iconClass: 'icon-projects', path: '/', title: 'VENTURES' },
 										{ iconClass: 'icon-impacts', path: '/global-statistics', title: 'IMPACTS' }
 									]}
 									matchType={MatchType.exact}
