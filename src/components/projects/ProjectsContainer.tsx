@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { ProjectCard } from './ProjectCard';
 import { ProjectsHero } from './ProjectsHero';
+import { ProjectsFilter } from './ProjectsFilter';
 import { Spinner } from '../common/Spinner';
 import { connect } from 'react-redux';
 
@@ -229,7 +230,8 @@ export class Projects extends React.Component<Props, State> {
 	render() {
 		return (        
 			<Container>
-				<ProjectsHero ixo={this.props.ixo} myProjectsCount={this.state.myProjects.length} showMyProjects={(val) => this.showMyProjects(val)}/>
+				<ProjectsHero ixo={this.props.ixo} />
+				<ProjectsFilter/>
 				{this.handleRenderProjectList()}
 			</Container>
 		);

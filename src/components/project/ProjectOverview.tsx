@@ -11,7 +11,8 @@ import { UserInfo } from '../../types/models';
 import { Button, ButtonTypes } from '../common/Buttons';
 import { Fragment } from 'react';
 import QRComponent from '../common/QRComponent';
-
+// import FacebookProvider, { Share } from 'react-facebook';
+import { Helmet } from 'react-helmet';
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
 const OverviewContainer = styled.section`
@@ -131,43 +132,71 @@ const Social = styled.div`
 	}
 `;
 
-// const LocalButton = styled.a`
-// 	border: 1px solid #B8B8B8;
-//     &&& {color: ${props => props.theme.fontGrey};}
-//     font-size: 16px;
-//     text-transform: uppercase;
-//     padding: 10px 20px;
-//     background: none;
-//     margin-bottom: 10px;
-// 	width: 100%;
-// 	font-family: ${props => props.theme.fontRobotoCondensed};
-// 	font-weight: 500;
-// 	display:inline-block;
-// 	text-align: center;
+const Hidden = styled.div`
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: opacity 0.3s ease;
+	opacity: 0;
 
-// 	transition: all 0.3s ease;
-// 	cursor: pointer;
+	i {
+		color: #282828;
+		top: auto;
+		margin: 0 8px;
+		font-size: 20px;
+	}
 
-// 	:hover {
-// 		color: white;
-// 		background: #B8B8B8;
-// 	}
+	.icon-facebook:hover:before {
+		color: #3B5998;
+	}
+	.icon-twitter:hover:before {
+		color: #1DA1F2;
+	}
+`;
 
-// 	:hover i:before {
-// 		color: white;
-// 	}
+const Visible = styled.div`
+	i {
+		font-size: 21px;
+		position: relative;
+		top: 3px;
+		margin-right: 10px;
+	}
+	transition: opacity 0.3s ease;
+`;
 
-// 	i {
-// 		font-size: 21px;
-// 		position: relative;
-// 		top: 3px;
-// 		margin-right: 10px;
-// 	}
+const LocalButton = styled.a`
+	border: 1px solid #B8B8B8;
+    &&& {color: ${props => props.theme.fontGrey};}
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    background: none;
+    margin-bottom: 30px;
+	width: 100%;
+	font-family: ${props => props.theme.fontRobotoCondensed};
+	font-weight: 500;
+	display:inline-block;
+	text-align: center;
+	position: relative;
 
-// 	i:before {
-// 		transition: color 0.3s ease;
-// 	}
-// `;
+	transition: all 0.3s ease;
+	cursor: pointer;
+
+	:hover {
+		${Visible} {
+			opacity: 0;
+		}
+
+		${Hidden} {
+			opacity: 1;
+		}
+	}
+`;
 
 const FounderContainer = styled.section`
 	padding: 50px 0;
@@ -350,8 +379,24 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 		evt.target.src = placeholder;
 	};
 
+	const shareToTwitter = () => {
+		var url = location.href;
+		var text = 'It’s up to all of us to start making an impact for a positive future for humanity. Check out this venture that aims to achieve the global SDGs. If you think it’s a worthy cause, then like or share this post to show your support.';
+		window.open('http://twitter.com/share?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+	};
+
 	return (
 		<div>
+			<Helmet
+				title={props.project.title}
+				meta={[
+					{ 'name': 'description', 'content': props.project.shortDescription },
+					{ property: 'og:type', content: 'article' },
+					{ property: 'og:title', content: 'ixo provides a trusted global information network that is owned by everyone. Enabling anyone to become the creators of their own impact projects and a stake-holder in the projects they believe in.' },
+					{ property: 'og:image', content: props.imageLink },
+					{ property: 'og:url', content: 'https://qa.ixo.world/about' }
+				]}
+			/>
 			<ModalWrapper
 				isModalOpen={props.isModalOpen}
 				handleToggleModal={() => props.toggleModal({})}
@@ -413,6 +458,21 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 							</Sidebar>
 							{/* <LocalButton><i className="icon-heart"/>SAVE TO FAVOURITES</LocalButton> */}
 							{/* <LocalButton><i className="icon-share"/>SHARE THIS PROJECT</LocalButton> */}
+							<LocalButton>
+								<Visible>
+									<i className="icon-share" />SHARE THIS PROJECT
+								</Visible>
+								<Hidden>
+									{/* <i onClick={shareToTwitter} className="icon-facebook" /> */}
+									<i onClick={shareToTwitter} className="icon-twitter" />
+								</Hidden>
+							</LocalButton>
+							{ /*
+							<FacebookProvider appId="245800599615583">
+								<Share href="http://www.facebook.com">
+									<button type="button">Share</button>
+								</Share>
+							</FacebookProvider> */}
 							<QRComponent url={location.href} />
 						</div>
 					</div>
