@@ -10,7 +10,7 @@ import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import * as Toast from '../helpers/Toast';
 import { contentType, UserInfo } from '../../types/models';
 import { ProjectsDashboard } from './ProjectsDashboard';
-import { floorandRemoveDuplicateSDGs } from '../../utils/formatters';
+import { floorandRemoveDuplicateSDGs, SDGsCount } from '../../utils/formatters';
 
 const Container = styled.div`
 
@@ -103,11 +103,12 @@ export class Projects extends React.Component<Props, State> {
 	}
 
 	handleFilter = ( showOnlyFilterProjects?: boolean, filterIndexes?: number[] ) => {
+		
 		let filteredProjects = [];
 		if (showOnlyFilterProjects === true) {
 			let projects = [...this.state.projectList];
 			projects = floorandRemoveDuplicateSDGs(projects); 
-	
+			console.log(SDGsCount(projects));
 			for (let j = 0; j < projects.length; j++) {
 				for (let filterI of filterIndexes) {
 					if (projects[j].data.sdgs.includes(filterI)) {

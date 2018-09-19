@@ -29,7 +29,7 @@ export function floorandRemoveDuplicateSDGs(projects: any[]) {
 }
 
 export function SDGsCount(projects: any[]) {
-	var sdgArray = new Array(17);
+	let sdgArray = Array.apply(null, new Array(17)).map(Number.prototype.valueOf, 0);
 	for (let project of projects) {
 		let tempProject = project;
 		tempProject.data.sdgs = project.data.sdgs.map((sdg) => {
@@ -37,11 +37,10 @@ export function SDGsCount(projects: any[]) {
 		});
 		tempProject.data.sdgs = Array.from(new Set(tempProject.data.sdgs));
 		for ( let o = 0; o < tempProject.data.sdgs.length; o++) {
-			sdgArray[o]++;
+			sdgArray[tempProject.data.sdgs[o] - 1]++;
 		}
 	}
 	return sdgArray;
-
 }
 
 export function excerptText(theText: string, words: number = 20) {
