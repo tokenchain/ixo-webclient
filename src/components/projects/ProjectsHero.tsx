@@ -2,8 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 
-const bg = require('../../assets/images/heroBg.jpg');
-
 const DaysContainer = styled.div`
 	justify-content: flex-end;
 	display: flex;
@@ -38,8 +36,7 @@ const HeroInner = styled.div`
 `;
 
 const HeroContainer = styled.div`
-	background: url(${bg}) no-repeat center top;
-	background-size: cover;
+	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
 	margin:0 0 0px;
 	width: 100vw;
 	position:relative;
