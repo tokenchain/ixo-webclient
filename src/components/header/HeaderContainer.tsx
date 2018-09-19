@@ -14,7 +14,8 @@ const TopBar = styled.header`
 	padding: 0 15px;
 
 	z-index: 9;
-	background: black;
+	color: #282828;
+	background: #D6D6D6;
 
 	&& {
 		width: 100vw;
@@ -25,7 +26,7 @@ const StatusMessage = styled.div`
 	opacity: 0;
 	background: ${props => props.theme.bg.lightBlue};
 	position: absolute;
-	color: white;
+	color: #282828;
 	top: 15px;
 	right: 0;
 	width: 220px;
@@ -186,7 +187,7 @@ class Header extends React.Component<Props, State> {
 
 	render() {
 		return (
-			<TopBar className="container-fluid text-white">
+			<TopBar className="container-fluid">
 				<div className="row">
 					<HeaderLeft simple={this.props.simpleHeader} refreshProjects={this.props.refreshProjects}/>
 					<MediaQuery minWidth={`${deviceWidth.tablet}px`}>
