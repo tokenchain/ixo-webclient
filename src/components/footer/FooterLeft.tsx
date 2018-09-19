@@ -4,7 +4,7 @@ import MediaQuery from 'react-responsive';
 import { deviceWidth } from '../../lib/commonData';
 import { getIxoWorldRoute } from '../../utils/formatters';
 
-const ixoLogo = require('../../assets/images/ixo-logo.svg');
+const sdgLogo = require('../../assets/images/Futures-footer-logo.svg');
 
 const ExternalFooterLink = styled.a`
 	font-family: ${props => props.theme.fontRobotoRegular};
@@ -23,7 +23,7 @@ const ExternalFooterLink = styled.a`
 	transition: border 0.3s ease;
 
 	@media (min-width: ${deviceWidth.tablet}px) {
-		padding:10px 20px 10px;
+		padding: 20px 20px 10px;
 		margin:0 10px;
 		font-size:13px;
 	}
@@ -33,8 +33,8 @@ const ExternalFooterLink = styled.a`
 
 const IXOLogo = styled.img`
 	margin-right: 20px;
-	width: 50px;
-	margin-top: 2px;
+	width: 200px;
+	margin-top: 0px;
 `;
 
 const FooterTextBlue = styled.span`
@@ -65,7 +65,7 @@ export const FooterLeft: React.SFC<any> = ({simple}) => {
 		<Main className="col-md-8">
 			<div className="row">
 				<MediaQuery minWidth={`${deviceWidth.tablet}px`}>
-					<a href={getIxoWorldRoute('')}><IXOLogo alt="IXO Logo" src={ixoLogo}/></a>
+					<IXOLogo alt="SDG Futures Logo" src={sdgLogo}/>
 				</MediaQuery>
 				<ExternalFooterLink target="_blank" href={getIxoWorldRoute('/about')}>About</ExternalFooterLink>
 				<ExternalFooterLink target="_blank" href={getIxoWorldRoute('/membership')}>Membership</ExternalFooterLink>

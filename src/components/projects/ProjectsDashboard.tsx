@@ -13,7 +13,7 @@ const Container = styled.div`
 `;
 
 const ProjectCount = styled.h1`
-	color: ${props => props.theme.fontBlue};
+	color: #A11C43;
 `;
 
 export interface ParentProps {
@@ -53,7 +53,7 @@ export const ProjectsDashboard: React.SFC<ParentProps> = ({projects, claims, cla
 						</ProjectCount>
 						<BarChartProjects 
 							barData={[
-								{data: projects, color: BarColors.blue, label: 'Ventures Submitted'},
+								{data: projects, color: BarColors.yellow, label: 'Ventures Submitted'},
 							]}
 						/>
 					</WidgetWrapper>

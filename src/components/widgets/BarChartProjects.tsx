@@ -12,6 +12,7 @@ const LabelsX = styled.div`
 	display: flex;
 	justify-content: space-between;
 	padding-left: 25px;
+	color: #282828;
 `;
 
 const compEnd = moment('2018-12-15 00:00:00');
@@ -32,6 +33,7 @@ export interface BarData {
 
 export enum BarColors {
 	blue = 'BLUE',
+	yellow = 'YELLOW',
 	red = 'RED',
 	green = 'GREEN',
 	darkBlue = 'DARKBLUE'
@@ -330,6 +332,11 @@ export default class BarChartProjects extends React.Component<ParentProps, State
 		gradientRed.addColorStop(0.5, '#E2223B');
 		gradientRed.addColorStop(1, '#B31429'); // bottom
 
+		const gradientYellow = ctx.createLinearGradient(0, 0, 0, this.state.canvasHeight);
+		gradientYellow.addColorStop(0, '#DFA551'); // top
+		gradientYellow.addColorStop(0.5, '#DFA551');
+		gradientYellow.addColorStop(1, '#F3C546'); // bottom
+
 		const gradientBlue = ctx.createLinearGradient(0, 0, 0, this.state.canvasHeight);
 		gradientBlue.addColorStop(0, '#49BFE0');
 		gradientBlue.addColorStop(0.5, '#49BFE0');
@@ -346,8 +353,8 @@ export default class BarChartProjects extends React.Component<ParentProps, State
 		gradientGreen.addColorStop(1, '#156a0e');
 
 		const gradientRemaining = ctx.createLinearGradient(0, 0, 0, this.state.canvasHeight);
-		gradientRemaining.addColorStop(0, '#01293C');
-		gradientRemaining.addColorStop(1, '#033C50');
+		gradientRemaining.addColorStop(0, '#F5F3F3');
+		gradientRemaining.addColorStop(1, '#EAE9E9');
 
 		let dataArrays = new Array;
 
@@ -371,6 +378,10 @@ export default class BarChartProjects extends React.Component<ParentProps, State
 				case BarColors.red:
 					theCol = gradientRed;
 					hoverCol = '#E2223B';
+					break;
+				case BarColors.yellow:
+					theCol = gradientYellow;
+					hoverCol = '#DFA551';
 					break;
 				case BarColors.blue:
 					theCol = gradientBlue;
@@ -475,7 +486,7 @@ export default class BarChartProjects extends React.Component<ParentProps, State
 					ticks: {
 						beginAtZero: true,
 						callback: function(value: number) {if (value % 1 === 0) {return value; } else {return null; }},
-						fontColor: '#2A7597'
+						fontColor: '#282828'
 					}
 				}]
 			}
