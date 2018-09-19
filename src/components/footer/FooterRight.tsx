@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 
 const Main = styled.div`
+	margin-top: 15px;
 	display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,7 +18,7 @@ const Main = styled.div`
 `;
 
 const SocialIcon = styled.a`
-	padding: 10px;
+	padding: 10px 10px 0px;
 
 	:before {
 		color: #FFF;

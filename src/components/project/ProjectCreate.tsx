@@ -195,6 +195,13 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		}
 	}
 
+	componentDidMount() {
+		setTimeout(() => this.checkState(), 2000);
+		// this.checkState();
+	}
+
+	/****************************************************************************************************/
+
 	handleCreateProject = () => {
 		console.log(this.state.project);
 		if (this.props.keysafe === null) {
