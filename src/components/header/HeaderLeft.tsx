@@ -8,39 +8,63 @@ import { Fragment } from 'react';
 const sdgLogo = require('../../assets/images/FuturesLogo.svg');
 
 const HeaderLink = styled(NavLink)`
-	color: white;
+	color: inherit;
 	font-family: ${props => props.theme.fontRobotoCondensed};
 	font-size: 13px;
 	font-weight: 400;
 	letter-spacing: 1px;
 	text-transform: uppercase;
-	border: 1px solid #000000;
-	border-radius:3px;
-	
+	bottom: 1px;
+	border-width: 0 0 1px;
+	border-style: solid;
+	border-color: #D6D6D6;
+	padding:5px 0px 5px;
+	margin: 5px 15px;
+
+	@media (min-width: 415px) {
+		padding:5px 0px 5px;
+		margin: 5px 15px;
+		font-size:13px;
+	}
+
+	&.active {
+		bottom: 1px;
+		border-width: 0 0 1px;
+		border-style: solid;
+		border-color: #A11C43;
+	}
+
+	:hover {
+ 		text-decoration:none;
+ 		&&{color: #A11C43;}}
+ 	}
+`;
+
+const HeaderBorderLink = HeaderLink.extend`
+
+	border:1px solid #A11C43;
+	border-radius: 3px;
+	font-weight: 300;
+	color: white;
+	background: #A11C43;
+
 	@media (min-width: 415px) {
 		padding:5px 10px 5px;
 		margin:0 10px;
 		font-size:13px;
 	}
 
-	transition:border 0.3s ease;
-
-	:hover {
- 		text-decoration:none;
- 		&&{color: ${props => props.theme.fontBlue};}}
- 	}
-`;
-
-const HeaderBorderLink = HeaderLink.extend`
-
-	border:1px solid #49bfe0;
-	font-weight: 300;
-
 	&.active {
-		background: ${props => props.theme.bg.gradientButton};
-		color:white;
+		background: #A11C43;
+		color: white;
 		font-weight: 300;
 	}
+
+	:hover {
+		text-decoration:none;
+		&&{color: white;}}
+	}
+
 
 `;
 
@@ -74,14 +98,12 @@ export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {
 
 	return (
 		<Fragment>
-			<Main className="col-md-3 d-flex align-items-center">
+			<Main className="col-md-10 d-flex align-items-center">
 				<a href="/"><IXOLogo alt="SDG Futures Logo" src={sdgLogo}/></a>
-			</Main>
-			<Main className="col-md-7 d-flex align-items-center">
 				<HeaderLink exact={true} onClick={refreshProjects} to="/">Ventures</HeaderLink>
-				<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
 				<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
 				<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
+				<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
 			</Main>
 		</Fragment>
 	);
