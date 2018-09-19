@@ -13,12 +13,16 @@ const DaysContainer = styled.div`
 
 const HeroInner = styled.div`
 	padding: 110px 0 0;
-	color: white;
+	color: ${props => props.theme.fontDarkGrey};
 
 	h2 {
 		font-weight: 300;
+		font-size: 40px;
+
 		strong {
 			display: block;
+			text-align: right;
+			font-weight: 600;
 		}
 	}
 
@@ -85,15 +89,15 @@ export class ProjectsHero extends React.Component<Props, State> {
 			<HeroContainer>
 				<HeroInner className="container">
 					<div className="row">
-						<div className="col-md-6">
+						<div className="col-xl-6 col-lg-8">
 							<h2>Technology ventures for the <strong>future of humanity.</strong></h2>
+							<DaysContainer>
+								<div>
+									<h3>{[dateString.slice(0, 1) , ' ', dateString.slice(1)].join('')}</h3>
+									<p>COUNTDOWN TO <strong>2030</strong></p>
+								</div>
+							</DaysContainer>
 						</div>
-						<DaysContainer className="col-md-6">
-							<div>
-								<h3>{[dateString.slice(0, 1) , ' ', dateString.slice(1)].join('')}</h3>
-								<p>COUNTDOWN TO <strong>2030</strong></p>
-							</div>
-						</DaysContainer>
 					</div>
 				</HeroInner>
 			</HeroContainer>
