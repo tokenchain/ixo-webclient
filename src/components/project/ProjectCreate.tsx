@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { countryLatLng } from '../../lib/commonData';
 import { Button, ButtonTypes } from '../common/Buttons';
-import { successToast, errorToast } from '../helpers/Toast';
+import { warningToast, successToast, errorToast } from '../helpers/Toast';
 import { ErrorTypes } from '../../types/models';
 
 const Text = styled.input`
@@ -30,6 +30,8 @@ const BigTextArea = TextArea.extend`
 `;
 
 const Container = styled.div`
+	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
+	
 	button {
 		margin: 0 10px 10px 10px;
 	}
@@ -46,6 +48,12 @@ export interface StateProps {
 }
 
 export interface State {
+	hasKeySafe: boolean;
+	hasDid: boolean;
+	isDidLedgered: boolean;
+	toastShown: boolean;
+	didDoc: any;
+
 	croppedImg: any;
 	imageKey: string;
 	claimSchema: string;
@@ -98,17 +106,94 @@ let defaultProject = {
 export class ProjectCreate extends React.Component<StateProps, State> {
 
 	state = {
-			croppedImg: null,
-			imageKey: null,
-			claimSchema: '',
-			claimSchemaKey: null,
-			claimForm: '',
-			claimFormKey: null,
-			projectJson: JSON.stringify(defaultProject),
-			project: defaultProject,
-			fetchedImage: null,
-			fetchedFile: '',
-			};
+		hasKeySafe: false,
+		hasDid: false,
+		isDidLedgered: false,
+		toastShown: false,
+		didDoc: null,
+
+		croppedImg: null,
+		imageKey: null,
+		claimSchema: '',
+		claimSchemaKey: null,
+		claimForm: '',
+		claimFormKey: null,
+		projectJson: JSON.stringify(defaultProject),
+		project: defaultProject,
+		fetchedImage: null,
+		fetchedFile: '',
+	};
+
+	busyLedgering = false;
+
+	checkState() {
+		// If the user has a keysafe and but the hasKeySafe not set then set state
+		if (this.props.keysafe && !this.state.hasKeySafe) {
+			this.props.keysafe.getDidDoc((error, response) => {
+				if (error) {
+					if (this.state.toastShown === false) {
+						errorToast('Please log into IXO Keysafe');
+						this.setState({ toastShown: true});
+					}
+				} else {	
+					let newDidDoc = {
+							did: response.didDoc.did,
+							pubKey: response.didDoc.pubKey,
+							credentials: []
+					};
+					this.setState({hasKeySafe: true, hasDid: true, didDoc: newDidDoc });
+				}
+			});
+		}
+		// So has a client side didDoc, so lets check if it is ledgered
+		if (this.props.ixo && this.state.didDoc && !this.state.isDidLedgered) {
+			let ledgerDid = () => this.ledgerDid();
+			this.props.ixo.user.getDidDoc(this.state.didDoc.did).then((didResponse: any) => {
+				if (didResponse.did) {
+					this.setState({isDidLedgered: true, didDoc: didResponse});
+				} else {
+					// Did not ledgered
+					ledgerDid();
+				}
+			})
+			.catch((err) => {
+					// Did not ledgered
+					ledgerDid();
+					
+			});
+		}
+	}
+
+	setBusyLedgeringToFalse() {
+		this.busyLedgering = false;
+	}
+
+	ledgerDid = () => {
+		if (this.state.didDoc && !this.busyLedgering) {
+			let payload = {didDoc: this.state.didDoc};
+			this.busyLedgering = true;
+			this.props.keysafe.requestSigning(JSON.stringify(payload), (error, signature) => {
+				if (!error) {
+					this.props.ixo.user.registerUserDid(payload, signature).then((response: any) => {
+						if (response.code === 0) {
+							successToast('Did document was ledgered successfully');
+						} else {
+							errorToast('Unable to ledger did at this time');
+						}
+						// Delay the update here to allow Explorer to sync
+						setTimeout(() => this.busyLedgering = false, 3000);
+					});
+				} else {
+					this.busyLedgering = false;
+				}
+			});
+		} else {
+			if (this.state.toastShown === false) {
+				warningToast('Please log into the IXO Keysafe');
+				this.setState({ toastShown: true});
+			}
+		}
+	}
 
 	handleCreateProject = () => {
 		console.log(this.state.project);
@@ -253,7 +338,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	render() {
 		return (
 			<div>
-				<Container className="container">
+				<Container className="container-fluid">
 					<div className="row">
 						<div className="col-md-12">
 							<br />
