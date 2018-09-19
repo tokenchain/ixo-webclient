@@ -93,7 +93,6 @@ export class ProjectsHero extends React.Component<Props, State> {
 	}
 
 	render() {
-		const dateString = String(this.state.daysTo2030);
 		return (
 			<HeroContainer>
 				<HeroInner className="container">
@@ -104,7 +103,7 @@ export class ProjectsHero extends React.Component<Props, State> {
 							<DaysContainer>
 								<div>
 									<p>COUNTDOWN TO <strong>2030</strong></p>
-									<h3>{[dateString.slice(0, 1) , ' ', dateString.slice(1)].join('')}</h3>
+									<h3>{this.state.daysTo2030.toLocaleString()}</h3>
 								</div>
 							</DaysContainer>
 						</div>

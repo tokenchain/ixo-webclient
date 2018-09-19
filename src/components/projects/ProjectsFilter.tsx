@@ -112,6 +112,7 @@ const SDG = styled.div`
 `;
 
 export interface ParentProps {
+	handleFilter: (filter: boolean, indexes?: number[] ) => void;
 }
 
 export interface State {
@@ -137,6 +138,12 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 		this.setState({
 			selected: currSelected
 		});
+
+		if (currSelected.length > 0 ) {
+			this.props.handleFilter(true, currSelected);
+		} else {
+			this.props.handleFilter(false);
+		}
 	}
 
 	handleIsSelected = (idx: number) => {
@@ -159,7 +166,7 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 										<img src={`./sdgs/${idx + 1}.png`}/>
 										<Dialog>
 											<p>{sdg.shortText}</p>
-											<a href={sdg.url}>Find out more</a>
+											<a href={sdg.url} target="_blank">Find out more</a>
 											<Arrow />
 										</Dialog>
 										<Check>
@@ -174,7 +181,7 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 								<img src={`./sdgs/18.png`}/>
 								<Dialog>
 									<p>Future of humanity description</p>
-									<a href="test">Find out more</a>
+									<a href="test" target="_blank">Find out more</a>
 									<Arrow />
 								</Dialog>
 								<Check>

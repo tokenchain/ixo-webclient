@@ -17,6 +17,17 @@ export function capitalizeFirstLetter(theString: string) {
 	return theString.charAt(0).toUpperCase() + theString.slice(1);
 }
 
+export function floorandRemoveDuplicateSDGs(projects: any[]) {
+	return projects = projects.map((project, i) => {
+		let tempProject = project;
+		tempProject.data.sdgs = project.data.sdgs.map((sdg) => {
+			return Number(String(sdg).split('.')[0]);
+		});
+		tempProject.data.sdgs = Array.from(new Set(tempProject.data.sdgs));
+		return tempProject;
+	});
+}
+
 export function excerptText(theText: string, words: number = 20) {
 	const cutOffCount = words;
 	const wordCount = theText.split(' ').length - 1;
