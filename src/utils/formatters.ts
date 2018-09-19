@@ -28,6 +28,22 @@ export function floorandRemoveDuplicateSDGs(projects: any[]) {
 	});
 }
 
+export function SDGsCount(projects: any[]) {
+	var sdgArray = new Array(17);
+	for (let project of projects) {
+		let tempProject = project;
+		tempProject.data.sdgs = project.data.sdgs.map((sdg) => {
+			return Number(String(sdg).split('.')[0]);
+		});
+		tempProject.data.sdgs = Array.from(new Set(tempProject.data.sdgs));
+		for ( let o = 0; o < tempProject.data.sdgs.length; o++) {
+			sdgArray[o]++;
+		}
+	}
+	return sdgArray;
+
+}
+
 export function excerptText(theText: string, words: number = 20) {
 	const cutOffCount = words;
 	const wordCount = theText.split(' ').length - 1;
