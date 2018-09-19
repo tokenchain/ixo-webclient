@@ -16,8 +16,8 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
-	background: #f1f0f0;
-
+	background: ${props => props.theme.bg.lightGrey};
+	
 	.example-enter {
 		opacity: 0.01;
 	}
