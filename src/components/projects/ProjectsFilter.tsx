@@ -5,6 +5,9 @@ import styled from 'styled-components';
 const SDGsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	width: 810px;
+	max-width: 100%;
+	margin-top: 50px;
 `;
 
 const Dialog = styled.div`
@@ -166,7 +169,19 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 								</SDG>
 							);
 						})}
-						<SDG><img src={`./sdgs/18.png`}/></SDG>
+						<SDG onClick={() => this.handleSetClicked(18)} style={{background: 'white'}}>
+							<div className={this.handleIsSelected(18) ? 'checked' : ''}>
+								<img src={`./sdgs/18.png`}/>
+								<Dialog>
+									<p>Future of humanity description</p>
+									<a href="test">Find out more</a>
+									<Arrow />
+								</Dialog>
+								<Check>
+									<i className="icon-approved" />
+								</Check>
+							</div>
+						</SDG>
 					</SDGsContainer>
 			</div>
 		);

@@ -18,13 +18,13 @@ const HeaderLink = styled(NavLink)`
 	border-width: 0 0 1px;
 	border-style: solid;
 	border-color: #D6D6D6;
-	padding:5px 0px 5px;
+	padding:5px 10px;
 	margin: 5px 15px;
 
 	@media (min-width: 415px) {
-		padding:5px 0px 5px;
-		margin: 5px 15px;
-		font-size:13px;
+		padding: 7px 10px;
+		margin: 5px 20px;
+		font-size:15px;
 	}
 
 	&.active {
@@ -48,12 +48,6 @@ const HeaderBorderLink = HeaderLink.extend`
 	color: white;
 	background: #A11C43;
 
-	@media (min-width: 415px) {
-		padding:5px 10px 5px;
-		margin:0 10px;
-		font-size:13px;
-	}
-
 	&.active {
 		background: #A11C43;
 		color: white;
@@ -71,17 +65,9 @@ const HeaderBorderLink = HeaderLink.extend`
 const Main = styled.div`
 	padding:15px 20px;
 	justify-content: flex-end;
-	
-	a:first-child {
-		margin-right: auto;
-	}
 
 	@media (min-width:${deviceWidth.tablet}px){
-		justify-content: flex-start;
-
-		a:first-child {
-			margin-right: inherit;
-		}
+		justify-content: space-between;
 	}
 
 	a {
@@ -99,11 +85,15 @@ export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {
 	return (
 		<Fragment>
 			<Main className="col-md-10 d-flex align-items-center">
-				<a href="/"><IXOLogo alt="SDG Futures Logo" src={sdgLogo}/></a>
-				<HeaderLink exact={true} onClick={refreshProjects} to="/">Ventures</HeaderLink>
-				<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
-				<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
-				<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
+				<div>
+					<a href="/"><IXOLogo alt="SDG Futures Logo" src={sdgLogo}/></a>
+				</div>
+				<div>
+					<HeaderLink exact={true} onClick={refreshProjects} to="/">Ventures</HeaderLink>
+					<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
+					<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
+					<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
+				</div>
 			</Main>
 		</Fragment>
 	);
