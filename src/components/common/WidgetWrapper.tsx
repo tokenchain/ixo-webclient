@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-	background: ${props => props.theme.bg.gradientBlue};
-	border: 1px solid ${props => props.theme.widgetBorder};
+	background: linear-gradient(0deg, #FFFFFF 0%, #F6F6F6 100%);;
+	border: 0px solid ${props => props.theme.widgetBorder};
 	padding: 20px;
 	box-shadow: 0 2px 10px 0 rgba(0,0,0,0.18);
 	margin: 15px 0;
@@ -22,6 +22,7 @@ const Container = styled.div`
 `;
 
 const FlexTitle = styled.div`
+	color: #282828;
 	display: flex;
 	justify-content: space-between;
 `;
@@ -35,7 +36,7 @@ const FlexContent = styled.div`
 
 const WrappedLink = styled(Link)`
 
-	color: white;
+	color: #282828;
 
 	p, a, i, h3 {
 	}
