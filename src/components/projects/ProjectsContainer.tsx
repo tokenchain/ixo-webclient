@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Fragment } from 'react';
+
 import styled from 'styled-components';
 import { ProjectCard } from './ProjectCard';
 import { ProjectsHero } from './ProjectsHero';
@@ -228,11 +230,24 @@ export class Projects extends React.Component<Props, State> {
 		}
 	}
 
+	renderHero() {
+		if (this.props.contentType === contentType.dashboard) {
+			return null;
+		} else {
+			return (
+				<Fragment>
+					<ProjectsHero ixo={this.props.ixo} />
+					<ProjectsFilter/>
+				</Fragment>
+			);
+		}
+	}
+
 	render() {
 		return (        
 			<Container>
-				<ProjectsHero ixo={this.props.ixo} />
-				<ProjectsFilter/>
+				{this.renderHero()}
+				
 				{this.handleRenderProjectList()}
 			</Container>
 		);

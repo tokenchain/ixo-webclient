@@ -5,6 +5,7 @@ import { LayoutWrapper } from '../common/LayoutWrapper';
 import BarChartProjects, { BarColors } from '../widgets/BarChartProjects';
 import { WorldMap, LatLng } from '../widgets/WorldMap';
 import { isoCountriesLatLng } from '../../lib/commonData';
+import { SDGArray } from '../../lib/commonData';
 
 const Container = styled.div`
 	color: white;
@@ -14,6 +15,28 @@ const Container = styled.div`
 
 const ProjectCount = styled.h1`
 	color: #A11C43;
+`;
+
+const SDGsContainer = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	max-width: 100%;
+	margin-top: 50px;
+`;
+
+const SDG = styled.div`
+	width: 60px;
+	height: 60px;
+	box-shadow: 0 3px 11px 0 rgba(0,0,0,0.31);
+	margin: 0 15px 15px 0;
+	position: relative;
+	cursor: pointer;
+
+	img {
+		width: 100%;
+		height: 100%;
+		transition: opacity 0.3s ease;
+	} 
 `;
 
 export interface ParentProps {
@@ -45,6 +68,22 @@ export const ProjectsDashboard: React.SFC<ParentProps> = ({projects, claims, cla
 	return (
 		<Container>
 		<LayoutWrapper>
+			<div className="row">
+				<div className="col-md-12">
+					<SDGsContainer>
+						{SDGArray.map((sdg, idx) => {
+							return (
+								<SDG key={idx} style={{background: sdg.color}}>
+									<img src={`./sdgs/${idx + 1}.png`}/>
+								</SDG>
+							);
+						})}
+						<SDG key={18} style={{background: 'white'}}>
+							<img src={`./sdgs/18.png`}/>
+						</SDG>
+					</SDGsContainer>	
+				</div>
+			</div>
 			<div className="row">
 				<div className="col-md-12">
 					<WidgetWrapper title="Ventures" path={``}>
