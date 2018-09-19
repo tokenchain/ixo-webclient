@@ -16,6 +16,7 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
+	background: ${props => props.theme.bg.lightGrey};
 	
 	.example-enter {
 		opacity: 0.01;
@@ -38,7 +39,6 @@ const Container = styled.div`
 
 const ProjectsContainer = styled.div`
 	overflow-y: scroll;
-	background: ${props => props.theme.bg.lightGrey};
 	flex: 1 1 auto;
 
 	& > .row {
