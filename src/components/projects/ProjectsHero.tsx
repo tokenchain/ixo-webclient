@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { deviceWidth } from '../../lib/commonData';
+const circleBG = require('../../assets/images/circleBG.png');
 
 const DaysContainer = styled.div`
 	justify-content: flex-end;
@@ -14,10 +14,12 @@ const DaysContainer = styled.div`
 const HeroInner = styled.div`
 	padding: 110px 0 0;
 	color: ${props => props.theme.fontDarkGrey};
+	position: relative;
 
 	h2 {
 		font-weight: 300;
 		font-size: 40px;
+		line-height: 40px;
 
 		strong {
 			display: block;
@@ -28,14 +30,19 @@ const HeroInner = styled.div`
 
 	h3 {
 		font-weight: 300;
-		font-size: 70px;
-		border-bottom: 1px solid ${props => props.theme.fontLightBlue};
-		color: ${props => props.theme.fontLightBlue};
+		font-size: 44px;
+		display: inline-block;
+		color: #A11C43;
+		font-family: ${props => props.theme.fontRobotoCondensed};
 	}
 
 	p {
-		font-size: 19px;
+		font-size: 16px;
 		font-family: ${props => props.theme.fontRobotoCondensed};
+		display: inline-block;
+		position: relative;
+		top: -20px;
+		right: 10px;
 	}
 `;
 
@@ -43,8 +50,7 @@ const HeroContainer = styled.div`
 	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
 	margin:0 0 0px;
 	width: 100vw;
-	position:relative;
-	height: 200px;
+	position: relative;
 
 	${HeroInner}:before {
 		position: absolute;
@@ -58,10 +64,13 @@ const HeroContainer = styled.div`
 
 		background-color: rgba(3,60,80,0);
 	}
+`;
 
-	@media (min-width: ${deviceWidth.tablet}px) {
-		height: 425px;
-	}
+const CircleBG = styled.img`
+	position: absolute;
+	top: 30px;
+	right: 0;
+	width: 500px;
 `;
 
 export interface State {
@@ -88,13 +97,14 @@ export class ProjectsHero extends React.Component<Props, State> {
 		return (
 			<HeroContainer>
 				<HeroInner className="container">
+					<CircleBG src={circleBG} />
 					<div className="row">
 						<div className="col-xl-6 col-lg-8">
 							<h2>Technology ventures for the <strong>future of humanity.</strong></h2>
 							<DaysContainer>
 								<div>
-									<h3>{[dateString.slice(0, 1) , ' ', dateString.slice(1)].join('')}</h3>
 									<p>COUNTDOWN TO <strong>2030</strong></p>
+									<h3>{[dateString.slice(0, 1) , ' ', dateString.slice(1)].join('')}</h3>
 								</div>
 							</DaysContainer>
 						</div>
