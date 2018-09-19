@@ -51,17 +51,6 @@ const HeaderLink = styled(NavLink)`
 	border: 1px solid #000000;
 	border-radius:3px;
 	
-	:last-child {
-		border:1px solid #49bfe0;
-		font-weight: 300;
-	}
-
-	&:last-child.active {
-		background: ${props => props.theme.bg.gradientButton};
-		color:white;
-		font-weight: 300;
-	}
-
 	@media (min-width: 415px) {
 		padding:5px 10px 5px;
 		margin:0 10px;
@@ -74,6 +63,19 @@ const HeaderLink = styled(NavLink)`
  		text-decoration:none;
  		&&{color: ${props => props.theme.fontBlue};}}
  	}
+`;
+
+const HeaderBorderLink = HeaderLink.extend`
+
+	border:1px solid #49bfe0;
+	font-weight: 300;
+
+	&.active {
+		background: ${props => props.theme.bg.gradientButton};
+		color:white;
+		font-weight: 300;
+	}
+
 `;
 
 const Main = styled.div`
@@ -107,8 +109,10 @@ export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {
 	return (
 		<Main className="col-md-6 d-flex align-items-center">
 			<a href={getIxoWorldRoute('')}><IXOLogo alt="IXO Logo" src={ixoLogo}/></a>
-			<HeaderLink exact={true} onClick={refreshProjects} to="/">Explore</HeaderLink>
-			<HeaderLink exact={true} to="/register">Submit a Venture</HeaderLink>
+			<HeaderLink exact={true} onClick={refreshProjects} to="/">Ventures</HeaderLink>
+			<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
+			<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
+			<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
 		</Main>
 	);
 };
