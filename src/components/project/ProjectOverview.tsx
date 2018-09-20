@@ -422,7 +422,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 							<Text>{props.project.founder.shortDescription}</Text>
 							<IconText>
 								{props.project.founder.countryOfOrigin && <span><i className="icon-location"/>{getCountryName(props.project.founder.countryOfOrigin)}</span>}
-								{props.project.founder.websiteURL && <span><i className="icon-url"/><a href={props.project.founder.websiteURL} target="_blank">{props.project.founder.websiteURL}</a></span>}
+								{props.project.founder.websiteURL && <span><i className="icon-world"/><a href={props.project.founder.websiteURL} target="_blank">{props.project.founder.websiteURL}</a></span>}
 							</IconText>
 						</div>
 						<div className="col-md-4">
