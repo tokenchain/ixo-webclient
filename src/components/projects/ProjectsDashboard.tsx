@@ -6,6 +6,7 @@ import BarChartProjects, { BarColors } from '../widgets/BarChartProjects';
 import { WorldMap, LatLng } from '../widgets/WorldMap';
 import { isoCountriesLatLng } from '../../lib/commonData';
 import { SDGArray } from '../../lib/commonData';
+import { SDGsCount } from '../../utils/formatters';
 
 const Container = styled.div`
 	color: white;
@@ -22,6 +23,7 @@ const SDGsContainer = styled.div`
 	flex-wrap: wrap;
 	max-width: 100%;
 	margin-top: 50px;
+	margin-bottom: 10px;
 `;
 
 const SDG = styled.div`
@@ -37,6 +39,19 @@ const SDG = styled.div`
 		height: 100%;
 		transition: opacity 0.3s ease;
 	} 
+`;
+
+const SDGMetric = styled.div`
+	display: flex;
+	align-items: center;
+	width: 60px;
+	height: 30px;
+	font-weight: 400;
+	color: #282828;
+	justify-content: center;
+	text-decoration: bold;
+	background-color: white;
+	box-shadow: 0 3px 11px 0 rgba(0,0,0,0.31);
 `;
 
 export interface ParentProps {
@@ -65,6 +80,8 @@ export const ProjectsDashboard: React.SFC<ParentProps> = ({projects, claims, cla
 		return n.toLocaleString();
 	};
 
+	const projCnt = SDGsCount(projects);
+
 	return (
 		<Container>
 		<LayoutWrapper>
@@ -75,12 +92,14 @@ export const ProjectsDashboard: React.SFC<ParentProps> = ({projects, claims, cla
 							return (
 								<SDG key={idx} style={{background: sdg.color}}>
 									<img src={`./sdgs/${idx + 1}.png`}/>
+									<SDGMetric>{projCnt[idx]}</SDGMetric>
 								</SDG>
 							);
 						})}
 						<SDG key={18} style={{background: 'white'}}>
 							<img src={`./sdgs/18.png`}/>
-						</SDG>
+							<SDGMetric>{projCnt[17] ? projCnt[17] : 0}</SDGMetric>
+						</SDG> 
 					</SDGsContainer>	
 				</div>
 			</div>

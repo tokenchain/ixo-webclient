@@ -54,13 +54,13 @@ export class WorldMap extends React.Component<ParentProps> {
 							projection={projection}
 							style={{
 								default: {
-									fill: '#053c53',
-									stroke: '#49BFE0',
-									strokeWidth: 0.1,
+									fill: '#ebe8e8',
+									stroke: '#f8f7f7',
+									strokeWidth: 0.5,
 									outline: 'none',
 								},
-								hover:   { fill: '#49BFE0' },
-								pressed: { fill: '#000' },
+								hover:   { fill: '#dbd8d8' },
+								pressed: { fill: '#dbd8d8' },
 							}}
 						/>
 					))}
@@ -72,7 +72,7 @@ export class WorldMap extends React.Component<ParentProps> {
 										key={i}
 										marker={{ coordinates: [ value.lon(), value.lat() ] }}
 										style={{
-											default: { fill: '49BFE0' },
+											default: { fill: '#4A9F46' },
 											hover:   { fill: '#FFF' },
 											pressed: { fill: '#000' },
 										}
