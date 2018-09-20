@@ -19,6 +19,8 @@ import { Spinner } from './components/common/Spinner';
 import { ToastContainer } from 'react-toastify';
 import * as ReactGA from 'react-ga';
 
+const circleBG = require('./assets/images/circleBG.png');
+
 ReactGA.initialize('UA-106630107-5');
 
 ReactGA.pageview(window.location.pathname + window.location.search);
@@ -76,10 +78,30 @@ const Container = styled.div`
 
 const ContentWrapper = styled.main`
 	display: flex;
+	background: ${theme.bg.lightGrey};
 	flex-direction: column;
 	flex: 1;
 `;
 
+const CircleBG = styled.img`
+	position: absolute;
+	top: 30px;
+	right: 0;
+	width: 500px;
+`;
+
+const BGContainer = styled.div`
+	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
+	height: 516px;
+    position: absolute;
+    top: 74px;
+    left: 0;
+	width: 100vw;
+	
+	> div {
+		position: relative;
+	}
+`;
 export namespace App {
 	export interface State {
 		loginError: string;
@@ -168,6 +190,11 @@ class App extends React.Component<App.Props, App.State> {
 						<HeaderConnected pingIxoExplorer={this.handlePingExplorer} simpleHeader={false} userInfo={this.props.userInfo} refreshProjects={() => console.log('clicked')} />
 							<ToastContainer hideProgressBar={true} />
 							<ContentWrapper>
+								<BGContainer>
+									<div className="container">
+										<CircleBG src={circleBG} />
+									</div>
+								</BGContainer>
 								{this.props.ixo !== null ? 
 									<Routes /> : 
 									<Spinner info={'Loading ixo.world...'}/>
