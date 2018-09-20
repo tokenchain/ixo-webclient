@@ -1,12 +1,12 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { SDGArray, deviceWidth } from '../../lib/commonData';
-import { getCountryName, getIxoWorldRoute } from '../../utils/formatters';
+import { getIxoWorldRoute } from '../../utils/formatters';
 import { AgentRoles } from '../../types/models';
 
 const SingleSDG = styled.a`
 	&&& {
-		color: ${props => props.theme.fontBlue};
+		color: #2A5F2F;
 	}
 	font-family: ${props => props.theme.fontRobotoCondensed};
 	font-weight: 300;
@@ -34,7 +34,7 @@ const SingleSDG = styled.a`
 	}
 
 	&&&:hover, :hover i:before {
-		color: ${props => props.theme.fontLightBlue};
+		color: ${props => props.theme.fontDarkGrey};
 	}
 `;
 
@@ -64,29 +64,8 @@ const ColLeft = styled.div`
 
 `;
 
-const ColRight = styled.div`
-	color: white;
-	font-weight: 200;
-    display: flex;
-    flex-direction: column;
-	justify-content: center;
-	
-	p {
-		margin-bottom: 0;
-		line-height: 24px;
-	}
-
-	i {
-		margin-right: 8px;
-	}
-
-	i:before {
-		color: white;
-	}
-`;
-
 const Title = styled.h1`
-	color: white;
+	color: ${props => props.theme.fontDarkGrey};
 	font-size: 36px;
 	line-height: 1;
 	margin-bottom:10px;
@@ -102,6 +81,12 @@ const SubTextContainer = styled.div`
 
 	@media (min-width: ${deviceWidth.desktop}px) {
 		margin-bottom: 0;
+	}
+
+	p {
+		color: ${props => props.theme.fontDarkGrey};
+		margin-top: 5px;
+		font-weight: 400;
 	}
 `;
 
@@ -131,15 +116,9 @@ export const ProjectHero: React.SFC<Props> = ({project, match, isDetail, hasCapa
 									</SingleSDG>
 									);
 								})}
-							</SubTextContainer>						</ColLeft>
-						<ColRight className="col-lg-4 col-sm-12">
-							<p><strong>Created:</strong> {project.createdOn.split('T')[0]}</p>
-							<p><strong>By:</strong> {project.ownerName}</p>
-							<p>
-								<i className="icon-location" />
-								{getCountryName(project.projectLocation)}
-							</p>
-						</ColRight>
+								<p>{project.shortDescription}</p>
+							</SubTextContainer>						
+						</ColLeft>
 					</div>
 				</HeroInner>
 		</HeroContainer>
