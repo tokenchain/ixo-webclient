@@ -17,7 +17,7 @@ export function capitalizeFirstLetter(theString: string) {
 	return theString.charAt(0).toUpperCase() + theString.slice(1);
 }
 
-export function floorandRemoveDuplicateSDGs(projects: any[]) {
+export function floorAndRemoveDuplicateSDGs(projects: any[]) {
 	return projects = projects.map((project, i) => {
 		let tempProject = project;
 		tempProject.data.sdgs = project.data.sdgs.map((sdg) => {

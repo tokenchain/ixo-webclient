@@ -12,7 +12,7 @@ import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import * as Toast from '../helpers/Toast';
 import { contentType, UserInfo } from '../../types/models';
 import { ProjectsDashboard } from './ProjectsDashboard';
-import { floorandRemoveDuplicateSDGs } from '../../utils/formatters';
+import { floorAndRemoveDuplicateSDGs } from '../../utils/formatters';
 
 const Container = styled.div`
 
@@ -108,7 +108,7 @@ export class Projects extends React.Component<Props, State> {
 		let filteredProjects = [];
 		if (showOnlyFilterProjects === true) {
 			let projects = [...this.state.projectList];
-			projects = floorandRemoveDuplicateSDGs(projects); 
+			projects = floorAndRemoveDuplicateSDGs(projects); 
 	
 			for (let j = 0; j < projects.length; j++) {
 				for (let filterI of filterIndexes) {
@@ -251,7 +251,7 @@ export class Projects extends React.Component<Props, State> {
 			return (
 				<Fragment>
 					<ProjectsHero ixo={this.props.ixo} />
-					<ProjectsFilter/>
+					<ProjectsFilter handleFilter={(filter, idxs) => this.handleFilter(filter, idxs)}/>
 				</Fragment>
 			);
 		}
@@ -260,13 +260,8 @@ export class Projects extends React.Component<Props, State> {
 	render() {
 		return (        
 			<Container>
-<<<<<<< HEAD
 				{this.renderHero()}
 				
-=======
-				<ProjectsHero ixo={this.props.ixo} />
-				<ProjectsFilter handleFilter={(filter, idxs) => this.handleFilter(filter, idxs)}/>
->>>>>>> e333d2714ecc4761d3f72026a3b6d87d315efd69
 				{this.handleRenderProjectList()}
 			</Container>
 		);
