@@ -24,8 +24,9 @@ const LoaderContainer = styled.div`
 const SpinningImage = styled.div`
 	background-color: ${props => props.theme.bg.lightGrey};
 	animation-name: spinner;
-	animation-duration: 5.5s;
+	animation-duration: 2.5s;
 	animation-iteration-count: infinite;
+	animation-timing-function: linear;
 	transform-origin: 50% 50%;
 	display: inline-block;
 

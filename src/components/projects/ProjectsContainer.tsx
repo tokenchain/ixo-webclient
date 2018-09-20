@@ -12,6 +12,7 @@ import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import * as Toast from '../helpers/Toast';
 import { contentType, UserInfo } from '../../types/models';
 import { ProjectsDashboard } from './ProjectsDashboard';
+import { floorandRemoveDuplicateSDGs } from '../../utils/formatters';
 
 const Container = styled.div`
 
@@ -76,8 +77,8 @@ export interface State {
 	claims: any;
 	claimsTotalRequired: number;
 	agents: any;
-	myProjects: any[];
-	showOnlyMyProjects: boolean;
+	filteredProjects: any[];
+	showOnlyFilterProjects: boolean;
 }
 
 export interface StateProps {
@@ -93,8 +94,8 @@ export class Projects extends React.Component<Props, State> {
 		claims: null,
 		claimsTotalRequired: 0,
 		agents: null,
-		myProjects: [],
-		showOnlyMyProjects: false,
+		filteredProjects: [],
+		showOnlyFilterProjects: false
 	};
 
 	loadingProjects = false;
@@ -103,12 +104,25 @@ export class Projects extends React.Component<Props, State> {
 		this.refreshAllProjects();
 	}
 
-	showMyProjects( showMyProjects: boolean ) {
-		this.setState({showOnlyMyProjects: showMyProjects});
+	handleFilter = ( showOnlyFilterProjects?: boolean, filterIndexes?: number[] ) => {
+		let filteredProjects = [];
+		if (showOnlyFilterProjects === true) {
+			let projects = [...this.state.projectList];
+			projects = floorandRemoveDuplicateSDGs(projects); 
+	
+			for (let j = 0; j < projects.length; j++) {
+				for (let filterI of filterIndexes) {
+					if (projects[j].data.sdgs.includes(filterI)) {
+						filteredProjects.push(projects[j]);
+						break;
+					}
+				}
+			}
+		}
+		this.setState({showOnlyFilterProjects: showOnlyFilterProjects, filteredProjects: filteredProjects });
 	}
 
 	getMyProjects(userInfo: UserInfo, projList: any) {
-		// debugger;
 		if (userInfo != null) {
 			let did = userInfo.didDoc.did;
 			let myProjects = projList.filter((proj) => {
@@ -152,7 +166,7 @@ export class Projects extends React.Component<Props, State> {
 						claims: claimsArr,
 						claimsTotalRequired: reqClaims,
 						agents: Object.assign({}, agents),
-						myProjects: this.getMyProjects(this.props.userInfo, projectList)
+						filteredProjects: this.getMyProjects(this.props.userInfo, projectList)
 					});
 					this.loadingProjects = false;
 				})
@@ -177,13 +191,13 @@ export class Projects extends React.Component<Props, State> {
 			}
 		}
 		if (this.state.projectList !== null && this.props.userInfo !== nextProps.userInfo) {
-			this.setState({myProjects: this.getMyProjects(nextProps.userInfo, this.state.projectList)});
+			this.setState({filteredProjects: this.getMyProjects(nextProps.userInfo, this.state.projectList)});
 		}
 	}
 
 	renderProjects = () => {
 		if (this.state.projectList.length > 0) {	
-			let projects = (this.state.showOnlyMyProjects ? this.state.myProjects : this.state.projectList);	
+			let projects = (this.state.showOnlyFilterProjects ? this.state.filteredProjects : this.state.projectList);	
 			return (
 				<ProjectsContainer className="container-fluid">
 					<div className="container">
@@ -246,13 +260,19 @@ export class Projects extends React.Component<Props, State> {
 	render() {
 		return (        
 			<Container>
+<<<<<<< HEAD
 				{this.renderHero()}
 				
+=======
+				<ProjectsHero ixo={this.props.ixo} />
+				<ProjectsFilter handleFilter={(filter, idxs) => this.handleFilter(filter, idxs)}/>
+>>>>>>> e333d2714ecc4761d3f72026a3b6d87d315efd69
 				{this.handleRenderProjectList()}
 			</Container>
 		);
 		}
-	}
+		
+}
 
 function mapStateToProps(state: PublicSiteStoreState) {
 	return {
