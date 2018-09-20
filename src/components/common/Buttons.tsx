@@ -31,14 +31,16 @@ const EnabledGradient = BaseButton.extend`
 `;
 
 const EnabledDark = BaseButton.extend`
-	background: #002d42;
-	&&&{ color: ${props => props.theme.fontDarkBlueButtonNormal} };
-	border: 1px solid ${props => props.theme.ixoBlue};
+	background: #A11C43;
+	&&&{ color: white };
+	border: 1px solid A11C43};
+	border-radius: 3px;
+
 	cursor: pointer;
 	
 	:hover {
-		&&&{ color: ${props => props.theme.fontBlueButtonHover} }
-		background: ${props => props.theme.bg.darkButton};
+		&&&{ color: white }
+		background: #A11C43;
 		text-decoration: none;
 	}
 `;

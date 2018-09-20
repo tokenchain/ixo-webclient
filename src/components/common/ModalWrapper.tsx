@@ -23,13 +23,13 @@ const modalStyles = {
 };
 
 const ModalInner = styled.div`
-	background: ${props => props.theme.bg.blue};
+	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
 	color: white;
 	padding: 10px 30px;
 `;
 
 const CloseModal = styled.button`
-	color: white;
+	color: #282828;
 	background: none;
 	border: 0;
 	top: 0px;
