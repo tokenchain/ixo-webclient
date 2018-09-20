@@ -9,6 +9,7 @@ import { SDGArray } from '../../lib/commonData';
 import { SDGsCount } from '../../utils/formatters';
 
 const Container = styled.div`
+	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
 	color: white;
 	flex: 1 1 auto;
 	display: flex;
@@ -20,23 +21,23 @@ const ProjectCount = styled.h1`
 
 const SDGsContainer = styled.div`
 	display: flex;
+	justify-content: center;
 	flex-wrap: wrap;
 	max-width: 100%;
-	margin-top: 50px;
+	margin-top: 10px;
 	margin-bottom: 10px;
 `;
 
 const SDG = styled.div`
 	width: 60px;
-	height: 60px;
 	box-shadow: 0 3px 11px 0 rgba(0,0,0,0.31);
-	margin: 0 15px 15px 0;
+	margin: 0 7.5px 15px;
 	position: relative;
 	cursor: pointer;
 
 	img {
 		width: 100%;
-		height: 100%;
+		height: 60px;
 		transition: opacity 0.3s ease;
 	} 
 `;
