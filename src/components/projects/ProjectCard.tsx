@@ -2,9 +2,7 @@ import * as React from 'react';
 import { SDGArray, deviceWidth } from '../../lib/commonData';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { ProgressBar } from '../common/ProgressBar';
 import { excerptText } from '../../utils/formatters';
-import { Fragment } from 'react';
 
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
@@ -15,11 +13,6 @@ const Title = styled.h3`
     margin: 12px 0;
 	color: ${props => props.theme.fontDarkGrey};
     line-height: 1.2;
-`;
-
-const Owner = styled.p`
-	font-size: 11px;
-	margin-bottom: 15px;
 `;
 
 const Description = styled.div`
@@ -39,26 +32,12 @@ const Description = styled.div`
 	@media (min-width: ${deviceWidth.desktop}px){
 		opacity: 0;
 	}
-
-	p {
-		font-size: 13px;
-		color: white;
-		position:relative;
-		top: -15px;
-
-		transition: top 0.6s ease;
-	}
 `;
 
-const Progress = styled.p`
-	font-size: 23px;
-	font-weight: lighter;
-	margin:15px 0 0;
-`;
-
-const Impact = styled.p`
-	font-size: 13px;
-	font-weight: 400;
+const Excerpt = styled.p`
+	color: #8B8B8B;
+	font-size: 15px;
+	font-weight: 100;
 `;
 
 const SDGs = styled.div`
@@ -73,7 +52,7 @@ const CardTop = styled.div`
 	padding: 10px;
 	height: 240px;
 	box-shadow: 0 8px 16px -2px rgba(0,0,0,0.03);
-	background-size: 100%;
+	background-size: auto 100%;
 	background-repeat: no-repeat;
 	background-position: center top;
 
@@ -82,7 +61,7 @@ const CardTop = styled.div`
 	position:relative;
 
 	@media (min-width: ${deviceWidth.mobile}px){
-		height: 170px;
+		height: 225px;
 	}
 
 	:before {
@@ -92,7 +71,7 @@ const CardTop = styled.div`
 		height: 33%;
 		top: 0;
 		left: 0;
-		background: linear-gradient(180deg,rgba(0,0,0,0.33) 0%,rgba(0,0,0,0) 100%);
+		background: linear-gradient(180deg, rgba(0,0,0,0.63) 0%, rgba(0,0,0,0) 100%);
 	}
 
 	i {
@@ -107,15 +86,29 @@ const CardTop = styled.div`
 	}
 `;
 
-const CardBottom = styled.div`
-	border-radius: 0 0 2px 2px;
-	padding: 20px 14px;
-	background: white;
+const Founder = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	img {
+		filter: grayscale(100%);
+		height: 40px;
+	}
 
 	p {
-        font-weight:300;
-		color: ${props => props.theme.fontDarkGrey};
-    }
+		color: #282828;
+		font-size: 12px;
+		margin-bottom: 0;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+`;
+
+const CardBottom = styled.div`
+	border-radius: 0 0 2px 2px;
+	padding: 20px 14px 15px;
+	background: white;
 `;
 
 const CardContainer = styled.div`
@@ -127,7 +120,6 @@ const ProjectLink = styled(Link) `
 	box-shadow: 0px 10px 25px 0px rgba(0,0,0,0);
 	background: white;
 	height:100%;
-	border: 1px solid #E2E2E2;
 
 	transition: box-shadow 0.3s ease;
 
@@ -137,7 +129,7 @@ const ProjectLink = styled(Link) `
 	}
 
 	:hover ${CardTop} {
-		background-size: 105%;
+		background-size: auto 105%;
 	}
 
 	:hover ${Description} {
@@ -178,6 +170,7 @@ export class ProjectCard extends React.Component<Props, States> {
 	}
 
 	render() {
+		console.log(this.props.project);
 		return (
 			<CardContainer className="col-10 offset-1 col-xl-4 col-md-6 col-sm-10 offset-sm-1 offset-md-0">
 				<ProjectLink to={{pathname: `/projects/${this.props.did}/overview`, state: { projectPublic: this.props.project, imageLink: this.getImageLink() } }}>
@@ -189,20 +182,15 @@ export class ProjectCard extends React.Component<Props, States> {
 							);
 						})}
 						</SDGs>
-						<Description><p>{excerptText(this.props.project.shortDescription, 20)}</p></Description>
+						<Description />
 					</CardTop>
 					<CardBottom>
 						<Title>{excerptText(this.props.project.title, 10)}</Title>
-						<Owner>By {this.props.project.ownerName}</Owner>
-						{this.props.project.requiredClaims === 0 ?
-							<p>This project will launch in September 2018.</p>
-						:
-							<Fragment>
-								<ProgressBar total={this.props.project.requiredClaims} approved={this.props.project.claimStats.currentSuccessful} rejected={this.props.project.claimStats.currentRejected}/>
-								<Progress><strong>{this.props.project.claims.length}</strong></Progress>
-								<Impact>{this.props.project.impactAction}</Impact>
-							</Fragment>
-						}
+						<Excerpt>{excerptText(this.props.project.shortDescription, 20)}</Excerpt>
+						<Founder>
+							<p>{this.props.project.founder.name}</p>
+							{this.props.project.founder.logoLink && <img src={this.props.project.founder.logoLink} />}
+						</Founder>
 					</CardBottom>
 				</ProjectLink>
 			</CardContainer>
