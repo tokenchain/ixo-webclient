@@ -7,7 +7,7 @@ import { ModalWrapper } from '../common/ModalWrapper';
 import { ProjectNewAgent } from './ProjectNewAgent';
 import { UserInfo } from '../../types/models';
 import QRComponent from '../common/QRComponent'; 
-// import FacebookProvider, { Share } from 'react-facebook';
+import FacebookProvider, { Share } from 'react-facebook';
 import { Helmet } from 'react-helmet';
 import ReactMd from 'react-md-file';
 
@@ -371,17 +371,15 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 										<i className="icon-share" />SHARE THIS PROJECT
 									</Visible>
 									<Hidden>
-										{/* <i onClick={shareToTwitter} className="icon-facebook" /> */}
 										<i onClick={shareToTwitter} className="icon-twitter" />
+										<FacebookProvider appId="245800599615583">
+											<Share href={location.href}>
+												<i className="icon-facebook" />
+											</Share>
+										</FacebookProvider>
 									</Hidden>
 								</LocalButton>
 							</Sidebar>
-							{ /*
-							<FacebookProvider appId="245800599615583">
-								<Share href="http://www.facebook.com">
-									<button type="button">Share</button>
-								</Share>
-							</FacebookProvider> */}
 							<QRComponent url={location.href} />
 						</div>
 					</div>
