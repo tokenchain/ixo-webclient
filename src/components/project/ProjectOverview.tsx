@@ -225,6 +225,8 @@ const Founder = styled.div`
 	}
 	
 	img {
+		max-width: 100px;
+    max-height: 100px;
 		margin-top: 20px;
 	}
 

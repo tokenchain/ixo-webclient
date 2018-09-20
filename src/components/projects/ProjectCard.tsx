@@ -177,9 +177,13 @@ export class ProjectCard extends React.Component<Props, States> {
 					<CardTop style={{backgroundImage: `url(${this.getImageLink()}),url(${placeholder})`}}>
 						<SDGs>
 						{this.props.project.sdgs.map((SDG, SDGi) => {
-							return (
-							<i key={SDGi} className={`icon-sdg-${SDGArray[Math.floor(SDG) - 1].ico}`} />
-							);
+							if (SDG !== 18) {
+								return (
+								<i key={SDGi} className={`icon-sdg-${SDGArray[Math.floor(SDG) - 1].ico}`} />
+								);
+							} else {
+								return '';
+							}
 						})}
 						</SDGs>
 						<Description />

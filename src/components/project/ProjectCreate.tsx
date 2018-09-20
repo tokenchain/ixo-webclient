@@ -65,6 +65,19 @@ export interface State {
 
 	fetchedImage: string;
 	fetchedFile: string;
+
+	UNSDGs: string;
+	lngDescr: string;
+	goals: string;
+
+	github: string;
+	twitter: string;
+	facebook: string;
+	instagram: string;
+
+	websiteLink: string;
+	mediaLink: string;
+
 }	
 
 let defaultProject = {
@@ -122,6 +135,16 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		project: defaultProject,
 		fetchedImage: null,
 		fetchedFile: '',
+
+		UNSDGs: '',
+		lngDescr: '',
+		goals: '',
+		github: '',
+		twitter: '',
+		facebook: '',
+		instagram: '',
+		websiteLink: '',
+		mediaLink: '',
 	};
 
 	busyLedgering = false;
@@ -196,14 +219,16 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	}
 
 	componentDidMount() {
-		setTimeout(() => this.checkState(), 2000);
-		// this.checkState();
+	// setTimeout(() => this.checkState(), 2000);
 	}
 
 	/****************************************************************************************************/
 
 	handleCreateProject = () => {
 		console.log(this.state.project);
+		let newProject = this.state.project;
+		newProject.longDescription = this.createMarkup();
+
 		if (this.props.keysafe === null) {
 		errorToast('Please install IXO Credential Manager first.');
 		} else {
@@ -212,7 +237,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 				promises.push(
 					this.props.ixo.project.createPublic(this.state.croppedImg, this.state.project.serviceEndpoint).then((res: any) => {
 						successToast('Uploaded image successfully');
-						let newProject = this.state.project;
 						newProject.imageLink = res.result;
 						this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 						return res.result;
@@ -319,14 +343,12 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	handleOwnerNameChanged = (event: any) => {
 		let newProject = this.state.project;
 		newProject.ownerName = event.target.value;
-		newProject.founder.name = event.target.value;
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
 	handleOwnerEmailChanged = (event: any) => {
 		let newProject = this.state.project;
 		newProject.ownerEmail = event.target.value.trim();
-		newProject.founder.email = event.target.value.trim();
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
@@ -342,6 +364,70 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
+	projectMediaLink = () => {
+		let mLink = this.state.mediaLink.trim();
+		if (mLink.length > 0) {
+			let link = '\n### Project Media\n'
+				+ '<a href="' + mLink + '" target="_blank">' + mLink + '</a>\n';
+			return link;
+		} else {
+			return '';
+		}
+	}
+
+	socialMediaLinks = () => {
+		let github = this.state.github.trim();
+		let facebook = this.state.facebook.trim();
+		let instagram = this.state.instagram.trim();
+		let twitter = this.state.twitter.trim();
+		let websiteLink = this.state.websiteLink.trim();
+		if (github.length > 0 || facebook.length > 0 || instagram.length > 0 || twitter.length > 0 || websiteLink.length > 0) {
+			let link = '\n### Social Media\n';
+			if (instagram.length > 0 ) {
+				link = link + '<a href="' + instagram + '" target="_blank"><img src="/socialmedia/instagram.svg" /></a>&nbsp;&nbsp;&nbsp;';
+			}
+			if (twitter.length > 0 ) {
+				link = link + '<a href="' + twitter + '" target="_blank"><img src="/socialmedia/twitter.svg" /></a>&nbsp;&nbsp;&nbsp;';
+			}
+			if (facebook.length > 0 ) {
+				link = link + '<a href="' + facebook + '" target="_blank"><img src="/socialmedia/facebook.svg" /></a>&nbsp;&nbsp;&nbsp;';
+			}
+			if (websiteLink.length > 0 ) {
+				link = link + '<a href="' + websiteLink + '" target="_blank"><img src="/socialmedia/url.svg" /></a>&nbsp;&nbsp;&nbsp;';
+			}
+			if (github.length > 0 ) {
+				link = link + '<a href="' + github + '" target="_blank"><img src="/socialmedia/github.svg" /></a>';
+			}
+			return link + '\n';
+		} else {
+			return '';
+		}
+	}
+
+	createMarkup = () => {
+		// double up line feeds to ensure that it linefeeds in markup
+		let long = this.fixTextForMarkup(this.state.lngDescr);
+		let UNSDGs = this.fixTextForMarkup(this.state.UNSDGs);
+		let goals = this.fixTextForMarkup(this.state.goals);
+
+		let descr = long 
+			+ '\n### How does your project solve for the UN SDGs?\n'
+			+ UNSDGs
+			+ '\n### Goal for 2030 and beyond\n'
+			+ goals
+			+ this.projectMediaLink()
+			+ this.socialMediaLinks();
+
+		return descr;
+	}
+
+	fixTextForMarkup = (txt) => {
+		// ensure double line feeds and remove trailing linefeed
+		let newTxt = txt.replace(/\n/g, '\n\n');
+		newTxt = newTxt.trim();
+		return txt;
+	}
+
 	render() {
 		return (
 			<div>
@@ -351,11 +437,14 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<br />
 							<Text placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
 							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
-							<Text placeholder="Title" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
+							<Text placeholder="Venture Title" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
 							<Text placeholder="Owner Name" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
 							<Text placeholder="Owner Email" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
 							<SmallTextArea placeholder="Short Description" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
-							<BigTextArea placeholder="Long Description" value={this.state.project.longDescription} onChange={(ev) => this.handlePropertyChanged('longDescription', ev)}/>
+							<BigTextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
+							<BigTextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
+							<BigTextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
+							<Text placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
 							<select value={this.state.project.projectLocation} onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}>
 							{countryLatLng.map( (v) => {
 								return (
@@ -364,10 +453,16 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							})}
 							</select>
 							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
+							<Text placeholder="Github" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
+							<Text placeholder="Facebook" value={this.state.facebook} onChange={(ev) => this.setState({facebook: ev.target.value})}/>
+							<Text placeholder="Twitter" value={this.state.twitter} onChange={(ev) => this.setState({twitter: ev.target.value})}/>
+							<Text placeholder="Instagram" value={this.state.instagram} onChange={(ev) => this.setState({instagram: ev.target.value})}/>
+							<Text placeholder="MediaLink" value={this.state.mediaLink} onChange={(ev) => this.setState({mediaLink: ev.target.value})}/>
+							<Text placeholder="WebsiteLink" value={this.state.websiteLink} onChange={(ev) => this.setState({websiteLink: ev.target.value})}/>
 							<Text placeholder="Founder Name" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
 							<Text placeholder="Founder email" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
 							<Text placeholder="Founder ShortDescription" value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
-							<select value={this.state.project.founder.countryOfOrigin} onChange={(ev) => this.handleFounderPropertyChanged('founder', ev)}>
+							<select value={this.state.project.founder.countryOfOrigin} onChange={(ev) => this.handleFounderPropertyChanged('countryOfOrigin', ev)}>
 							{countryLatLng.map( (v) => {
 								return (
 									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>

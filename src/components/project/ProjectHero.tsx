@@ -201,13 +201,17 @@ export const ProjectHero: React.SFC<Props> = ({project, match, isDetail, hasCapa
 			return (
 				<SubTextContainer>
 					{project.sdgs.map((SDG, index) => {
-						const goal = Math.floor(SDG);
-						return (
-							<SingleSDG href={getIxoWorldRoute('/about')} key={index}>
-								<i className={`icon-sdg-${SDGArray[goal - 1].ico}`}/>
-								{goal}. {SDGArray[goal - 1].title}
-						</SingleSDG>
-						);
+						if (SDG !== 18) {
+							const goal = Math.floor(SDG);
+							return (
+								<SingleSDG href={getIxoWorldRoute('/about')} key={index}>
+									<i className={`icon-sdg-${SDGArray[goal - 1].ico}`}/>
+									{goal}. {SDGArray[goal - 1].title}
+							</SingleSDG>
+							);
+						} else {
+							return null;
+						}
 					})}
 				</SubTextContainer>
 			);
