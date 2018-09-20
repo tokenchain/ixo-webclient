@@ -170,7 +170,6 @@ export class ProjectCard extends React.Component<Props, States> {
 	}
 
 	render() {
-		console.log(this.props.project);
 		return (
 			<CardContainer className="col-10 offset-1 col-xl-4 col-md-6 col-sm-10 offset-sm-1 offset-md-0">
 				<ProjectLink to={{pathname: `/projects/${this.props.did}/overview`, state: { projectPublic: this.props.project, imageLink: this.getImageLink() } }}>

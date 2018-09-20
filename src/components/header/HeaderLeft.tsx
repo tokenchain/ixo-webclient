@@ -77,7 +77,6 @@ const Main = styled.div`
 
 const IXOLogo = styled.img`
 	margin-top: -6px;
-	margin-right:100px;
 `;
 
 export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {

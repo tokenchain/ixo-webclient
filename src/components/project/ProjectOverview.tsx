@@ -7,7 +7,6 @@ import { ModalWrapper } from '../common/ModalWrapper';
 import { ProjectNewAgent } from './ProjectNewAgent';
 import { UserInfo } from '../../types/models';
 import QRComponent from '../common/QRComponent'; 
-import FacebookProvider, { Share } from 'react-facebook';
 import { Helmet } from 'react-helmet';
 import ReactMd from 'react-md-file';
 
@@ -317,6 +316,38 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 		var text = 'It’s up to all of us to start making an impact for a positive future for humanity. Check out this venture that aims to achieve the global SDGs. If you think it’s a worthy cause, then like or share this post to show your support.';
 		window.open('http://twitter.com/share?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
 	};
+	
+	// @ts-ignore
+	window.fbAsyncInit = function() {
+		// @ts-ignore
+		window.FB.init({
+		appId            : '245800599615583',
+		autoLogAppEvents : true,
+		xfbml            : true,
+		version          : 'v3.1'
+		});
+	};
+	
+	(function(d: any, s: any, id: any) {
+		var js, fjs = d.getElementsByTagName(s)[0];
+		if (d.getElementById(id)) {return; }
+		js = d.createElement(s); js.id = id;
+		js.src = 'https://connect.facebook.net/en_US/sdk.js';
+		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+
+	const shareToFacebook = () => {
+		// @ts-ignore
+		FB.ui({
+			method: 'share',
+			href: location.href, 
+			picture: props.imageLink,
+			name: props.project.title,
+			description: props.project.shortDescription
+		},    (response) => {
+			console.log('res is: ', response);
+		});
+	};
 
 	return (
 		<div>
@@ -327,7 +358,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 					{ property: 'og:type', content: 'article' },
 					{ property: 'og:title', content: 'ixo provides a trusted global information network that is owned by everyone. Enabling anyone to become the creators of their own impact projects and a stake-holder in the projects they believe in.' },
 					{ property: 'og:image', content: props.imageLink },
-					{ property: 'og:url', content: 'https://qa.ixo.world/about' }
+					{ property: 'og:url', content: location.href }
 				]}
 			/>
 			<ModalWrapper
@@ -374,11 +405,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 									</Visible>
 									<Hidden>
 										<i onClick={shareToTwitter} className="icon-twitter" />
-										<FacebookProvider appId="245800599615583">
-											<Share href={location.href}>
-												<i className="icon-facebook" />
-											</Share>
-										</FacebookProvider>
+										<i onClick={shareToFacebook} className="icon-facebook" />
 									</Hidden>
 								</LocalButton>
 							</Sidebar>
