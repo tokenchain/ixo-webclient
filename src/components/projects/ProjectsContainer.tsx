@@ -19,7 +19,6 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: column;
 	flex: 1 1 auto;
-	background: ${props => props.theme.bg.lightGrey};
 	
 	.example-enter {
 		opacity: 0.01;
@@ -58,9 +57,8 @@ const ErrorContainer = styled.div`
 	display: flex;
 	flex: 1;
 	justify-content: center;
-	color: white;
+	color: #282828;
 	align-items: center;
-	background-color: ${props => props.theme.bg.blue};
 	height:100%:
 `;
 

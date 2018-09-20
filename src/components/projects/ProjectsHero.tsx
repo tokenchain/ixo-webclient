@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled from 'styled-components';
-const circleBG = require('../../assets/images/circleBG.png');
 
 const DaysContainer = styled.div`
 	justify-content: flex-end;
@@ -47,7 +46,6 @@ const HeroInner = styled.div`
 `;
 
 const HeroContainer = styled.div`
-	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
 	margin:0 0 0px;
 	width: 100vw;
 	position: relative;
@@ -64,13 +62,6 @@ const HeroContainer = styled.div`
 
 		background-color: rgba(3,60,80,0);
 	}
-`;
-
-const CircleBG = styled.img`
-	position: absolute;
-	top: 30px;
-	right: 0;
-	width: 500px;
 `;
 
 export interface State {
@@ -96,7 +87,6 @@ export class ProjectsHero extends React.Component<Props, State> {
 		return (
 			<HeroContainer>
 				<HeroInner className="container">
-					<CircleBG src={circleBG} />
 					<div className="row">
 						<div className="col-xl-6 col-lg-8">
 							<h2>Technology ventures for the <strong>future of humanity.</strong></h2>
