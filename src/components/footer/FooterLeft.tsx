@@ -2,9 +2,9 @@ import * as React from 'react';
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import { deviceWidth } from '../../lib/commonData';
-import { getIxoWorldRoute } from '../../utils/formatters';
+// import { getIxoWorldRoute } from '../../utils/formatters';
 
-const sdgLogo = require('../../assets/images/Futures-footer-logo.svg');
+const sdgLogo = require('../../assets/images/footer-logo.svg');
 
 const ExternalFooterLink = styled.a`
 	font-family: ${props => props.theme.fontRobotoRegular};
@@ -37,21 +37,21 @@ const IXOLogo = styled.img`
 	margin-top: 0px;
 `;
 
-const FooterTextBlue = styled.span`
-	color: #5CD0FA;
+// const FooterTextBlue = styled.span`
+// 	color: #5CD0FA;
 
-	:hover {
-		text-decoration: underline;
-	}
-`;
+// 	:hover {
+// 		text-decoration: underline;
+// 	}
+// `;
 
-const FooterText = styled.div`
-	padding: 19px 0px 20px 15px;
-	color: #808080;
-	font-family: Roboto;
-	font-size: 14px;
-	line-height: 19px;
-`;
+// const FooterText = styled.div`
+// 	padding: 19px 0px 20px 15px;
+// 	color: #808080;
+// 	font-family: Roboto;
+// 	font-size: 14px;
+// 	line-height: 19px;
+// `;
 
 const Main = styled.div`
 	display: flex;
@@ -67,20 +67,19 @@ export const FooterLeft: React.SFC<any> = ({simple}) => {
 				<MediaQuery minWidth={`${deviceWidth.tablet}px`}>
 					<IXOLogo alt="SDG Futures Logo" src={sdgLogo}/>
 				</MediaQuery>
-				<ExternalFooterLink target="_blank" href={getIxoWorldRoute('/about')}>About</ExternalFooterLink>
-				<ExternalFooterLink target="_blank" href={getIxoWorldRoute('/membership')}>Membership</ExternalFooterLink>
-				<ExternalFooterLink target="_blank" href={getIxoWorldRoute('/ecosystem')}>Ecosystem</ExternalFooterLink>
-				<ExternalFooterLink target="_blank" href="https://ixo.foundation">ixo.Foundation</ExternalFooterLink>
+				<ExternalFooterLink target="_blank" href="/">Ventures</ExternalFooterLink>
+				<ExternalFooterLink target="_blank" href="/about">About</ExternalFooterLink>
+				<ExternalFooterLink target="_blank" href="/global-statistics">Impacts</ExternalFooterLink>
 				{/* <FooterLink exact={true} to="/">Oracles</FooterLink> */}
 				{/* <FooterLink exact={true} to="/">Plans / Pricing</FooterLink> */}
 			</div>
-			<div className="row">
+			{/* <div className="row">
 				<FooterText className="col-md-10">
 					<div className="row">
 						Email:<a href="mailto:info@ixo.world"><FooterTextBlue>&nbsp;info@ixo.world</FooterTextBlue></a>
 					</div>
 				</FooterText>
-			</div>
+			</div> */}
 		</Main>
 	);
 };

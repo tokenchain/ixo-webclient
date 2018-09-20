@@ -5,7 +5,7 @@ import { deviceWidth } from '../../lib/commonData';
 import { Fragment } from 'react';
 
 // const ixoLogo = require('../../assets/images/ixo-logo.svg');
-const sdgLogo = require('../../assets/images/FuturesLogo.svg');
+const sdgLogo = require('../../assets/images/header-logo.svg');
 
 const HeaderLink = styled(NavLink)`
 	color: inherit;
