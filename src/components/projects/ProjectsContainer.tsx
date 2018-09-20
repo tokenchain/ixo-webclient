@@ -105,6 +105,7 @@ export class Projects extends React.Component<Props, State> {
 	}
 
 	handleFilter = ( showOnlyFilterProjects?: boolean, filterIndexes?: number[] ) => {
+		
 		let filteredProjects = [];
 		if (showOnlyFilterProjects === true) {
 			let projects = [...this.state.projectList];

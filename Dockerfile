@@ -1,14 +1,13 @@
 FROM node:carbon
 
-ADD yarn.lock /yarn.lock
-ADD package.json /package.json
+ENV SRC_DIR=/usr/src/app
+WORKDIR $SRC_DIR
 
-ENV NODE_PATH=/node_modules
-ENV PATH=$PATH:/node_modules/.bin
-RUN yarn
+COPY package*.json ./
 
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+RUN npm install
+
 COPY . .
+
 EXPOSE 80
-CMD ["npm", "start"]
+CMD [ "npm", "start" ]
