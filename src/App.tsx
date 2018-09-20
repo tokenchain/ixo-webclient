@@ -146,14 +146,14 @@ class App extends React.Component<App.Props, App.State> {
 		}
 	}
 
-	static getDerivedStateFromProps(nextProps: any) {
-		if (nextProps.userInfo && !nextProps.userInfo.ledgered) {
-			if (!(nextProps.location.pathname === '/register')) {
-				nextProps.history.push('/register');
-			}
-		}
-		return null;
-	}
+	// static getDerivedStateFromProps(nextProps: any) {
+	// 	if (nextProps.userInfo && !nextProps.userInfo.ledgered) {
+	// 		if (!(nextProps.location.pathname === '/register')) {
+	// 			nextProps.history.push('/register');
+	// 		}
+	// 	}
+	// 	return null;
+	// }
 
 	componentDidMount() {
 		this.props.onIxoInit();

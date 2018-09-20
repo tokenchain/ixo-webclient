@@ -33,7 +33,7 @@ const ImageContainer = styled.div`
 `;
 
 const OverviewContainer = styled.div`
-	background: ${props => props.theme.bg.ixoBlue};
+	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
 `;
 
 const IconImage = styled.img`

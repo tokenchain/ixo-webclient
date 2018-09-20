@@ -3,38 +3,38 @@ import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 import { ButtonTypes, Button } from '../common/Buttons';
 
-const bannerBg = require('../../assets/images/404/404-bg.jpg');
-const walrusImg = require('../../assets/images/404/walrus-image.png');
+// const bannerBg = require('../../assets/images/404/404-bg.jpg');
+// const walrusImg = require('../../assets/images/404/walrus-image.png');
 
 const Banner = styled.div`
-	background: #002233 url(${bannerBg}) no-repeat;
+	background: inherit;
 	background-size: cover;
 	width: 100%;
 	display: flex;
 	flex: 1 1 auto;
 	margin: 0;
 `;
-const BannerLeft = styled.div`
-	width: 100%;
-	img {
-		margin-top: 10%;
-		margin-left: -3%;
-		width: 90%;
-	}
-	@media (max-width: 1240px) {
-		img {
-			display: none
-		}
-	}
-	@media (max-width: ${deviceWidth.tablet}px){
-		img {
-			display: none;
-		}
-	}
-`;
+// const BannerLeft = styled.div`
+// 	width: 100%;
+// 	img {
+// 		margin-top: 10%;
+// 		margin-left: -3%;
+// 		width: 90%;
+// 	}
+// 	@media (max-width: 1240px) {
+// 		img {
+// 			display: none
+// 		}
+// 	}
+// 	@media (max-width: ${deviceWidth.tablet}px){
+// 		img {
+// 			display: none;
+// 		}
+// 	}
+// `;
 const BannerRight = styled.div`
 	width: 100%;
-	color: white;
+	color: #282828;
 	margin-top: 22%;
 	margin-right: 10%;
 	@media (max-width: 992px) {
@@ -142,15 +142,15 @@ export interface ParentProps { }
 export const About: React.SFC<ParentProps> = (props) => {
 	return (
 		<Banner className="row">
-			<div className="col-lg-4">
+			{/* <div className="col-lg-4">
 				<BannerLeft>
 					<img src={walrusImg} alt="" />
 				</BannerLeft>
-			</div>
+			</div> */}
 			<div className="col-lg-8 col-md-12">
 				<BannerRight>
 					<div className="container">
-						<h2>SDG Futurea</h2>
+						<h2>SDG Futures</h2>
 						<p>Building sustainable development projects for the future</p>
 						<ButtonContainer><Button type={ButtonTypes.dark} onClick={() => history.back(-1)}>Back</Button></ButtonContainer>
 					</div>
