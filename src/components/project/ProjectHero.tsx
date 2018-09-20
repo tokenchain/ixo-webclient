@@ -70,6 +70,7 @@ const Title = styled.h1`
 	line-height: 1;
 	margin-bottom:10px;
 	font-family: ${props => props.theme.fontRobotoCondensed};
+	max-width: 690px;
 
 	@media (min-width: 600px) {
 		font-size: 45px;
@@ -87,6 +88,7 @@ const SubTextContainer = styled.div`
 		color: ${props => props.theme.fontDarkGrey};
 		margin-top: 5px;
 		font-weight: 400;
+		max-width: 630px;
 	}
 `;
 

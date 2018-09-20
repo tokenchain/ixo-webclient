@@ -26,21 +26,6 @@ const ProjectImage = styled.img`
 	margin-bottom: 22px;
 `;
 
-const BarContainer = styled.div`
-
-	div {
-		height: 2px;
-		background-color: #033C50;
-	}
-
-	div div {
-		height: 4px;
-		position: relative;
-		top: -1px;
-		z-index: 1;
-	}
-`;
-
 const SidebarTop = styled.div`
 	font-weight: 200;
     display: flex;
@@ -72,19 +57,6 @@ const Sidebar = styled.div`
 		height: 1px;
 		border-radius: 2px;
 		background-color: #c9c9c9;
-	}
-`;
-
-const Claims = styled.h4`
-	font-size: 18px;
-	margin: 15px 0 0;
-	color: #282828;
-
-	strong {
-		color: #A11C43;
-		font-weight: 600;
-		font-size: 39px;
-		display: block;
 	}
 `;
 
@@ -394,9 +366,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 										<p><i className="icon-location" />{getCountryName(props.project.projectLocation)}</p>
 									}
 								</SidebarTop>
-								<BarContainer />
 								<hr />
-								<Claims><strong>{props.project.claimStats.currentSuccessful}</strong> successful {props.project.impactAction}</Claims>
 								<LocalButton>
 									<Visible>
 										<i className="icon-share" />SHARE THIS PROJECT

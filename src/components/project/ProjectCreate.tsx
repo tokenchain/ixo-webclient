@@ -8,6 +8,7 @@ import { countryLatLng } from '../../lib/commonData';
 import { Button, ButtonTypes } from '../common/Buttons';
 import { warningToast, successToast, errorToast } from '../helpers/Toast';
 import { ErrorTypes } from '../../types/models';
+import { Redirect } from 'react-router-dom';
 
 const Text = styled.input`
 	margin: 20px 0;
@@ -62,7 +63,7 @@ export interface State {
 	claimFormKey: string;
 	projectJson: string;
 	project: Object;
-
+	shouldRedirect: boolean;
 	fetchedImage: string;
 	fetchedFile: string;
 }	
@@ -106,6 +107,7 @@ let defaultProject = {
 export class ProjectCreate extends React.Component<StateProps, State> {
 
 	state = {
+		shouldRedirect: false,
 		hasKeySafe: false,
 		hasDid: false,
 		isDidLedgered: false,
@@ -227,6 +229,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								errorToast(res.error.message, ErrorTypes.message);
 							} else {
 								successToast('Venture submitted successfully');
+								this.setState({ shouldRedirect: true});
 							}
 						});
 					});
@@ -343,8 +346,12 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	}
 
 	render() {
+		if (this.state.shouldRedirect === true) {
+			return <Redirect to="/" />;
+		}
 		return (
 			<div>
+				
 				<Container className="container-fluid">
 					<div className="row">
 						<div className="col-md-12">
