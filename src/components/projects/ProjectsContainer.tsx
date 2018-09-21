@@ -13,6 +13,7 @@ import * as Toast from '../helpers/Toast';
 import { contentType, UserInfo } from '../../types/models';
 import { ProjectsDashboard } from './ProjectsDashboard';
 import { floorAndRemoveDuplicateSDGs } from '../../utils/formatters';
+import * as tracking from '../../utils/socialTracker';
 
 const Container = styled.div`
 
@@ -257,6 +258,7 @@ export class Projects extends React.Component<Props, State> {
 	}
 
 	render() {
+		tracking.fireTracker('/sdgfutures.ixo.world');
 		return (        
 			<Container>
 				{this.renderHero()}

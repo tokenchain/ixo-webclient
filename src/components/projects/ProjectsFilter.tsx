@@ -196,7 +196,7 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 							<div className={this.handleIsSelected(18) ? 'checked' : ''}>
 								<img src={`./sdgs/18.png`}/>
 								<Dialog>
-									<p>Future of humanity description</p>
+									<p>Build for the Future of Humanity</p>
 									<a href="/about" target="_blank">Find out more</a>
 									<Arrow />
 								</Dialog>

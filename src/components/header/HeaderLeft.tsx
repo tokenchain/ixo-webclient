@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Fragment } from 'react';
 import { deviceWidth } from '../../lib/commonData';
 import MediaQuery from 'react-responsive';
+import * as ReactGA from 'react-ga';
 
 // const ixoLogo = require('../../assets/images/ixo-logo.svg');
 const sdgLogo = require('../../assets/images/header-logo.svg');
@@ -52,6 +53,7 @@ const HeaderBorderLink = HeaderLink.extend`
 	font-weight: 300;
 	color: white;
 	background: #A11C43;
+	border-bottom: 1px solid #A11C43;
 
 	&.active {
 		background: #A11C43;
@@ -162,6 +164,14 @@ export class HeaderLeft extends React.Component<ParentProps> {
 	handleBurgerClick = () => {
 		this.setState({ menuOpen : !this.state.menuOpen});
 	}
+
+	trackEventClick = (clickEvent: string) => {
+		ReactGA.event({
+			category: 'Button click',
+			action: clickEvent,
+		});
+	}
+
 	render() {
 		return (
 			<Fragment>
@@ -180,14 +190,14 @@ export class HeaderLeft extends React.Component<ParentProps> {
 						<Menu className={this.state.menuOpen === true ? 'openMenu' : ''}>
 							<HeaderLink exact={true} to="/about">About</HeaderLink>
 							<HeaderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderLink>
-							<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
+							<HeaderLink exact={true} onClick={() => { this.trackEventClick('Clicked Imapacts Navigation'); }}  to="/global-statistics">Impacts</HeaderLink>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
-								<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
+								<HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
 							</MediaQuery>
 						</Menu>
 					</div>
 				</Main>
 			</Fragment>
-	);
+		);
 	}
 }

@@ -13,8 +13,12 @@ import styled from 'styled-components';
 
 const MapWrapper = styled.div`
 
-	path {
+	path:focus {
 		outline: none!important;
+	}
+
+	g.rsm-marker {
+    outline-width: 0px;
 	}
 `;
 
@@ -44,7 +48,7 @@ export class WorldMap extends React.Component<ParentProps> {
 	render() {
 		return (
 			<MapWrapper>
-				<ComposableMap height="800" style={{ width: '100%' }}>
+				<ComposableMap height="800" style={{ width: '100%', outline: 'none!important' }}>
 					<ZoomableGroup zoom={1.5}>
 					<Geographies geography={geographyPaths}>
 					{(geographies, projection) => geographies.map((geography, index) => (
@@ -57,7 +61,7 @@ export class WorldMap extends React.Component<ParentProps> {
 									fill: '#ebe8e8',
 									stroke: '#f8f7f7',
 									strokeWidth: 0.5,
-									outline: 'none',
+									outline: 'none!important',
 								},
 								hover:   { fill: '#dbd8d8' },
 								pressed: { fill: '#dbd8d8' },
@@ -65,7 +69,7 @@ export class WorldMap extends React.Component<ParentProps> {
 						/>
 					))}
 					</Geographies>
-					<Markers >
+					<Markers style={{outlineWidth: '0px'}}>
 						{this.props.markers.map( (value: LatLng, i: number) => {
 							return (
 								<Marker 
@@ -73,8 +77,10 @@ export class WorldMap extends React.Component<ParentProps> {
 										marker={{ coordinates: [ value.lon(), value.lat() ] }}
 										style={{
 											default: { fill: '#4A9F46' },
-											hover:   { fill: '#FFF' },
-											pressed: { fill: '#000' },
+											hover:   { fill: '#FFFFFF' },
+											pressed: { fill: '#FFFFFF' },
+											outline: 'none!important',
+											outlineWidth: '0px',
 										}
 										}
 								>

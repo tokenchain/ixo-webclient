@@ -9,6 +9,7 @@ import { UserInfo } from '../../types/models';
 import QRComponent from '../common/QRComponent'; 
 import { Helmet } from 'react-helmet';
 import ReactMd from 'react-md-file';
+import * as tracking from '../../utils/socialTracker';
 
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
@@ -63,6 +64,10 @@ const Text = styled.div`
 	color: ${props => props.theme.fontDarkGrey};
 	font-size: 16px;
 	line-height: 30px;
+
+	h3 {
+		font-size: 20px;
+	}
 `;
 
 const Social = styled.div`
@@ -322,6 +327,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 
 	return (
 		<div>
+			{tracking.fireTracker('/overview')}
 			<Helmet
 				title={props.project.title}
 				meta={[
