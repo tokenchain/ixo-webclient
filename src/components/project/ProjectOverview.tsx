@@ -15,7 +15,6 @@ const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 const OverviewContainer = styled.section`
 
 	margin-top: -86px;
-	background: ${props => props.theme.bg.lightGrey};
 	color: white;
 	padding-bottom: 40px;
 `;
