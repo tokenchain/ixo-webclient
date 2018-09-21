@@ -29,7 +29,7 @@ export function floorAndRemoveDuplicateSDGs(projects: any[]) {
 }
 
 export function SDGsCount(projects: any[]) {
-	let sdgArray = Array.apply(null, new Array(17)).map(Number.prototype.valueOf, 0);
+	let sdgArray = Array.apply(null, new Array(18)).map(Number.prototype.valueOf, 0);
 	for (let project of projects) {
 		let tempProject = project;
 		tempProject.data.sdgs = project.data.sdgs.map((sdg) => {

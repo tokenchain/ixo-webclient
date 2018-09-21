@@ -65,6 +65,10 @@ const Text = styled.div`
 	color: ${props => props.theme.fontDarkGrey};
 	font-size: 16px;
 	line-height: 30px;
+
+	h3 {
+		font-size: 20px;
+	}
 `;
 
 const Social = styled.div`

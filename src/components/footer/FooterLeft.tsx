@@ -56,7 +56,7 @@ const SDGLogo = styled.img`
 // `;
 
 const FooterText = styled.div`
-	padding: 5px 0px 20px 0px;
+	padding: 5px 0px 20px 15px;
 	color: white;
 	font-family: Roboto;
 	font-size: 14px;
@@ -84,12 +84,12 @@ export const FooterLeft: React.SFC<any> = ({simple}) => {
 					{/* <FooterLink exact={true} to="/">Oracles</FooterLink> */}
 					{/* <FooterLink exact={true} to="/">Plans / Pricing</FooterLink> */}
 				</div>
+				<div className="row">
+					<FooterText className="row">
+						In partnership with <a href={getIxoWorldRoute('/')}><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity
+					</FooterText>
+				</div>
 			</Main>
-			<div className="col-md-8">
-				<FooterText className="row">
-					In partnership with <a href={getIxoWorldRoute('/')}><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity
-				</FooterText>
-			</div>
 		</Fragment>
 	);
 };

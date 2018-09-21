@@ -99,7 +99,7 @@ export const ProjectsDashboard: React.SFC<ParentProps> = ({projects, claims, cla
 						})}
 						<SDG key={18} style={{background: 'white'}}>
 							<img src={`./sdgs/18.png`}/>
-							<SDGMetric>{projects.length}</SDGMetric>
+							<SDGMetric>{projCnt[17]}</SDGMetric>
 						</SDG> 
 					</SDGsContainer>	
 				</div>
