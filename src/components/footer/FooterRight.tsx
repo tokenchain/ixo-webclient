@@ -1,9 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
-import { getIxoWorldRoute } from '../../utils/formatters';
-
-const ixoLogo = require('../../assets/images/ixo-logo.svg');
 
 const Main = styled.div`
 	margin-top: 15px;
@@ -46,18 +43,11 @@ const Main = styled.div`
 // 		padding-right: 60px;
 // 	}
 // `;
-const IXOLogo = styled.img`
-	margin-top: -6px;
-	margin-right:5px;
-	margin-left:5px;
-	height: 16px;
-`;
-
 export const FooterRight: React.SFC<any> = () => {
 	return (
 		<Main className="col-md-4">
 			<div className="row">
-				In partnership with <a href={getIxoWorldRoute('/')}><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity
+				{/* In partnership with <a href={getIxoWorldRoute('/')}><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity */}
 				{/* <SocialIconContainer className="col-md-12">
 					<SocialIcon href="https://twitter.com/ixoworld?lang=en" target="_blank" className="icon-twitter" />
 					<SocialIcon href="https://www.facebook.com/ixoworld/" target="_blank" className="icon-facebook" />

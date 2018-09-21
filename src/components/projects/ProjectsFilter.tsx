@@ -185,7 +185,7 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 								<img src={`./sdgs/18.png`}/>
 								<Dialog>
 									<p>Future of humanity description</p>
-									<a href="test" target="_blank">Find out more</a>
+									<a href="/about" target="_blank">Find out more</a>
 									<Arrow />
 								</Dialog>
 								<Check>
