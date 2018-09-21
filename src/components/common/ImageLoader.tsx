@@ -54,6 +54,13 @@ const styles = {
 		flexDirection: 'column',
 		justifyContent: 'center',
 		borderRadius: '5px',
+	},
+	sdgDropzone: {
+		width: '100%',
+		color: '#b00042',
+		cursor: 'pointer', 
+		padding: '2px 10px',
+		fontWeight: '400'
 	}
 };
 
@@ -63,12 +70,17 @@ export enum imageQuality {
 	medium = 'LOW',
 	high = 'HIGH',
 }
+
+export enum styleTypes {
+	sdgFutures = 'SDGFUTURES'
+}
 export interface StateProps {
 	imageCallback: Function;
 	imageWidth: number;
 	aspect?: number;
 	placeholder?: string;
 	quality: imageQuality;
+	styleType?: styleTypes;
 }
 
 export interface State {
@@ -231,8 +243,8 @@ export class ImageLoader extends React.Component<StateProps, State> {
 	render() {
 		return (
 			<div>
-				<Dropzone accept="image/*" onDropAccepted={this.onDropAccepted} style={styles.dropzone} >
-					<IconImage src={iconUpload()} />
+				<Dropzone accept="image/*" onDropAccepted={this.onDropAccepted} style={this.props.styleType === styleTypes.sdgFutures ? styles.sdgDropzone : styles.dropzone} >
+					{this.props.styleType !== styleTypes.sdgFutures && <IconImage src={iconUpload()} />}
 					<p>{this.props.placeholder || 'Choose file'}{this.showFilename()}</p>
 				</Dropzone>
 				<ModalWrapper

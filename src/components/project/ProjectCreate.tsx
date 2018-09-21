@@ -1,6 +1,6 @@
 // require('dotenv').config();
 import * as React from 'react';
-import { ImageLoader, imageQuality } from '../common/ImageLoader';
+import { ImageLoader, imageQuality, styleTypes } from '../common/ImageLoader';
 import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
@@ -64,7 +64,20 @@ const Text = styled.input`
 	
 `;
 
-const TextArea = Text.extend`
+const TextArea = styled.textarea`
+	margin: 0 0 20px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+	border-radius: 3px;
+	border: 1px solid ${props => props.theme.lightGrey};
+	color: #b00042;
+
+	::placeholder {
+		color: ${props => props.theme.lightGrey};
+		font-weight: 300;
+	}
+
 	vertical-align: top;
 	height: 150px;
 `;
@@ -119,6 +132,22 @@ const InnerSection = styled.div`
 const LogoThumb = styled.img`
 	width: 30px;
 	height: 30px;
+`;
+
+const ImageWrapper = styled.section`
+	:hover {
+		border: 1px solid #b00042;
+	}
+
+	margin-bottom: 20px;
+	border-radius: 3px;
+	border: 1px solid white;
+
+	transition: 0.3s all ease;
+
+	p {
+		margin-bottom: 0;
+	}
 `;
 
 export interface StateProps {
@@ -602,16 +631,8 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								placeholder="Eg. South Africa"
 								styles={colourStyles}
 							/>
-							{/* <select value={this.state.project.projectLocation} onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}>
-							{countryLatLng.map( (v) => {
-								return (
-									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>
-									);
-								})}
-							</select> */}
-
 							<Label>A picture is worth a thousand words. Send us a high quality picture that best describes your projector</Label>
-							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
+							<ImageWrapper><ImageLoader quality={imageQuality.medium} styleType={styleTypes.sdgFutures} placeholder="Add file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/></ImageWrapper>
 							<TextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
 							<TextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
 							<TextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
@@ -626,9 +647,13 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<Text placeholder="Founder Name" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
 							<Text placeholder="Founder email" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
 							<Text placeholder="Founder ShortDescription" value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
-							{/* <select value={this.state.project.founder.countryOfOrigin} onChange={(ev) => this.handleFounderPropertyChanged('countryOfOrigin', ev)}>
-
-							</select> */}
+							<Select
+								options={countries}
+								onChange={(ev) => this.handlePropertyChanged('countryOfOrigin', ev)}
+								className="selector"
+								placeholder="Eg. South Africa"
+								styles={colourStyles}
+							/>
 							<Text placeholder="Founder websiteURL" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
 							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
 							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" />
