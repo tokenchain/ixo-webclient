@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 import { ButtonTypes, Button } from '../common/Buttons';
+import * as tracking from '../../utils/socialTracker';
 
 // const bannerBg = require('../../assets/images/404/404-bg.jpg');
 // const walrusImg = require('../../assets/images/404/walrus-image.png');
@@ -142,6 +143,7 @@ export interface ParentProps { }
 export const About: React.SFC<ParentProps> = (props) => {
 	return (
 		<Banner className="row">
+		{tracking.fireTracker('/about-sdg-futures')}
 			{/* <div className="col-lg-4">
 				<BannerLeft>
 					<img src={walrusImg} alt="" />

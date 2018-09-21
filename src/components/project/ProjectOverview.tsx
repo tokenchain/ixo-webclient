@@ -9,6 +9,7 @@ import { UserInfo } from '../../types/models';
 import QRComponent from '../common/QRComponent'; 
 import { Helmet } from 'react-helmet';
 import ReactMd from 'react-md-file';
+import * as tracking from '../../utils/socialTracker';
 
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
@@ -323,6 +324,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 
 	return (
 		<div>
+			{tracking.fireTracker('/overview')}
 			<Helmet
 				title={props.project.title}
 				meta={[

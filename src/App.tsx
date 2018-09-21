@@ -12,16 +12,16 @@ import { UserInfo } from './types/models';
 import { initUserInfo } from './redux/login/login_action_creators';
 import ScrollToTop from './components/common/ScrollToTop';
 import './assets/icons.css';
+import * as ReactGA from 'react-ga';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Routes } from './components/Routes';
 import { Spinner } from './components/common/Spinner';
 import { ToastContainer } from 'react-toastify';
-import * as ReactGA from 'react-ga';
 
 const circleBG = require('./assets/images/circleBG.png');
 
-ReactGA.initialize('UA-106630107-5');
+ReactGA.initialize('UA-106630107-7');
 
 ReactGA.pageview(window.location.pathname + window.location.search);
 
@@ -62,6 +62,11 @@ const theme = {
 	graphGradient: 'linear-gradient(to right, #016480 0%, #03d0FE 100%)', // gradient fill for graphs/bars/charts
 	red: '#E2223B'
 };
+
+// INITIALISE GOOGLE ANALYTICS
+ReactGA.initialize('UA-106630107-7', {
+	debug: true
+});
 
 // END OF THEME DECLARATION, CSS FOR COMPONENT BELOW
 const Container = styled.div`

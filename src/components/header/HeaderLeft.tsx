@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 import { Fragment } from 'react';
+import * as ReactGA from 'react-ga';
 
 // const ixoLogo = require('../../assets/images/ixo-logo.svg');
 const sdgLogo = require('../../assets/images/header-logo.svg');
@@ -79,6 +80,14 @@ const IXOLogo = styled.img`
 	margin-top: -6px;
 `;
 
+const trackEventClick = (clickEvent: string) => {
+	ReactGA.event({
+		category: 'Button click',
+		action: clickEvent,
+	});
+	console.log(`${clickEvent} clicked!`);
+};
+
 export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {
 
 	return (
@@ -90,8 +99,8 @@ export const HeaderLeft: React.SFC<any> = ({refreshProjects}) => {
 				<div>
 					<HeaderLink exact={true} onClick={refreshProjects} to="/">Ventures</HeaderLink>
 					<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
-					<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
-					<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
+					<HeaderLink onClick={() => { trackEventClick('Clicked Imapacts Navigation'); }} exact={true} to="/global-statistics">Impacts</HeaderLink>
+					<HeaderBorderLink onClick={() => { trackEventClick('Launch New Venture Header Button'); }}  exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
 				</div>
 			</Main>
 		</Fragment>
