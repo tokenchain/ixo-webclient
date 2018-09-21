@@ -1,12 +1,17 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { deviceWidth } from '../../lib/commonData';
 
 const DaysContainer = styled.div`
-	justify-content: flex-end;
+	justify-content: flex-start;
 	display: flex;
 
-	div {
-		display: inline-block;
+	@media (min-width: ${deviceWidth.mobile}px) {
+		justify-content: flex-end;
+
+		div {
+			display: inline-block;
+		}
 	}
 `;
 
@@ -17,20 +22,18 @@ const HeroInner = styled.div`
 
 	h2 {
 		font-weight: 300;
-		font-size: 40px;
 		line-height: 40px;
-
+		font-size: 32px;
 		strong {
-			display: block;
-			text-align: right;
+			text-align: left;
 			font-weight: 600;
 		}
 	}
 
 	h3 {
 		font-weight: 300;
-		font-size: 44px;
-		display: inline-block;
+		display: block;
+		font-size: 22px;
 		color: #A11C43;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 	}
@@ -39,14 +42,34 @@ const HeroInner = styled.div`
 		font-size: 16px;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 		display: inline-block;
-		position: relative;
-		top: -20px;
-		right: 10px;
+		right: auto;
+		margin-bottom:0;
+	}
+
+	@media (min-width: ${deviceWidth.mobile}px) {
+		h2 {	
+			font-size: 40px;
+			strong {
+				display: block;
+				text-align: right;
+			}
+		}
+
+		h3 {
+			font-size: 44px;
+			display: inline-block;
+		}
+
+		p {
+			position: relative;
+			top: -20px;
+			right: 10px;
+		}
 	}
 `;
 
 const HeroContainer = styled.div`
-	margin:0 0 0px;
+	margin:0 10px;
 	width: 100vw;
 	position: relative;
 
@@ -61,6 +84,10 @@ const HeroContainer = styled.div`
 		transition: background 0.3s ease;
 
 		background-color: rgba(3,60,80,0);
+	}
+
+	@media (min-width: ${deviceWidth.mobile}px) {
+		margin: 0;
 	}
 `;
 
