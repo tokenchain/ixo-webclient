@@ -42,10 +42,19 @@ const ModalContainer = styled.div`
 	}
 `;
 
+const Label = styled.label`
+	color: #333C4E;
+
+`;
+
 const Text = styled.input`
-	margin: 20px 0;
+	margin: 0 0 20px;
+	padding: 15px;
 	display: block;
 	width: 100%;
+	border-radius: 3px;
+	border: 1px solid #B6B6B6;
+	color: #b00042;
 `;
 
 const TextArea = styled.textarea`
@@ -63,11 +72,42 @@ const BigTextArea = TextArea.extend`
 `;
 
 const Container = styled.div`
-	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
-	
+
+	color: ${props => props.theme.fontDarkGrey};
 	button {
 		margin: 0 10px 10px 10px;
 	}
+`;
+
+const Intro = styled.div`
+	margin-top: 50px;
+
+	p {
+		width: 600px;
+		max-width: 100%;
+	}
+`;
+
+const SDGForm = styled.div`
+	margin-top: 50px;
+`;
+
+const FormSection = styled.div`
+	display: flex;
+	justify-content: center;
+	width: 100%;
+
+	.hidden {
+		display: none;
+	}
+`;
+
+const InnerSection = styled.div`
+	background: white;
+	padding: 40px 50px;
+	width: 640px;
+	max-width: 100%;
+	box-shadow: 0 8px 16px -2px rgba(0,0,0,0.03);
 `;
 
 const LogoThumb = styled.img`
@@ -418,8 +458,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	handleSDGChanged = (event: any) => {
 		let newProject = this.state.project;
 		let sdgs = event.target.value;
-		// remove all whitespaces
-		// @ts-ignore
 		sdgs = sdgs.replace(/ /g, '');
 		let sdgList = sdgs.split(',');
 
@@ -496,7 +534,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 			return <Redirect to="/" />;
 		}
 		return (
-			<div>
+			<React.Fragment>
 				<ModalWrapper
 					isModalOpen={this.state.isModalOpen}
 					handleToggleModal={(val) => this.toggleModal()}
@@ -504,28 +542,46 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 				>
 					{this.renderModal()}
 				</ModalWrapper>
-				
-				<Container className="container-fluid">
-					<div className="row">
+				<Container className="container">
+					<Intro className="row">
 						<div className="col-md-12">
-							<br />
-							<Text placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
-							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
-							<Text placeholder="Venture Title" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
-							<Text placeholder="Owner Name" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
-							<Text placeholder="Owner Email" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
-							<SmallTextArea placeholder="Short Description" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
-							<BigTextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
-							<BigTextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
-							<BigTextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
-							<Text placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
+							<h1>Launch a Venture</h1>
+							<p>Launch your venture for all to see the positive impact you’re making on the world. Remember that your venture should have the intention of achieving one of the 18 Sustainable Development Goals.</p>
+						</div>
+					</Intro>
+				</Container>
+				<SDGForm>
+					<FormSection>
+						<InnerSection>
+							<Text className="hidden" placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
+							
+							<Label>Your Name</Label>
+							<Text placeholder="John Smith" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
+
+							<Label>Your Email</Label>
+							<Text placeholder="john@gmail.com" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
+							
+							<Label>What is the name of your venture?</Label>
+							<Text placeholder="E.g Togo water project" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
+							
+							<Label>Describe your venture in a short sentence</Label>
+							<SmallTextArea placeholder="Project headline" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
+							
+							<Label>In which country is your venture located?</Label>
 							<select value={this.state.project.projectLocation} onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}>
 							{countryLatLng.map( (v) => {
 								return (
 									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>
-								);
-							})}
+									);
+								})}
 							</select>
+
+							<Label>A picture is worth a thousand words. Send us a high quality picture that best describes your projector</Label>
+							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
+							<BigTextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
+							<BigTextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
+							<BigTextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
+							<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
 							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
 							<Text placeholder="Github" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
 							<Text placeholder="Facebook" value={this.state.facebook} onChange={(ev) => this.setState({facebook: ev.target.value})}/>
@@ -548,10 +604,10 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" />
 							<br />
 							<Button type={ButtonTypes.gradient} onClick={this.handleCreateProject}>SUBMIT VENTURE</Button>
-						</div>
-					</div>
-				</Container>
-			</div>
+						</InnerSection>
+					</FormSection>
+				</SDGForm>
+			</React.Fragment>
 		); 
 	}
 }
