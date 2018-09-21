@@ -377,7 +377,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	/****************************************************************************************************/
 
 	handleCreateProject = () => {
-		console.log(this.state.project);
 		let newProject = this.state.project;
 		newProject.longDescription = this.createMarkup();
 
@@ -479,7 +478,9 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		
 		let newProject = this.state.project;
 		// This check is for select boxes (using a plugin that sends value directly), if not a select box it gets the event.target.value
-		if (prop === 'projectLocation' || prop === 'countryOfOrigin') {
+		if (prop === 'countryOfOrigin') {
+			newProject.founder[prop] = event.value;
+		} else if (prop === 'projectLocation') {
 			newProject[prop] = event.value;
 		} else {
 			newProject[prop] = event.target.value;
