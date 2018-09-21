@@ -94,6 +94,7 @@ const Founder = styled.div`
 	img {
 		filter: grayscale(100%);
 		height: 40px;
+		max-width: 50%;
 	}
 
 	p {

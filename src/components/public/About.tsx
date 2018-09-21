@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 import { ButtonTypes, Button } from '../common/Buttons';
 import * as tracking from '../../utils/socialTracker';
+import MediaQuery from 'react-responsive';
 
 // const bannerBg = require('../../assets/images/404/404-bg.jpg');
 // const walrusImg = require('../../assets/images/404/walrus-image.png');
@@ -149,7 +150,9 @@ export const About: React.SFC<ParentProps> = (props) => {
 							and technology stack for the United Nations SDG’s. SDG Futures is partnering with the best in 
 							technology, philanthropy, and ethical business to form open-sourced decentralized communities to 
 							accomplish the United Nation's Sustainable Development Goals globally.</p>
-						<ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer>
+							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
+							<ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer>
+							</MediaQuery>
 					</div>
 				</BannerRight>
 			</div>
