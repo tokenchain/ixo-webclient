@@ -95,7 +95,7 @@ const Container = styled.div`
 `;
 
 const Intro = styled.div`
-	margin-top: 50px;
+	margin-top: 80px;
 
 	p {
 		width: 600px;
@@ -148,6 +148,17 @@ const ImageWrapper = styled.section`
 	p {
 		margin-bottom: 0;
 	}
+`;
+
+const Submit = styled.button`
+	background: #4A9F46;
+	color: white;
+	text-tranform: uppercase;
+	font-weight: 400;
+	font-family: ${props => props.theme.fontRobotoCondensed};
+	width: 233px;
+	border: 0;
+	height: 40px;
 `;
 
 export interface StateProps {
@@ -610,7 +621,8 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 					<FormSection>
 						<InnerSection>
 							<Text className="hidden" placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
-							
+							<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
+
 							<Label>Your Name</Label>
 							<Text placeholder="John Smith" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
 
@@ -633,32 +645,65 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							/>
 							<Label>A picture is worth a thousand words. Send us a high quality picture that best describes your projector</Label>
 							<ImageWrapper><ImageLoader quality={imageQuality.medium} styleType={styleTypes.sdgFutures} placeholder="Add file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/></ImageWrapper>
-							<TextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
-							<TextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
-							<TextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
-							<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
+						{/* end of section 1 */}
+
+							<Label>Describe your venture in full detail</Label>
+							<TextArea placeholder="Venture detail" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
+							
+							<Label>Facebook</Label>
+							<Text placeholder="https://www.facebook.com/venture" value={this.state.facebook} onChange={(ev) => this.setState({facebook: ev.target.value})}/>
+							
+							<Label>Twitter</Label>
+							<Text placeholder="https://twitter.com/venture" value={this.state.twitter} onChange={(ev) => this.setState({twitter: ev.target.value})}/>
+							
+							<Label>Instagram</Label>
+							<Text placeholder="https://www.instagram.com/venture" value={this.state.instagram} onChange={(ev) => this.setState({instagram: ev.target.value})}/>
+							
+							<Label>Website</Label>
+							<Text placeholder="https://www.venture.com" value={this.state.websiteLink} onChange={(ev) => this.setState({websiteLink: ev.target.value})}/>
+							
+							<Label>Github</Label>
+							<Text placeholder="https://www.github.com/venture" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
+							
+							<Label>Do you have any other media links you would like to include?</Label>
+							<Text placeholder="https://www.buzzfeed.com" value={this.state.mediaLink} onChange={(ev) => this.setState({mediaLink: ev.target.value})}/>
+
+						{/* end of section 2 */}
+							<Label>Select one or more SDGs that apply to your project</Label>
 							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
-							<Text placeholder="Github" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
-							<Text placeholder="Facebook" value={this.state.facebook} onChange={(ev) => this.setState({facebook: ev.target.value})}/>
-							<Text placeholder="Twitter" value={this.state.twitter} onChange={(ev) => this.setState({twitter: ev.target.value})}/>
-							<Text placeholder="Instagram" value={this.state.instagram} onChange={(ev) => this.setState({instagram: ev.target.value})}/>
-							<Text placeholder="MediaLink" value={this.state.mediaLink} onChange={(ev) => this.setState({mediaLink: ev.target.value})}/>
-							<Text placeholder="WebsiteLink" value={this.state.websiteLink} onChange={(ev) => this.setState({websiteLink: ev.target.value})}/>
-							<Text placeholder="Founder Name" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
-							<Text placeholder="Founder email" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
-							<Text placeholder="Founder ShortDescription" value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
+							
+							<Label>What does your venture solve for the UN SDGs?</Label>
+							<TextArea placeholder="E.g Eliminate food wastage" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
+							
+							<Label>Goal for 2030 and beyond</Label>
+							<TextArea placeholder="E.g Building better infrastructure for food distribution in the future" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
+
+						{/* end of section 3 */}
+							<Label>Venture founder name</Label>
+							<Text placeholder="E.g. Future of Humanity" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
+							
+							<Label>Founder email</Label>
+							<Text placeholder="E.g info@futureofhumanity.com" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
+							
+							<Label>Venture founder country of origin</Label>
 							<Select
 								options={countries}
 								onChange={(ev) => this.handlePropertyChanged('countryOfOrigin', ev)}
 								className="selector"
-								placeholder="Eg. South Africa"
+								placeholder="E.g Switzerland"
 								styles={colourStyles}
 							/>
-							<Text placeholder="Founder websiteURL" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
+
+							<Label>Short description </Label>
+							<Text placeholder="E.g Future of Humanity is a decentralized and distributed communities and technology stack for the United Nations SDG’s." value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
+
+							<Label>In which country is your venture located?</Label>
 							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
-							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" />
-							<br />
-							<Button type={ButtonTypes.gradient} onClick={this.handleCreateProject}>SUBMIT VENTURE</Button>
+							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" /><br />
+
+							<Label>Website URL</Label>
+							<Text placeholder="E.g https://www.futureofhumanity.com" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
+							<Submit onClick={this.handleCreateProject}>SUBMIT VENTURE</Submit>
 						</InnerSection>
 					</FormSection>
 				</SDGForm>
