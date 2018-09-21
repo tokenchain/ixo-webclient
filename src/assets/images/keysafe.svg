@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="348px" height="142px" viewBox="0 0 348 142" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.3 (57544) - http://www.bohemiancoding.com/sketch -->
+    <title>illustration@1x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#F7F7F7" offset="0%"></stop>
+            <stop stop-color="#E8E8E8" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="99.6138909%" x2="50%" y2="0%" id="linearGradient-2">
+            <stop stop-color="#C3E7BA" offset="0%"></stop>
+            <stop stop-color="#92D880" offset="52.1100143%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="99.6138909%" x2="50%" y2="0%" id="linearGradient-3">
+            <stop stop-color="#FFDBAE" offset="0%"></stop>
+            <stop stop-color="#E8AE62" offset="52.1100143%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="99.6138909%" x2="50%" y2="0%" id="linearGradient-4">
+            <stop stop-color="#DF7073" offset="0%"></stop>
+            <stop stop-color="#FF6C70" offset="52.1100143%"></stop>
+            <stop stop-color="#FFFFFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="SDG-Futures-Register" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Ventures-01-Message" transform="translate(-539.000000, -385.000000)">
+            <g id="illustration" transform="translate(539.000000, 385.000000)">
+                <rect id="Rectangle-2" stroke="#CBCBCB" stroke-width="0.7" fill="#FFFFFF" fill-rule="nonzero" x="0.35" y="0.35" width="347.3" height="141.3" rx="2"></rect>
+                <path d="M0.35,33.65 L347.65,33.65 L347.65,2 C347.65,1.08873016 346.91127,0.35 346,0.35 L2,0.35 C1.08873016,0.35 0.35,1.08873016 0.35,2 L0.35,33.65 Z" id="Rectangle-5" stroke="#CBCBCB" stroke-width="0.7" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+                <rect id="Rectangle-7" stroke="#CBCBCB" stroke-width="0.6" fill="#FFFFFF" fill-rule="nonzero" x="54.3" y="8.3" width="254.4" height="17.4" rx="8.7"></rect>
+                <polygon id="Fill-1" fill="#3FC6F0" points="330.377528 9 326.585 12.7924724 322.792472 9 319 9 319 12.7924724 322.792472 16.585 319 20.3774724 319 24.17 322.792472 24.17 326.585 20.3774724 330.377528 24.17 334.17 24.17 334.17 20.3774724 330.377528 16.585 334.17 12.7924724 334.17 9"></polygon>
+                <circle id="Oval" stroke="#66935D" stroke-width="0.5" fill="url(#linearGradient-2)" fill-rule="nonzero" cx="41" cy="18" r="4"></circle>
+                <circle id="Oval" stroke="#C98C38" stroke-width="0.5" fill="url(#linearGradient-3)" fill-rule="nonzero" cx="27" cy="18" r="4"></circle>
+                <circle id="Oval" stroke="#AD393B" stroke-width="0.5" fill="url(#linearGradient-4)" fill-rule="nonzero" cx="13" cy="18" r="4"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
