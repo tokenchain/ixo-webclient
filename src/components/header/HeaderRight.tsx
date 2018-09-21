@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 // import { Link } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 const Inner = styled.div`
 	position:relative;
@@ -39,7 +38,8 @@ const UserBox = styled.div`
 	}
 
 	i {
-		font-size: 18px;
+		font-size: 12px;
+		font-weight: 300;
 		margin: 1px 0 0 10px;	
 	}
 `;
@@ -78,15 +78,15 @@ const StatusText = styled.p`
 	font-weight: normal;
 `;
 
-const JoinLink = styled(Link)`
-	color: #282828;
-	text-decoration: none;
+// const JoinLink = styled(Link)`
+// 	color: #282828;
+// 	text-decoration: none;
 
-	:hover {
-		text-decoration: none;
-		color: #282828;
-	}
-`;	
+// 	:hover {
+// 		text-decoration: none;
+// 		color: #282828;
+// 	}
+// `;	
 
 interface HeaderRightProps {
 	userInfo: any;
@@ -111,16 +111,14 @@ export class HeaderRight extends React.Component<HeaderRightProps, State> {
 				<NoPadLeft className="col-md-2">
 					<Inner className="d-flex justify-content-end">
 						{(this.props.userInfo === null) ?
-							<JoinLink to="/register">
-								<UserBox>
-									<StatusBox>
-										{this.props.renderStatusIndicator()}
-										<StatusText>IXO EXPLORER STATUS</StatusText>
-									</StatusBox>
-									<h3><span>Join the Beta</span></h3>
-								</UserBox>
-							</JoinLink>
-							:
+							<UserBox>
+								<StatusBox>
+									{this.props.renderStatusIndicator()}
+									<StatusText>IXO EXPLORER STATUS</StatusText>
+								</StatusBox>
+								<h3><span><i>Not logged in</i></span></h3>
+							</UserBox>
+						:
 							<UserBox>
 								<StatusBox>
 									{this.props.renderStatusIndicator()}

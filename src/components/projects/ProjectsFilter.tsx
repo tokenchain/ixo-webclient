@@ -146,6 +146,10 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 		}
 	}
 
+	doNothingClick = () => {
+		return null;
+	}
+
 	handleIsSelected = (idx: number) => {
 		
 		// @ts-ignore
@@ -164,7 +168,7 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 								<SDG onClick={() => this.handleSetClicked(idx + 1)} key={idx} style={{background: sdg.color}}>
 									<div className={this.handleIsSelected(idx + 1) ? 'checked' : ''}>
 										<img src={`./sdgs/${idx + 1}.png`}/>
-										<Dialog>
+										<Dialog onClick={(event) => event.stopPropagation()}>
 											<p>{sdg.shortText}</p>
 											<a href={sdg.url} target="_blank">Find out more</a>
 											<Arrow />

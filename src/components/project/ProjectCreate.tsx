@@ -9,6 +9,38 @@ import { Button, ButtonTypes } from '../common/Buttons';
 import { warningToast, successToast, errorToast } from '../helpers/Toast';
 import { ErrorTypes } from '../../types/models';
 import { Redirect } from 'react-router-dom';
+import { ModalWrapper } from '../common/ModalWrapper';
+
+const chromeIcon = require('../../assets/images/register/chrome.png');
+const mozillaIcon = require('../../assets/images/register/firefox.png');
+const keysafeImg = require('../../assets/images/keysafe.svg');
+
+const BrowserIcon = styled.img`
+	position: absolute;
+    left: 10px;
+    top: 2px;
+    width: 36px
+`;
+
+const KeysafeImg = styled.img`
+	width: inherit;
+`;
+
+const ModalContainer = styled.div`
+	width: 320px;
+	margin:0 auto;
+	max-width: 100%;
+	padding-bottom: 20px;
+
+	p {
+		font-weight: 300;
+		font-size: 15px;
+	}
+
+	a {
+		margin:30px 0;
+	}
+`;
 
 const Label = styled.label`
 	color: #333C4E;
@@ -21,6 +53,8 @@ const Text = styled.input`
 	display: block;
 	width: 100%;
 	border-radius: 3px;
+	border: 1px solid #B6B6B6;
+	color: #b00042;
 `;
 
 const TextArea = styled.textarea`
@@ -87,6 +121,7 @@ export interface StateProps {
 }
 
 export interface State {
+	isModalOpen: boolean;
 	hasKeySafe: boolean;
 	hasDid: boolean;
 	isDidLedgered: boolean;
@@ -158,6 +193,7 @@ let defaultProject = {
 export class ProjectCreate extends React.Component<StateProps, State> {
 
 	state = {
+		isModalOpen: false,
 		shouldRedirect: false,
 		hasKeySafe: false,
 		hasDid: false,
@@ -189,41 +225,48 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 
 	busyLedgering = false;
 
+	toggleModal = () => {
+		this.setState({isModalOpen: !this.state.isModalOpen});
+	}
+
 	checkState() {
 		// If the user has a keysafe and but the hasKeySafe not set then set state
-		if (this.props.keysafe && !this.state.hasKeySafe) {
-			this.props.keysafe.getDidDoc((error, response) => {
-				if (error) {
-					if (this.state.toastShown === false) {
-						errorToast('Please log into IXO Keysafe');
-						this.setState({ toastShown: true});
+		if (this.props.keysafe) {
+			if (!this.state.hasKeySafe) {
+				this.props.keysafe.getDidDoc((error, response) => {
+					if (error) {
+						if (this.state.toastShown === false) {
+							errorToast('Please log into IXO Keysafe');
+							this.setState({ toastShown: true});
+						}
+					} else {	
+						let newDidDoc = {
+								did: response.didDoc.did,
+								pubKey: response.didDoc.pubKey,
+								credentials: []
+						};
+						this.setState({hasKeySafe: true, hasDid: true, didDoc: newDidDoc });
+						// So has a client side didDoc, so lets check if it is ledgered
+						if (this.props.ixo && this.state.didDoc && !this.state.isDidLedgered) {
+							let ledgerDid = () => this.ledgerDid();
+							this.props.ixo.user.getDidDoc(this.state.didDoc.did).then((didResponse: any) => {
+								if (didResponse.did) {
+									this.setState({isDidLedgered: true, didDoc: didResponse});
+								} else {
+									// Did not ledgered
+									ledgerDid();
+								}
+							})
+							.catch((err) => {
+									// Did not ledgered
+									ledgerDid();
+							});
+						}
 					}
-				} else {	
-					let newDidDoc = {
-							did: response.didDoc.did,
-							pubKey: response.didDoc.pubKey,
-							credentials: []
-					};
-					this.setState({hasKeySafe: true, hasDid: true, didDoc: newDidDoc });
-				}
-			});
-		}
-		// So has a client side didDoc, so lets check if it is ledgered
-		if (this.props.ixo && this.state.didDoc && !this.state.isDidLedgered) {
-			let ledgerDid = () => this.ledgerDid();
-			this.props.ixo.user.getDidDoc(this.state.didDoc.did).then((didResponse: any) => {
-				if (didResponse.did) {
-					this.setState({isDidLedgered: true, didDoc: didResponse});
-				} else {
-					// Did not ledgered
-					ledgerDid();
-				}
-			})
-			.catch((err) => {
-					// Did not ledgered
-					ledgerDid();
-					
-			});
+				});
+			}
+		} else {
+			this.toggleModal();
 		}
 	}
 
@@ -259,9 +302,28 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	}
 
 	componentDidMount() {
-	// setTimeout(() => this.checkState(), 2000);
+		setTimeout(() => this.checkState(), 2000);
+	// this.checkState();
 	}
 
+	renderModal = () => {
+		return (
+			<ModalContainer> 
+				<p>ixo Keysafe is your browser connection to the blockchain. It is a secure identity vault that allows you to <b>submit and manage your ventures</b>.</p>
+				<KeysafeImg src={keysafeImg} />
+				<Button type={ButtonTypes.dark} href="https://chrome.google.com/webstore/detail/ixo-keysafe/nnlfaleaeoefglohpacnfgoeldfakkjk" target="_blank"><BrowserIcon src={chromeIcon} alt="Chrome"/> DOWNLOAD FOR CHROME</Button>
+				<Button type={ButtonTypes.dark} href="https://addons.mozilla.org/en-US/firefox/addon/ixo-keysafe/" target="_blank"><BrowserIcon src={mozillaIcon} alt="Firefox"/> DOWNLOAD FOR FIREFOX</Button>
+			</ModalContainer>
+		);
+	}
+
+	renderModalHeading = () => {
+		return {
+			title: 'Install the ixo Keysafe',
+			subtitle: 'Your secure identity vault.',
+			width: '325'
+		};
+	}
 	/****************************************************************************************************/
 
 	handleCreateProject = () => {
@@ -473,6 +535,13 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		}
 		return (
 			<React.Fragment>
+				<ModalWrapper
+					isModalOpen={this.state.isModalOpen}
+					handleToggleModal={(val) => this.toggleModal()}
+					header={this.renderModalHeading()}
+				>
+					{this.renderModal()}
+				</ModalWrapper>
 				<Container className="container">
 					<Intro className="row">
 						<div className="col-md-12">

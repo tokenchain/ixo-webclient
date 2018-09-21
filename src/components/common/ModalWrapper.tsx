@@ -24,7 +24,7 @@ const modalStyles = {
 
 const ModalInner = styled.div`
 	background: linear-gradient(0deg, #F1F0F0 0%, #D6D6D6 100%);
-	color: white;
+	color: #282828;
 	padding: 10px 30px;
 `;
 
@@ -56,10 +56,9 @@ const FlexContainer = styled.div`
 	}
 	
 	h3 {
-		font-weight: 300;
-		font-size: 24px;
-		line-height: 1;
-		text-transform: uppercase;
+		font-weight: 500;
+		font-size: 30px;
+		line-height: 39px;
 		margin: 0;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 	}
@@ -68,13 +67,12 @@ const FlexContainer = styled.div`
 		font-weight: 300;
 		margin: 0;
 		font-size: 18px;
-		color: ${props => props.theme.fontLightBlue};
 		font-family: ${props => props.theme.fontRoboto};
 	}
 `;
 
 const Line = styled.div`
-	background: ${props => props.theme.widgetBorder};
+	background: #D1D1D1;
     width: calc(100% + 60px);
     margin: 10px -30px 25px;
 	height: 1px;
