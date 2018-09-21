@@ -78,8 +78,8 @@ export const FooterLeft: React.SFC<any> = ({simple}) => {
 					<MediaQuery minWidth={`${deviceWidth.tablet}px`}>
 						<SDGLogo alt="SDG Futures Logo" src={sdgLogo}/>
 					</MediaQuery>
-					<ExternalFooterLink href="/">Ventures</ExternalFooterLink>
 					<ExternalFooterLink href="/about">About</ExternalFooterLink>
+					<ExternalFooterLink href="/">Ventures</ExternalFooterLink>
 					<ExternalFooterLink href="/global-statistics">Impacts</ExternalFooterLink>
 					{/* <FooterLink exact={true} to="/">Oracles</FooterLink> */}
 					{/* <FooterLink exact={true} to="/">Plans / Pricing</FooterLink> */}

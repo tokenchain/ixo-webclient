@@ -9,13 +9,13 @@ import { UserInfo } from '../../types/models';
 import QRComponent from '../common/QRComponent'; 
 import { Helmet } from 'react-helmet';
 import ReactMd from 'react-md-file';
+import * as tracking from '../../utils/socialTracker';
 
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
 const OverviewContainer = styled.section`
 
 	margin-top: -86px;
-	background: ${props => props.theme.bg.lightGrey};
 	color: white;
 	padding-bottom: 40px;
 `;
@@ -327,6 +327,7 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 
 	return (
 		<div>
+			{tracking.fireTracker('/overview')}
 			<Helmet
 				title={props.project.title}
 				meta={[

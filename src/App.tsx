@@ -12,16 +12,16 @@ import { UserInfo } from './types/models';
 import { initUserInfo } from './redux/login/login_action_creators';
 import ScrollToTop from './components/common/ScrollToTop';
 import './assets/icons.css';
+import * as ReactGA from 'react-ga';
 
 import 'react-toastify/dist/ReactToastify.min.css';
 import { Routes } from './components/Routes';
 import { Spinner } from './components/common/Spinner';
 import { ToastContainer } from 'react-toastify';
-import * as ReactGA from 'react-ga';
 
 const circleBG = require('./assets/images/circleBG.png');
 
-ReactGA.initialize('UA-106630107-5');
+ReactGA.initialize('UA-106630107-7');
 
 ReactGA.pageview(window.location.pathname + window.location.search);
 
@@ -63,6 +63,11 @@ const theme = {
 	red: '#E2223B'
 };
 
+// INITIALISE GOOGLE ANALYTICS
+ReactGA.initialize('UA-106630107-7', {
+	debug: true
+});
+
 // END OF THEME DECLARATION, CSS FOR COMPONENT BELOW
 const Container = styled.div`
 
@@ -71,7 +76,8 @@ const Container = styled.div`
 	min-height: 100%;
 	font-family: roboto;
 	background: ${theme.bg.lightGrey};
-
+	overflow: hidden;
+	
 	h1, h2, h3, h4, h5, p, a {
 	}
 	font-weight: 300;
@@ -89,6 +95,11 @@ const CircleBG = styled.img`
 	top: 30px;
 	right: 0;
 	width: 500px;
+	opacity: 0.3;
+
+	@media (min-width: 1200px) {
+		opacity: 1;
+	}
 `;
 
 const BGContainer = styled.div`
