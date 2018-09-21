@@ -93,8 +93,13 @@ const Founder = styled.div`
 
 	img {
 		filter: grayscale(100%);
+<<<<<<< HEAD
 		max-height: 40px;
 		max-width: 150px;
+=======
+		height: 40px;
+		max-width: 50%;
+>>>>>>> 0306d135fb9903416edab768c13fcb75795eee3f
 	}
 
 	p {
