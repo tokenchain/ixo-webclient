@@ -10,6 +10,7 @@ import { warningToast, successToast, errorToast } from '../helpers/Toast';
 import { ErrorTypes } from '../../types/models';
 import { Redirect } from 'react-router-dom';
 import { ModalWrapper } from '../common/ModalWrapper';
+import Select from 'react-select';
 
 const chromeIcon = require('../../assets/images/register/chrome.png');
 const mozillaIcon = require('../../assets/images/register/firefox.png');
@@ -44,7 +45,7 @@ const ModalContainer = styled.div`
 
 const Label = styled.label`
 	color: #333C4E;
-
+	font-weight: 400;
 `;
 
 const Text = styled.input`
@@ -53,22 +54,23 @@ const Text = styled.input`
 	display: block;
 	width: 100%;
 	border-radius: 3px;
-	border: 1px solid #B6B6B6;
+	border: 1px solid ${props => props.theme.lightGrey};
 	color: #b00042;
+
+	::placeholder {
+		color: ${props => props.theme.lightGrey};
+		font-weight: 300;
+	}
+	
 `;
 
-const TextArea = styled.textarea`
-	margin: 20px 0;
-	display: block;
-	width: 100%;
+const TextArea = Text.extend`
+	vertical-align: top;
 	height: 150px;
 `;
 
 const SmallTextArea = TextArea.extend`
 	height: 50px;
-`;
-const BigTextArea = TextArea.extend`
-	height: 150px;
 `;
 
 const Container = styled.div`
@@ -99,6 +101,10 @@ const FormSection = styled.div`
 
 	.hidden {
 		display: none;
+	}
+
+	.selector {
+		margin-bottom: 20px;
 	}
 `;
 
@@ -426,8 +432,14 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	}
 
 	handlePropertyChanged = (prop: string, event: any) => {
+		
 		let newProject = this.state.project;
-		newProject[prop] = event.target.value;
+		// This check is for select boxes (using a plugin that sends value directly), if not a select box it gets the event.target.value
+		if (prop === 'projectLocation' || prop === 'countryOfOrigin') {
+			newProject[prop] = event.value;
+		} else {
+			newProject[prop] = event.target.value;
+		}
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
@@ -530,6 +542,21 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	}
 
 	render() {
+
+		// Custom styling for select boxes
+		const colourStyles = {
+			control: styles => ({ ...styles, backgroundColor: 'white', height: '50px', borderRadius: '3px', borderColor: '#B6B6B6' }),
+			placeholder: styles => ({ ...styles, color: '#B6B6B6' }),
+			singleValue: styles => ({ ...styles, color: '#b00042', fontWeight: '400' })
+		};
+
+		// List of countries for select boxes
+		const countries = countryLatLng.map( (v) => {
+			return (
+				{ label: v.country, value: v.alpha2}
+			);
+		});
+
 		if (this.state.shouldRedirect === true) {
 			return <Redirect to="/" />;
 		}
@@ -568,19 +595,26 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<SmallTextArea placeholder="Project headline" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
 							
 							<Label>In which country is your venture located?</Label>
-							<select value={this.state.project.projectLocation} onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}>
+							<Select
+								options={countries}
+								onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}
+								className="selector"
+								placeholder="Eg. South Africa"
+								styles={colourStyles}
+							/>
+							{/* <select value={this.state.project.projectLocation} onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}>
 							{countryLatLng.map( (v) => {
 								return (
 									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>
 									);
 								})}
-							</select>
+							</select> */}
 
 							<Label>A picture is worth a thousand words. Send us a high quality picture that best describes your projector</Label>
 							<ImageLoader quality={imageQuality.medium} placeholder="Choose project image file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/>
-							<BigTextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
-							<BigTextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
-							<BigTextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
+							<TextArea placeholder="Long Description" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
+							<TextArea placeholder="How does your project solve the UN SDGs?" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
+							<TextArea placeholder="Goal for 2030 and beyond" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
 							<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
 							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
 							<Text placeholder="Github" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
@@ -592,13 +626,9 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<Text placeholder="Founder Name" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
 							<Text placeholder="Founder email" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
 							<Text placeholder="Founder ShortDescription" value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
-							<select value={this.state.project.founder.countryOfOrigin} onChange={(ev) => this.handleFounderPropertyChanged('countryOfOrigin', ev)}>
-							{countryLatLng.map( (v) => {
-								return (
-									<option key={v.alpha2} value={v.alpha2}>{v.country}</option>
-								);
-							})}
-							</select>
+							{/* <select value={this.state.project.founder.countryOfOrigin} onChange={(ev) => this.handleFounderPropertyChanged('countryOfOrigin', ev)}>
+
+							</select> */}
 							<Text placeholder="Founder websiteURL" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
 							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
 							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" />
