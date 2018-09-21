@@ -3,14 +3,24 @@ import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import { deviceWidth } from '../../lib/commonData';
 // import { getIxoWorldRoute } from '../../utils/formatters';
+import { getIxoWorldRoute } from '../../utils/formatters';
+import { Fragment } from 'react';
 
+const ixoLogo = require('../../assets/images/ixo-logo.svg');
 const sdgLogo = require('../../assets/images/footer-logo.svg');
+
+const IXOLogo = styled.img`
+	margin-top: -6px;
+	margin-right:5px;
+	margin-left:5px;
+	height: 16px;
+`;
 
 const ExternalFooterLink = styled.a`
 	font-family: ${props => props.theme.fontRobotoRegular};
 	color: white;
 	margin: 0;
-	font-size: 12px;
+	font-size: 13px;
 	border: 1px solid #000000;
 	border-radius:3px;
 	margin:0 10px;
@@ -31,7 +41,7 @@ const ExternalFooterLink = styled.a`
 	transition:border 0.3s ease;
 `;
 
-const IXOLogo = styled.img`
+const SDGLogo = styled.img`
 	margin-right: 20px;
 	width: 200px;
 	margin-top: 0px;
@@ -45,13 +55,13 @@ const IXOLogo = styled.img`
 // 	}
 // `;
 
-// const FooterText = styled.div`
-// 	padding: 19px 0px 20px 15px;
-// 	color: #808080;
-// 	font-family: Roboto;
-// 	font-size: 14px;
-// 	line-height: 19px;
-// `;
+const FooterText = styled.div`
+	padding: 5px 0px 20px 0px;
+	color: white;
+	font-family: Roboto;
+	font-size: 14px;
+	line-height: 19px;
+`;
 
 const Main = styled.div`
 	display: flex;
@@ -62,24 +72,24 @@ const Main = styled.div`
 export const FooterLeft: React.SFC<any> = ({simple}) => {
 
 	return (
-		<Main className="col-md-8">
-			<div className="row">
-				<MediaQuery minWidth={`${deviceWidth.tablet}px`}>
-					<IXOLogo alt="SDG Futures Logo" src={sdgLogo}/>
-				</MediaQuery>
-				<ExternalFooterLink href="/">Ventures</ExternalFooterLink>
-				<ExternalFooterLink href="/about">About</ExternalFooterLink>
-				<ExternalFooterLink href="/global-statistics">Impacts</ExternalFooterLink>
-				{/* <FooterLink exact={true} to="/">Oracles</FooterLink> */}
-				{/* <FooterLink exact={true} to="/">Plans / Pricing</FooterLink> */}
-			</div>
-			{/* <div className="row">
-				<FooterText className="col-md-10">
-					<div className="row">
-						Email:<a href="mailto:info@ixo.world"><FooterTextBlue>&nbsp;info@ixo.world</FooterTextBlue></a>
-					</div>
+		<Fragment>
+			<Main className="col-md-8">
+				<div className="row">
+					<MediaQuery minWidth={`${deviceWidth.tablet}px`}>
+						<SDGLogo alt="SDG Futures Logo" src={sdgLogo}/>
+					</MediaQuery>
+					<ExternalFooterLink href="/">Ventures</ExternalFooterLink>
+					<ExternalFooterLink href="/about">About</ExternalFooterLink>
+					<ExternalFooterLink href="/global-statistics">Impacts</ExternalFooterLink>
+					{/* <FooterLink exact={true} to="/">Oracles</FooterLink> */}
+					{/* <FooterLink exact={true} to="/">Plans / Pricing</FooterLink> */}
+				</div>
+			</Main>
+			<div className="col-md-8">
+				<FooterText className="row">
+					In partnership with <a href={getIxoWorldRoute('/')}><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity
 				</FooterText>
-			</div> */}
-		</Main>
+			</div>
+		</Fragment>
 	);
 };

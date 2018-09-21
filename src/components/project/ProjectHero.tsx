@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { SDGArray, deviceWidth } from '../../lib/commonData';
-import { getIxoWorldRoute } from '../../utils/formatters';
+// import { getIxoWorldRoute } from '../../utils/formatters';
 import { AgentRoles } from '../../types/models';
 
 const SingleSDG = styled.a`
@@ -113,7 +113,7 @@ export const ProjectHero: React.SFC<Props> = ({project, match, isDetail, hasCapa
 									if (SDG !== 18) {
 										const goal = Math.floor(SDG);
 										return (
-											<SingleSDG href={getIxoWorldRoute('/about')} key={index}>
+											<SingleSDG href={SDGArray[goal - 1].url} target="_blank" key={index}>
 												<i className={`icon-sdg-${SDGArray[goal - 1].ico}`}/>
 												{goal}. {SDGArray[goal - 1].title}
 										</SingleSDG>
