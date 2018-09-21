@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import { deviceWidth } from '../../lib/commonData';
 // import { getIxoWorldRoute } from '../../utils/formatters';
-import { getIxoWorldRoute } from '../../utils/formatters';
 import { Fragment } from 'react';
 
 const ixoLogo = require('../../assets/images/ixo-logo.svg');
