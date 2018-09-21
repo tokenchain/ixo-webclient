@@ -12,7 +12,7 @@ const Banner = styled.div`
 	width: 100%;
 	display: flex;
 	flex: 1 1 auto;
-	margin: 0;
+	margin: 0px 20% 10px;
 `;
 // const BannerLeft = styled.div`
 // 	width: 100%;
@@ -37,6 +37,7 @@ const BannerRight = styled.div`
 	color: #282828;
 	margin-top: 22%;
 	margin-right: 10%;
+
 	@media (max-width: 992px) {
 		margin-top: 0;
 	}
@@ -44,7 +45,7 @@ const BannerRight = styled.div`
 		margin-top: -20px;
 	}
 	h2 {
-		font-size: 60px;
+		font-size: 45px;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 		margin-bottom: 5px;
 		width: 100%;
@@ -95,15 +96,6 @@ const BannerRight = styled.div`
 			padding-right: 18%;
 		}
 	}
-	p::before {
-		content: " ";
-		display: block;
-		position: absolute;
-		height: 1px;
-		background: #00D2FF;
-		width: 100px;
-		top: 15%;
-	}
 	@media (max-width: 1024px){
 		p::before {
 			top: -2%;
@@ -150,9 +142,12 @@ export const About: React.SFC<ParentProps> = (props) => {
 			<div className="col-lg-8 col-md-12">
 				<BannerRight>
 					<div className="container">
-						<h2>SDG Futures</h2>
-						<p>Building sustainable development projects for the future</p>
-						<ButtonContainer><Button type={ButtonTypes.dark} onClick={() => history.back(-1)}>Back</Button></ButtonContainer>
+						<h2>About SDG Futures</h2>
+						<p>SDG Futures is an initiative of Future of Humanity, a decentralized and distributed communities 
+							and technology stack for the United Nations SDG’s. SDG Futures is partnering with the best in 
+							technology, philanthropy, and ethical business to form open-sourced decentralized communities to 
+							accomplish the United Nation's Sustainable Development Goals globally.</p>
+						<ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer>
 					</div>
 				</BannerRight>
 			</div>
