@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import MediaQuery from 'react-responsive';
 import { deviceWidth } from '../../lib/commonData';
 // import { getIxoWorldRoute } from '../../utils/formatters';
-import { getIxoWorldRoute } from '../../utils/formatters';
 import { Fragment } from 'react';
 
 const ixoLogo = require('../../assets/images/ixo-logo.svg');
@@ -86,7 +85,7 @@ export const FooterLeft: React.SFC<any> = ({simple}) => {
 				</div>
 				<div className="row">
 					<FooterText className="row">
-						In partnership with <a href={getIxoWorldRoute('/')}><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity
+						In partnership with <a href="https://ixo.world"><IXOLogo alt="ixo Logo" src={ixoLogo}/></a> for the Future of Humanity
 					</FooterText>
 				</div>
 			</Main>
