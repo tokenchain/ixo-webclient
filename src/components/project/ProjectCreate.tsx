@@ -579,11 +579,13 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		
 		if (hasSelected === true) {
 			let newProject = this.state.project;
+			newProject.sdgs = filterIndexes.map((val, k) => {
+				return `${val}`;
+			});
 			// @ts-ignore
-			if (!newProject.sdgs.includes(18)) {
-				filterIndexes.push(18);
+			if (!newProject.sdgs.includes('18')) {
+				newProject.sdgs.push('18');
 			}
-			newProject.sdgs = filterIndexes;
 			this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 		}
 	}
