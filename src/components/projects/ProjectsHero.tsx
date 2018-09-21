@@ -74,7 +74,7 @@ export interface Props {
 
 export class ProjectsHero extends React.Component<Props, State> {
 	state = {
-		daysTo2030: this.datediff(Date.now(), Date.parse('2030-01-01 00:00:00')),
+		daysTo2030: this.datediff(Date.now(), Date.parse('2030-01-01T00:00:00')),
 	};
 	
 	datediff(first: number, second: number) {
