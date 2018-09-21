@@ -70,6 +70,7 @@ const Container = styled.div`
 	flex-flow: column;
 	min-height: 100%;
 	font-family: roboto;
+	background: ${theme.bg.lightGrey};
 
 	h1, h2, h3, h4, h5, p, a {
 	}
@@ -78,9 +79,9 @@ const Container = styled.div`
 
 const ContentWrapper = styled.main`
 	display: flex;
-	background: ${theme.bg.lightGrey};
 	flex-direction: column;
 	flex: 1;
+	position: relative;
 `;
 
 const CircleBG = styled.img`
@@ -190,12 +191,12 @@ class App extends React.Component<App.Props, App.State> {
 					<Container>
 						<HeaderConnected pingIxoExplorer={this.handlePingExplorer} simpleHeader={false} userInfo={this.props.userInfo} refreshProjects={() => console.log('clicked')} />
 							<ToastContainer hideProgressBar={true} />
+							<BGContainer>
+								<div className="container">
+									<CircleBG src={circleBG} />
+								</div>
+							</BGContainer>
 							<ContentWrapper>
-								<BGContainer>
-									<div className="container">
-										<CircleBG src={circleBG} />
-									</div>
-								</BGContainer>
 								{this.props.ixo !== null ? 
 									<Routes /> : 
 									<Spinner info={'Loading ixo.world...'}/>
