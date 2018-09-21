@@ -11,6 +11,7 @@ import { ErrorTypes } from '../../types/models';
 import { Redirect } from 'react-router-dom';
 import { ModalWrapper } from '../common/ModalWrapper';
 import Select from 'react-select';
+import { ProjectsFilter } from '../projects/ProjectsFilter';
 
 const chromeIcon = require('../../assets/images/register/chrome.png');
 const mozillaIcon = require('../../assets/images/register/firefox.png');
@@ -46,6 +47,10 @@ const ModalContainer = styled.div`
 const Label = styled.label`
 	color: #333C4E;
 	font-weight: 400;
+
+	span {
+		font-weight: 300;
+	}
 `;
 
 const Text = styled.input`
@@ -104,7 +109,7 @@ const Intro = styled.div`
 `;
 
 const SDGForm = styled.div`
-	margin-top: 50px;
+	margin: 50px 0;
 `;
 
 const FormSection = styled.div`
@@ -130,8 +135,7 @@ const InnerSection = styled.div`
 `;
 
 const LogoThumb = styled.img`
-	width: 30px;
-	height: 30px;
+	height: 60px;
 `;
 
 const ImageWrapper = styled.section`
@@ -507,16 +511,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
 	}
 
-	handleSDGChanged = (event: any) => {
-		let newProject = this.state.project;
-		let sdgs = event.target.value;
-		sdgs = sdgs.replace(/ /g, '');
-		let sdgList = sdgs.split(',');
-
-		newProject.sdgs = sdgList;
-		this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
-	}
-
 	projectMediaLink = () => {
 		let mLink = this.state.mediaLink.trim();
 		if (mLink.length > 0) {
@@ -581,6 +575,19 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		return txt;
 	}
 
+	handleSDGs = ( hasSelected?: boolean, filterIndexes?: number[] ) => {
+		
+		if (hasSelected === true) {
+			let newProject = this.state.project;
+			// @ts-ignore
+			if (!newProject.sdgs.includes(18)) {
+				filterIndexes.push(18);
+			}
+			newProject.sdgs = filterIndexes;
+			this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
+		}
+	}
+
 	render() {
 
 		// Custom styling for select boxes
@@ -630,7 +637,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<Text placeholder="john@gmail.com" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
 							
 							<Label>What is the name of your venture?</Label>
-							<Text placeholder="E.g Togo water project" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
+							<Text placeholder="E.g Raise your voice against discrimination" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
 							
 							<Label>Describe your venture in a short sentence</Label>
 							<SmallTextArea placeholder="Project headline" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
@@ -643,7 +650,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								placeholder="Eg. South Africa"
 								styles={colourStyles}
 							/>
-							<Label>A picture is worth a thousand words. Send us a high quality picture that best describes your projector</Label>
+							<Label>A picture is worth a thousand words. Upload a picture that represents your venture <span>(recommended size 1080x720)</span></Label>
 							<ImageWrapper><ImageLoader quality={imageQuality.medium} styleType={styleTypes.sdgFutures} placeholder="Add file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/></ImageWrapper>
 						{/* end of section 1 */}
 
@@ -669,23 +676,21 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<Text placeholder="https://www.buzzfeed.com" value={this.state.mediaLink} onChange={(ev) => this.setState({mediaLink: ev.target.value})}/>
 
 						{/* end of section 2 */}
-							<Label>Select one or more SDGs that apply to your project</Label>
-							<Text placeholder="SDG list (comma separated)" value={this.state.project.sdgs} onChange={this.handleSDGChanged}/>
+							<Label>Select one or more SDGs that apply to your venture</Label>
+							<ProjectsFilter handleFilter={(filter, idxs) => this.handleSDGs(filter, idxs)} exclude18th={true}/> <br/>
 							
-							<Label>What does your venture solve for the UN SDGs?</Label>
+							<Label>What does your venture solve for the sustainable development?</Label>
 							<TextArea placeholder="E.g Eliminate food wastage" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
 							
 							<Label>Goal for 2030 and beyond</Label>
 							<TextArea placeholder="E.g Building better infrastructure for food distribution in the future" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
-
 						{/* end of section 3 */}
-							<Label>Venture founder name</Label>
+							<Label>Name of founding organisation</Label>
 							<Text placeholder="E.g. Future of Humanity" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
 							
-							<Label>Founder email</Label>
+							<Label>Contact email</Label>
 							<Text placeholder="E.g info@futureofhumanity.com" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
-							
-							<Label>Venture founder country of origin</Label>
+							<Label>Country of origin</Label>
 							<Select
 								options={countries}
 								onChange={(ev) => this.handlePropertyChanged('countryOfOrigin', ev)}
@@ -694,15 +699,16 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								styles={colourStyles}
 							/>
 
-							<Label>Short description </Label>
+							<Label>Short description of founding organisation</Label>
 							<Text placeholder="E.g Future of Humanity is a decentralized and distributed communities and technology stack for the United Nations SDG’s." value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
 
-							<Label>In which country is your venture located?</Label>
-							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
-							<LogoThumb src={this.state.project.founder.logoLink} alt="Not Set" /><br />
-
-							<Label>Website URL</Label>
+							<Label>Website URL of Organisation</Label>
 							<Text placeholder="E.g https://www.futureofhumanity.com" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
+							
+							<Label>Add link to the logo of the founding Organisation</Label>
+							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
+							{this.state.project.founder.logoLink.length > 0 && <LogoThumb src={this.state.project.founder.logoLink} alt=" invalid image URL" />}
+							<br/>
 							<Submit onClick={this.handleCreateProject}>SUBMIT VENTURE</Submit>
 						</InnerSection>
 					</FormSection>

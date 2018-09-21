@@ -11,7 +11,7 @@ const DaysContainer = styled.div`
 `;
 
 const HeroInner = styled.div`
-	padding: 110px 0 0;
+	padding: 110px 0 50px;
 	color: ${props => props.theme.fontDarkGrey};
 	position: relative;
 

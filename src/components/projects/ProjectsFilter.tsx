@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SDGArray } from '../../lib/commonData';
+import { SDGArray, deviceWidth } from '../../lib/commonData';
 import styled from 'styled-components';
 
 const SDGsContainer = styled.div`
@@ -7,7 +7,6 @@ const SDGsContainer = styled.div`
 	flex-wrap: wrap;
 	width: 810px;
 	max-width: 100%;
-	margin-top: 50px;
 `;
 
 const Dialog = styled.div`
@@ -23,6 +22,7 @@ const Dialog = styled.div`
 	z-index: 11;
 	pointer-events: none;
 	transition: all 0.3s ease;
+	transition-delay: 0s;
 
 	p {
 		font-size: 14px;
@@ -88,6 +88,7 @@ const SDG = styled.div`
 
 	:hover {
 		${Dialog} {
+			transition-delay: 0.8s;
 			opacity: 1;
 			transform: scale(1);
 			pointer-events: auto;
@@ -111,8 +112,18 @@ const SDG = styled.div`
 	}
 `;
 
+const Container = styled.div`
+
+	padding: 15px;
+	
+	@media (min-width: ${deviceWidth.mobile}px) {
+		padding:0 ;
+	}
+`;
+
 export interface ParentProps {
 	handleFilter: (filter: boolean, indexes?: number[] ) => void;
+	exclude18th?: boolean;
 }
 
 export interface State {
@@ -161,25 +172,26 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 	}
 	render() {
 		return (
-			<div className="container">
-					<SDGsContainer>
-						{SDGArray.map((sdg, idx) => {
-							return (
-								<SDG onClick={() => this.handleSetClicked(idx + 1)} key={idx} style={{background: sdg.color}}>
-									<div className={this.handleIsSelected(idx + 1) ? 'checked' : ''}>
-										<img src={`./sdgs/${idx + 1}.png`}/>
-										<Dialog onClick={(event) => event.stopPropagation()}>
-											<p>{sdg.shortText}</p>
-											<a href={sdg.url} target="_blank">Find out more</a>
-											<Arrow />
-										</Dialog>
-										<Check>
-											<i className="icon-approved" />
-										</Check>
-									</div>
-								</SDG>
-							);
-						})}
+			<Container className="container">
+				<SDGsContainer>
+					{SDGArray.map((sdg, idx) => {
+						return (
+							<SDG onClick={() => this.handleSetClicked(idx + 1)} key={idx} style={{background: sdg.color}}>
+								<div className={this.handleIsSelected(idx + 1) ? 'checked' : ''}>
+									<img src={`./sdgs/${idx + 1}.png`}/>
+									<Dialog onClick={(event) => event.stopPropagation()}>
+										<p>{sdg.shortText}</p>
+										<a href={sdg.url} target="_blank">Find out more</a>
+										<Arrow />
+									</Dialog>
+									<Check>
+										<i className="icon-approved" />
+									</Check>
+								</div>
+							</SDG>
+						);
+					})}
+					{(this.props.exclude18th === undefined || this.props.exclude18th === false) && 
 						<SDG onClick={() => this.handleSetClicked(18)} style={{background: 'white'}}>
 							<div className={this.handleIsSelected(18) ? 'checked' : ''}>
 								<img src={`./sdgs/18.png`}/>
@@ -193,8 +205,9 @@ export class ProjectsFilter extends React.Component<ParentProps, State> {
 								</Check>
 							</div>
 						</SDG>
-					</SDGsContainer>
-			</div>
+					}
+				</SDGsContainer>
+			</Container>
 		);
 	}
 }

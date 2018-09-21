@@ -178,8 +178,8 @@ export class HeaderLeft extends React.Component<ParentProps> {
 							</div>
 						</Burger>
 						<Menu className={this.state.menuOpen === true ? 'openMenu' : ''}>
+							<HeaderLink exact={true} to="/about">About</HeaderLink>
 							<HeaderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderLink>
-							<HeaderLink exact={true} to="/about">About SDG Futures</HeaderLink>
 							<HeaderLink exact={true} to="/global-statistics">Impacts</HeaderLink>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
 								<HeaderBorderLink exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>

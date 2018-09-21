@@ -90,6 +90,11 @@ const CircleBG = styled.img`
 	top: 30px;
 	right: 0;
 	width: 500px;
+	opacity: 0.3;
+
+	@media (min-width: 1200px) {
+		opacity: 1;
+	}
 `;
 
 const BGContainer = styled.div`
