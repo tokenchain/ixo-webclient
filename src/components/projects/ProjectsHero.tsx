@@ -6,12 +6,23 @@ const DaysContainer = styled.div`
 	justify-content: flex-start;
 	display: flex;
 
-	@media (min-width: ${deviceWidth.mobile}px) {
-		justify-content: flex-end;
+	p {
+		top: 20px;
+	}
 
+	@media (min-width: ${deviceWidth.mobile}px) {
+		padding-top: 20px;
+		padding-left: 250px;
 		div {
 			display: inline-block;
+			justify-content: flex-start;
+			display: grid;
+			p {
+				top: 0px;
+				left: 5px;
+			}
 		}
+		
 	}
 `;
 
@@ -119,8 +130,8 @@ export class ProjectsHero extends React.Component<Props, State> {
 							<h2>Technology ventures for the <strong>future of humanity.</strong></h2>
 							<DaysContainer>
 								<div>
-									<p>DAYS LEFT UNTIL <strong>2030</strong></p>
 									<h3>{this.state.daysTo2030.toLocaleString()}</h3>
+									<p>DAYS TO ACHIEVE THE <strong>2030 GLOBAL GOALS</strong></p>
 								</div>
 							</DaysContainer>
 						</div>
