@@ -244,7 +244,9 @@ export class Projects extends React.Component<Props, State> {
 					otherProjects.push(project);
 				}
 			}
-			otherProjects.unshift(featuredProject);
+			if (featuredProject !== null) {
+				otherProjects.unshift(featuredProject);
+			}
 			return otherProjects;
 		}
 	}
