@@ -149,6 +149,17 @@ export class Projects extends React.Component<Props, State> {
 						serviceProviders: 0,
 						evaluators: 0
 					};
+
+					// check and hide if any projects should be hidden
+					if (process.env.REACT_APP_HIDDEN_PROJECTS.length > 0) {
+						projectList = this.handleHideProjects(projectList);
+					}
+
+					// check and reorder if any projects should be pinned to top
+					if (process.env.REACT_APP_PINNED_PROJECTS.length > 0) {
+						projectList = this.handlePinProjects(projectList);
+					}
+					
 					for (let project of projectList) {
 
 						agents.serviceProviders += project.data.agentStats.serviceProviders;
@@ -166,7 +177,7 @@ export class Projects extends React.Component<Props, State> {
 						claims: claimsArr,
 						claimsTotalRequired: reqClaims,
 						agents: Object.assign({}, agents),
-						filteredProjects: this.getMyProjects(this.props.userInfo, projectList)
+						// filteredProjects: this.getMyProjects(this.props.userInfo, projectList)
 					});
 					this.loadingProjects = false;
 				})
@@ -192,6 +203,37 @@ export class Projects extends React.Component<Props, State> {
 		}
 		if (this.state.projectList !== null && this.props.userInfo !== nextProps.userInfo) {
 			this.setState({filteredProjects: this.getMyProjects(nextProps.userInfo, this.state.projectList)});
+		}
+	}
+
+	handlePinProjects = (projects: any[]) => {
+		if (process.env.REACT_APP_PINNED_PROJECTS.length === 0) {
+			return projects;
+		} else {
+			const projectsToPin = process.env.REACT_APP_PINNED_PROJECTS.split(',');
+			const pinnedProjects = [];
+			const unpinnedProjects = [];
+			for (let project of projects) {
+				// @ts-ignore)
+				if (projectsToPin.includes(project.projectDid)) {
+					pinnedProjects.push(project);
+				} else {
+					unpinnedProjects.push(project);
+				}
+			}
+			return pinnedProjects.concat(unpinnedProjects);
+		}
+	}
+
+	handleHideProjects = (projects: any[]) => {
+		if (process.env.REACT_APP_HIDDEN_PROJECTS.length === 0) {
+			return projects;
+		} else {
+			const hiddenProjects = process.env.REACT_APP_HIDDEN_PROJECTS.split(',');
+			return projects.filter((project => {
+				// @ts-ignore
+				return (!hiddenProjects.includes(project.projectDid));
+			}));
 		}
 	}
 
