@@ -152,7 +152,7 @@ const SDGIcon = styled.i`
 		background: red;
 		left: -3px;
 		position: absolute;
-		top: -12px;
+		top: -15px;
 	}
 `;
 
