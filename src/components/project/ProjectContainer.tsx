@@ -464,6 +464,7 @@ export class ProjectContainer extends React.Component<Props, State> {
 							userInfo={this.props.userInfo}
 							project={project}
 							id={project._id}
+							projectDid={this.state.projectDid}
 							isModalOpen={this.state.isModalOpen}
 							toggleModal={this.handleToggleModal}
 							modalData={this.state.modalData}

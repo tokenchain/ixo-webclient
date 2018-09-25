@@ -198,7 +198,8 @@ export interface State {
 	twitter: string;
 	facebook: string;
 	instagram: string;
-
+	youtube: string;
+	
 	websiteLink: string;
 	mediaLink: string;
 
@@ -271,6 +272,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		instagram: '',
 		websiteLink: '',
 		mediaLink: '',
+		youtube: ''
 	};
 
 	busyLedgering = false;
@@ -525,6 +527,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 
 	socialMediaLinks = () => {
 		let github = this.state.github.trim();
+		let youtube = this.state.youtube.trim();
 		let facebook = this.state.facebook.trim();
 		let instagram = this.state.instagram.trim();
 		let twitter = this.state.twitter.trim();
@@ -545,6 +548,9 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 			}
 			if (github.length > 0 ) {
 				link = link + '<a href="' + github + '" target="_blank"><img src="/socialmedia/github.svg" /></a>';
+			}
+			if (youtube.length > 0 ) {
+				link = link + '<a href="' + youtube + '" target="_blank"><img src="/socialmedia/youtube.svg" /></a>';
 			}
 			return link + '\n';
 		} else {
@@ -568,7 +574,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 			+ goals + '\n';
 		}
 		descr = descr
-			+ this.projectMediaLink()
+			// + this.projectMediaLink()
 			+ this.socialMediaLinks();
 		return descr;
 	}
@@ -679,8 +685,8 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 							<Label>Github</Label>
 							<Text placeholder="https://www.github.com/venture" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
 							
-							<Label>Do you have any other media links you would like to include?</Label>
-							<Text placeholder="https://www.buzzfeed.com" value={this.state.mediaLink} onChange={(ev) => this.setState({mediaLink: ev.target.value})}/>
+							<Label>Youtube</Label>
+							<Text placeholder="https://www.youtube.com/venture" value={this.state.youtube} onChange={(ev) => this.setState({youtube: ev.target.value})}/>
 
 						{/* end of section 2 */}
 							<Label>Select one or more SDGs that apply to your venture</Label>

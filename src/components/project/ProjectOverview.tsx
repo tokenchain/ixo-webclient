@@ -2,7 +2,7 @@ import * as React from 'react';
 import { deviceWidth } from '../../lib/commonData';
 import styled from 'styled-components';
 import { AgentRoles } from '../../types/models';
-import { getCountryName } from '../../utils/formatters';
+import { getCountryName, isFeatured } from '../../utils/formatters';
 import { ModalWrapper } from '../common/ModalWrapper';
 import { ProjectNewAgent } from './ProjectNewAgent';
 import { UserInfo } from '../../types/models';
@@ -229,9 +229,24 @@ const Founder = styled.div`
 	}
 `;
 
+const ImageWrapper = styled.div`
+	position: relative;
+`;
+
+const ImageLabel = styled.p`
+	background: #A11C43;
+	color: white;
+	position: absolute;
+	bottom: 6px;
+	left: 0;
+	font-weight: 500;
+	padding: 4px 15px;
+`;
+
 export interface ParentProps {
 	userInfo: UserInfo;
 	project: any;
+	projectDid: string;
 	id: string;
 	isModalOpen: boolean;
 	modalData: any;
@@ -353,7 +368,10 @@ export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 				<div className="container">
 					<div className="row">
 						<div className="col-md-8">
-							<ProjectImage src={props.imageLink} onError={onProjectImageNotFound}/>
+							<ImageWrapper>
+								<ProjectImage src={props.imageLink} onError={onProjectImageNotFound}/>
+								{isFeatured(props.projectDid) && <ImageLabel>LAUNCHING SOON</ImageLabel>}
+							</ImageWrapper>
 							<Text>
 								<ReactMd markdown={props.project.longDescription} />
 							</Text>
