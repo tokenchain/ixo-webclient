@@ -151,17 +151,17 @@ export class Projects extends React.Component<Props, State> {
 					};
 
 					// check and hide if any projects should be hidden
-					if (process.env.REACT_APP_HIDDEN_PROJECTS.length > 0) {
+					if (process.env.REACT_APP_HIDDEN_PROJECTS && process.env.REACT_APP_HIDDEN_PROJECTS.length > 0) {
 						projectList = this.handleHideProjects(projectList);
 					}
 
 					// check and reorder if any projects should be pinned to top
-					if (process.env.REACT_APP_PINNED_PROJECTS.length > 0) {
+					if (process.env.REACT_APP_PINNED_PROJECTS && process.env.REACT_APP_PINNED_PROJECTS.length > 0) {
 						projectList = this.handlePinProjects(projectList);
 					}
 
 					// check and reorder if any projects is featured to be the first
-					if (process.env.REACT_APP_FEATURED_PROJECT.length > 0) {
+					if (process.env.REACT_APP_FEATURED_PROJECT && process.env.REACT_APP_FEATURED_PROJECT.length > 0) {
 						projectList = this.handleFeaturedProject(projectList);
 					}
 					
