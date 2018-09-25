@@ -57,7 +57,7 @@ const styles = {
 	},
 	sdgDropzone: {
 		width: '100%',
-		color: '#b00042',
+		color: '#333C4E',
 		cursor: 'pointer', 
 		padding: '2px 10px',
 		fontWeight: '400'

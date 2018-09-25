@@ -60,7 +60,7 @@ const Text = styled.input`
 	width: 100%;
 	border-radius: 3px;
 	border: 1px solid ${props => props.theme.lightGrey};
-	color: #b00042;
+	color: #333C4E;
 
 	::placeholder {
 		color: ${props => props.theme.lightGrey};
@@ -76,7 +76,7 @@ const TextArea = styled.textarea`
 	width: 100%;
 	border-radius: 3px;
 	border: 1px solid ${props => props.theme.lightGrey};
-	color: #b00042;
+	color: #333C4E;
 
 	::placeholder {
 		color: ${props => props.theme.lightGrey};
@@ -140,7 +140,7 @@ const LogoThumb = styled.img`
 
 const ImageWrapper = styled.section`
 	:hover {
-		border: 1px solid #b00042;
+		border: 1px solid #333C4E;
 	}
 
 	margin-bottom: 20px;
@@ -607,7 +607,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		const colourStyles = {
 			control: styles => ({ ...styles, backgroundColor: 'white', height: '50px', borderRadius: '3px', borderColor: '#B6B6B6' }),
 			placeholder: styles => ({ ...styles, color: '#B6B6B6' }),
-			singleValue: styles => ({ ...styles, color: '#b00042', fontWeight: '400' })
+			singleValue: styles => ({ ...styles, color: '#333C4E', fontWeight: '400' })
 		};
 
 		// List of countries for select boxes
@@ -616,6 +616,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 				{ label: v.country, value: v.alpha2}
 			);
 		});
+		countries.push({label: 'Global', value: 'Global'});
 
 		if (this.state.shouldRedirect === true) {
 			return <Redirect to="/" />;
