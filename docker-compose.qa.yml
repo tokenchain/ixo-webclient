@@ -7,3 +7,4 @@ services:
       - REACT_APP_IXO_WORLD_ORIGIN=https://qa.ixo.world
       - REACT_APP_PINNED_PROJECTS=
       - REACT_APP_HIDDEN_PROJECTS=
+      - REACT_APP_FEATURED_PROJECT=

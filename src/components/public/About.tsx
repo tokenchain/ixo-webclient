@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
-import { ButtonTypes, Button } from '../common/Buttons';
+// import { ButtonTypes, Button } from '../common/Buttons';
 import * as tracking from '../../utils/socialTracker';
 import MediaQuery from 'react-responsive';
 
@@ -126,10 +126,10 @@ const BannerRight = styled.div`
 	}
 `;
 
-const ButtonContainer = styled.div`
-	display: inline-flex;
-	margin-top: 20px;
-`;
+// const ButtonContainer = styled.div`
+// 	display: inline-flex;
+// 	margin-top: 20px;
+// `;
 
 export interface ParentProps { }
 
@@ -151,7 +151,7 @@ export const About: React.SFC<ParentProps> = (props) => {
 							technology, philanthropy, and ethical business to form open-sourced decentralized communities to 
 							accomplish the United Nation's Sustainable Development Goals globally.</p>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
-								<ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer>
+								{/* <ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer> */}
 							</MediaQuery>
 					</div>
 				</BannerRight>

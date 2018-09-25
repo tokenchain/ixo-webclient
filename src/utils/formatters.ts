@@ -79,3 +79,11 @@ export function getIxoWorldRoute(path: string) {
 	let origin = process.env.REACT_APP_IXO_WORLD_ORIGIN || 'https://ixo.world';
 	return origin + path;
 }
+
+export function isFeatured(projectDid: string) {
+	if (projectDid === process.env.REACT_APP_FEATURED_PROJECT) {
+		return true;
+	} else {
+		return false;
+	}
+}

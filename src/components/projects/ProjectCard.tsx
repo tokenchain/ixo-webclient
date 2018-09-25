@@ -2,7 +2,7 @@ import * as React from 'react';
 import { SDGArray, deviceWidth } from '../../lib/commonData';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { excerptText } from '../../utils/formatters';
+import { excerptText, isFeatured } from '../../utils/formatters';
 
 const placeholder = require('../../assets/images/ixo-placeholder-large.jpg');
 
@@ -82,13 +82,8 @@ const Founder = styled.div`
 
 	img {
 		filter: grayscale(100%);
-<<<<<<< HEAD
-		max-height: 40px;
-		max-width: 150px;
-=======
 		height: 40px;
 		max-width: 50%;
->>>>>>> 0306d135fb9903416edab768c13fcb75795eee3f
 	}
 
 	p {
@@ -161,6 +156,18 @@ const SDGIcon = styled.i`
 	}
 `;
 
+const ImageLabel = styled.p`
+	background: #A11C43;
+	color: white;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	font-weight: 500;
+	font-size: 12px;
+	margin-bottom: 0;
+	padding: 4px 15px;
+`;
+
 export interface Props {
 	project: any;
 	did: string;
@@ -206,6 +213,7 @@ export class ProjectCard extends React.Component<Props, States> {
 						})}
 						</SDGs>
 						<Description />
+						{isFeatured(this.props.did) && <ImageLabel>LAUNCHING SOON</ImageLabel>}
 					</CardTop>
 					<CardBottom>
 						<div>

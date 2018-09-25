@@ -159,6 +159,11 @@ export class Projects extends React.Component<Props, State> {
 					if (process.env.REACT_APP_PINNED_PROJECTS.length > 0) {
 						projectList = this.handlePinProjects(projectList);
 					}
+
+					// check and reorder if any projects is featured to be the first
+					if (process.env.REACT_APP_FEATURED_PROJECT.length > 0) {
+						projectList = this.handleFeaturedProject(projectList);
+					}
 					
 					for (let project of projectList) {
 
@@ -222,6 +227,25 @@ export class Projects extends React.Component<Props, State> {
 				}
 			}
 			return pinnedProjects.concat(unpinnedProjects);
+		}
+	}
+
+	handleFeaturedProject = (projects: any[]) => {
+		if (process.env.REACT_APP_FEATURED_PROJECT.length === 0) {
+			return projects;
+		} else {
+			const projectToFeature = process.env.REACT_APP_FEATURED_PROJECT;
+			let featuredProject = null;
+			const otherProjects = [];
+			for (let project of projects) {
+				if (projectToFeature === project.projectDid) {
+					featuredProject = project;
+				} else {
+					otherProjects.push(project);
+				}
+			}
+			otherProjects.unshift(featuredProject);
+			return otherProjects;
 		}
 	}
 
