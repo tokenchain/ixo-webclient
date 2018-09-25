@@ -558,14 +558,18 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		let UNSDGs = this.fixTextForMarkup(this.state.UNSDGs);
 		let goals = this.fixTextForMarkup(this.state.goals);
 
-		let descr = long 
-			+ '\n### How does your project solve for the UN SDGs?\n'
-			+ UNSDGs
-			+ '\n### Goal for 2030 and beyond\n'
-			+ goals
+		let descr = long + '\n';
+		if ( UNSDGs.length > 0 ) {
+			descr = descr + '\n### How does your project solve for the UN SDGs?\n'
+				+ UNSDGs + '\n';
+		}
+		if ( goals.length > 0 ) {
+			descr = descr + '\n### Goal for 2030 and beyond\n'
+			+ goals + '\n';
+		}
+		descr = descr
 			+ this.projectMediaLink()
 			+ this.socialMediaLinks();
-
 		return descr;
 	}
 
