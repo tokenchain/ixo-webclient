@@ -151,7 +151,7 @@ export const About: React.SFC<ParentProps> = (props) => {
 							technology, philanthropy, and ethical business to form open-sourced decentralized communities to 
 							accomplish the United Nation's Sustainable Development Goals globally.</p>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
-							<ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer>
+								<ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer>
 							</MediaQuery>
 					</div>
 				</BannerRight>

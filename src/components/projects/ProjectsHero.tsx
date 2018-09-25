@@ -119,7 +119,7 @@ export class ProjectsHero extends React.Component<Props, State> {
 							<h2>Technology ventures for the <strong>future of humanity.</strong></h2>
 							<DaysContainer>
 								<div>
-									<p>COUNTDOWN TO <strong>2030</strong></p>
+									<p>DAYS LEFT UNTIL <strong>2030</strong></p>
 									<h3>{this.state.daysTo2030.toLocaleString()}</h3>
 								</div>
 							</DaysContainer>

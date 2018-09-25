@@ -73,17 +73,6 @@ const CardTop = styled.div`
 		left: 0;
 		background: linear-gradient(180deg, rgba(0,0,0,0.63) 0%, rgba(0,0,0,0) 100%);
 	}
-
-	i {
-		position: relative;
-		z-index: 1;
-	}
-	i:before {
-		color: white;
-		font-size: 20px;
-		margin: 10px 5px;
-		display: inline-flex;
-	}
 `;
 
 const Founder = styled.div`
@@ -115,6 +104,10 @@ const CardBottom = styled.div`
 	border-radius: 0 0 2px 2px;
 	padding: 20px 14px 15px;
 	background: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	flex: 1;
 `;
 
 const CardContainer = styled.div`
@@ -122,7 +115,8 @@ const CardContainer = styled.div`
 `;
 
 const ProjectLink = styled(Link) `
-	display: block;
+	display: flex;
+	flex-direction: column;
 	box-shadow: 0px 10px 25px 0px rgba(0,0,0,0);
 	background: white;
 	height:100%;
@@ -144,6 +138,26 @@ const ProjectLink = styled(Link) `
 
 	:hover ${Description} p {
 		top: 0;
+	}
+`;
+
+const SDGIcon = styled.i`
+	color: white;
+	font-size: 22px;
+	margin: 10px 3px;
+	display: inline-flex;
+	position: relative;
+	z-index: 1;
+	top: -8px;
+
+	span {
+		content: '';
+		width: calc(100% + 6px);
+		height: 8px;
+		background: red;
+		left: -3px;
+		position: absolute;
+		top: -12px;
 	}
 `;
 
@@ -184,7 +198,7 @@ export class ProjectCard extends React.Component<Props, States> {
 						{this.props.project.sdgs.map((SDG, SDGi) => {
 							if (SDG !== 18) {
 							return (
-								<i key={SDGi} className={`icon-sdg-${SDGArray[Math.floor(SDG) - 1].ico}`} />
+								<SDGIcon key={SDGi} className={`icon-sdg-${SDGArray[Math.floor(SDG) - 1].ico}`} ><span style={{background: SDGArray[Math.floor(SDG) - 1].color}}/></SDGIcon>
 								);
 							} else {
 								return null;
@@ -194,8 +208,10 @@ export class ProjectCard extends React.Component<Props, States> {
 						<Description />
 					</CardTop>
 					<CardBottom>
-						<Title>{excerptText(this.props.project.title, 10)}</Title>
-						<Excerpt>{excerptText(this.props.project.shortDescription, 20)}</Excerpt>
+						<div>
+							<Title>{excerptText(this.props.project.title, 10)}</Title>
+							<Excerpt>{excerptText(this.props.project.shortDescription, 20)}</Excerpt>
+						</div>
 						<Founder>
 							<p>{this.props.project.founder.name}</p>
 							{this.props.project.founder.logoLink && <img src={this.props.project.founder.logoLink} />}
