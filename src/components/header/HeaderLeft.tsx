@@ -63,7 +63,11 @@ const HeaderBorderLink = HeaderLink.extend`
 
 	:hover {
 		text-decoration:none;
-		&&{color: white;}}
+		&&{color: white;}
+	}
+
+	&.active:hover {
+		&&{color: #FCBBCE;}
 	}
 
 `;
@@ -188,6 +192,8 @@ export class HeaderLeft extends React.Component<ParentProps> {
 							</div>
 						</Burger>
 						<Menu className={this.state.menuOpen === true ? 'openMenu' : ''}>
+							{/* <HeaderBorderLink exact={true} to={{ pathname: `/projects/did:ixo:fGcCu1UjtSB9XXVAcHtou/overview`, state: {featured: true} }}>Apply</HeaderBorderLink> */}
+							{/* {process.env.REACT_APP_FEATURED_PROJECT && <HeaderBorderLink exact={true} to={`/projects/${process.env.REACT_APP_FEATURED_PROJECT}/overview`}>Apply</HeaderBorderLink>} */}
 							<HeaderBorderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderBorderLink>
 							<HeaderLink exact={true} to="/about">About</HeaderLink>
 							<HeaderLink exact={true} onClick={() => { this.trackEventClick('Clicked Imapacts Navigation'); }}  to="/global-statistics">Impacts</HeaderLink>
@@ -196,7 +202,7 @@ export class HeaderLeft extends React.Component<ParentProps> {
 							</MediaQuery>
 						</Menu>
 					</div>
-				</Main>
+				</Main> 
 			</Fragment>
 		);
 	}

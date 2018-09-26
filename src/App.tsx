@@ -76,7 +76,6 @@ const Container = styled.div`
 	min-height: 100%;
 	font-family: roboto;
 	background: ${theme.bg.lightGrey};
-	overflow: hidden;
 	
 	h1, h2, h3, h4, h5, p, a {
 	}
@@ -88,6 +87,7 @@ const ContentWrapper = styled.main`
 	flex-direction: column;
 	flex: 1;
 	position: relative;
+	overflow: hidden;
 `;
 
 const CircleBG = styled.img`
@@ -108,7 +108,7 @@ const BGContainer = styled.div`
     position: absolute;
     top: 74px;
     left: 0;
-	width: 100vw;
+	width: 100%;
 	
 	> div {
 		position: relative;

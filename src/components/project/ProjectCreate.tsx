@@ -4,7 +4,7 @@ import { ImageLoader, imageQuality, styleTypes } from '../common/ImageLoader';
 import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { countryLatLng } from '../../lib/commonData';
+import { countryLatLng, deviceWidth } from '../../lib/commonData';
 import { Button, ButtonTypes } from '../common/Buttons';
 import { warningToast, successToast, errorToast } from '../helpers/Toast';
 import { ErrorTypes } from '../../types/models';
@@ -114,7 +114,8 @@ const SDGForm = styled.div`
 
 const FormSection = styled.div`
 	display: flex;
-	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	width: 100%;
 
 	.hidden {
@@ -128,10 +129,24 @@ const FormSection = styled.div`
 
 const InnerSection = styled.div`
 	background: white;
-	padding: 40px 50px;
+	padding: 40px 50px 0;
 	width: 640px;
 	max-width: 100%;
 	box-shadow: 0 8px 16px -2px rgba(0,0,0,0.03);
+
+	h3 {
+		font-size: 23px;
+		font-family: ${props => props.theme.fontRobotoCondensed};
+		margin-bottom: 20px;
+
+		span {
+			color: #A11C43;
+		}
+	}
+
+	p {
+
+	}
 `;
 
 const LogoThumb = styled.img`
@@ -160,9 +175,56 @@ const Submit = styled.button`
 	text-tranform: uppercase;
 	font-weight: 400;
 	font-family: ${props => props.theme.fontRobotoCondensed};
-	width: 233px;
+	width: 100%;
 	border: 0;
 	height: 40px;
+	margin-bottom: 20px;
+	cursor: pointer; 
+`;
+
+const Back = styled.button`
+	width: 100%;
+	border: 1px solid #A11C43;
+	background: white;
+	color: #A11C43;
+	height: 40px;
+	font-family: ${props => props.theme.fontRobotoCondensed};
+	cursor: pointer;
+	margin-bottom: 20px;
+
+	:focus {
+		outline: none;
+	}
+
+	:hover {
+		background: #a11c4354;
+	}
+`;
+
+const Next = Back.extend`
+	color: white;
+	background: #A11C43;
+`;
+
+const ButtonContainer = styled.div`
+	background: white;
+	margin-bottom: 50px;
+	padding: 20px 50px 30px;
+	width: 640px;
+	max-width: 100%;
+	
+	div {
+		width: 100%;
+	}
+
+	@media (min-width: ${deviceWidth.mobile}px) {
+		justify-content: space-between;
+		display: flex;
+
+		div {
+			width: 45%;
+		}
+	}
 `;
 
 export interface StateProps {
@@ -177,7 +239,7 @@ export interface State {
 	isDidLedgered: boolean;
 	toastShown: boolean;
 	didDoc: any;
-
+	currentStep: number;
 	croppedImg: any;
 	imageKey: string;
 	claimSchema: string;
@@ -244,6 +306,7 @@ let defaultProject = {
 export class ProjectCreate extends React.Component<StateProps, State> {
 
 	state = {
+		currentStep: 1,
 		isModalOpen: false,
 		shouldRedirect: false,
 		hasKeySafe: false,
@@ -601,6 +664,12 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 		}
 	}
 
+	changeStep = (step: number) => {
+		window.scrollTo(0, 100); 
+		const currStep = this.state.currentStep + step;
+		this.setState({ currentStep : currStep});
+	}
+
 	render() {
 
 		// Custom styling for select boxes
@@ -640,91 +709,111 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 				</Container>
 				<SDGForm>
 					<FormSection>
-						<InnerSection>
-							<Text className="hidden" placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
-							<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
+						{this.state.currentStep === 1 &&
+							<InnerSection>
+								<h3>Step {this.state.currentStep}<span>/4</span>: Your venture</h3>
+								<Text className="hidden" placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
+								<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
 
-							<Label>Your Name</Label>
-							<Text placeholder="John Smith" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
+								<Label>Your Name</Label>
+								<Text placeholder="John Smith" value={this.state.project.ownerName} onChange={this.handleOwnerNameChanged} />
 
-							<Label>Your Email</Label>
-							<Text placeholder="john@gmail.com" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
-							
-							<Label>What is the name of your venture?</Label>
-							<Text placeholder="E.g Raise your voice against discrimination" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
-							
-							<Label>Describe your venture in a short sentence</Label>
-							<SmallTextArea placeholder="Project headline" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
-							
-							<Label>In which country is your venture located?</Label>
-							<Select
-								options={countries}
-								onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}
-								className="selector"
-								placeholder="Eg. South Africa"
-								styles={colourStyles}
-							/>
-							<Label>A picture is worth a thousand words. Upload a picture that represents your venture <span>(recommended size 1080x720)</span></Label>
-							<ImageWrapper><ImageLoader quality={imageQuality.medium} styleType={styleTypes.sdgFutures} placeholder="Add file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/></ImageWrapper>
-						{/* end of section 1 */}
+								<Label>Your Email</Label>
+								<Text placeholder="john@gmail.com" value={this.state.project.ownerEmail} onChange={this.handleOwnerEmailChanged} />
+								
+								<Label>What is the name of your venture?</Label>
+								<Text placeholder="E.g Raise your voice against discrimination" value={this.state.project.title} onChange={(ev) => this.handlePropertyChanged('title', ev)}/>
+								
+								<Label>Describe your venture in a short sentence</Label>
+								<SmallTextArea placeholder="Project headline" value={this.state.project.shortDescription} onChange={(ev) => this.handlePropertyChanged('shortDescription', ev)}/>
+								
+								<Label>In which country is your venture located?</Label>
+								<Select
+									options={countries}
+									onChange={(ev) => this.handlePropertyChanged('projectLocation', ev)}
+									className="selector"
+									placeholder="Eg. South Africa"
+									styles={colourStyles}
+								/>
+								<Label>A picture is worth a thousand words. Upload a picture that represents your venture <span>(recommended size 1080x720)</span></Label>
+								<ImageWrapper><ImageLoader quality={imageQuality.medium} styleType={styleTypes.sdgFutures} placeholder="Add file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/></ImageWrapper>
+							</InnerSection>
+						}
+						{this.state.currentStep === 2 &&
+							<InnerSection>
+								<h3>Step {this.state.currentStep}<span>/4</span>: Your venture (continued)</h3>
+								<Label>Describe your venture in full detail</Label>
+								<TextArea placeholder="Venture detail" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
+								
+								<Label>Facebook</Label>
+								<Text placeholder="https://www.facebook.com/venture" value={this.state.facebook} onChange={(ev) => this.setState({facebook: ev.target.value})}/>
+								
+								<Label>Twitter</Label>
+								<Text placeholder="https://twitter.com/venture" value={this.state.twitter} onChange={(ev) => this.setState({twitter: ev.target.value})}/>
+								
+								<Label>Instagram</Label>
+								<Text placeholder="https://www.instagram.com/venture" value={this.state.instagram} onChange={(ev) => this.setState({instagram: ev.target.value})}/>
+								
+								<Label>Website</Label>
+								<Text placeholder="https://www.venture.com" value={this.state.websiteLink} onChange={(ev) => this.setState({websiteLink: ev.target.value})}/>
+								
+								<Label>Github</Label>
+								<Text placeholder="https://www.github.com/venture" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
+								
+								<Label>Youtube</Label>
+								<Text placeholder="https://www.youtube.com/venture" value={this.state.youtube} onChange={(ev) => this.setState({youtube: ev.target.value})}/>
+							</InnerSection>
+						}
+						{this.state.currentStep === 3 &&
+							<InnerSection>
+								<h3>Step {this.state.currentStep}<span>/4</span>: SDGs</h3>
+								<Label>Select one or more SDGs that apply to your venture</Label>
+								<ProjectsFilter handleFilter={(filter, idxs) => this.handleSDGs(filter, idxs)} exclude18th={true}/> <br/>
+								
+								<Label>What does your venture solve for the sustainable development?</Label>
+								<TextArea placeholder="E.g Eliminate food wastage" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
+								
+								<Label>Goal for 2030 and beyond</Label>
+								<TextArea placeholder="E.g Building better infrastructure for food distribution in the future" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
+							</InnerSection>
+						}
+						{this.state.currentStep === 4 &&
+							<InnerSection>
+								<h3>Step {this.state.currentStep}<span>/4</span>: Founding Organization</h3>
+								<Label>Name of founding organisation</Label>
+								<Text placeholder="E.g. Future of Humanity" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
+								
+								<Label>Contact email</Label>
+								<Text placeholder="E.g info@futureofhumanity.com" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
+								<Label>Country of origin</Label>
+								<Select
+									options={countries}
+									onChange={(ev) => this.handlePropertyChanged('countryOfOrigin', ev)}
+									className="selector"
+									placeholder="E.g Switzerland"
+									styles={colourStyles}
+								/>
 
-							<Label>Describe your venture in full detail</Label>
-							<TextArea placeholder="Venture detail" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
-							
-							<Label>Facebook</Label>
-							<Text placeholder="https://www.facebook.com/venture" value={this.state.facebook} onChange={(ev) => this.setState({facebook: ev.target.value})}/>
-							
-							<Label>Twitter</Label>
-							<Text placeholder="https://twitter.com/venture" value={this.state.twitter} onChange={(ev) => this.setState({twitter: ev.target.value})}/>
-							
-							<Label>Instagram</Label>
-							<Text placeholder="https://www.instagram.com/venture" value={this.state.instagram} onChange={(ev) => this.setState({instagram: ev.target.value})}/>
-							
-							<Label>Website</Label>
-							<Text placeholder="https://www.venture.com" value={this.state.websiteLink} onChange={(ev) => this.setState({websiteLink: ev.target.value})}/>
-							
-							<Label>Github</Label>
-							<Text placeholder="https://www.github.com/venture" value={this.state.github} onChange={(ev) => this.setState({github: ev.target.value})}/>
-							
-							<Label>Youtube</Label>
-							<Text placeholder="https://www.youtube.com/venture" value={this.state.youtube} onChange={(ev) => this.setState({youtube: ev.target.value})}/>
+								<Label>Short description of founding organisation</Label>
+								<Text placeholder="E.g Future of Humanity is a decentralized and distributed communities and technology stack for the United Nations SDG’s." value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
 
-						{/* end of section 2 */}
-							<Label>Select one or more SDGs that apply to your venture</Label>
-							<ProjectsFilter handleFilter={(filter, idxs) => this.handleSDGs(filter, idxs)} exclude18th={true}/> <br/>
-							
-							<Label>What does your venture solve for the sustainable development?</Label>
-							<TextArea placeholder="E.g Eliminate food wastage" value={this.state.UNSDGs} onChange={(ev) => this.setState({UNSDGs: ev.target.value})}/>
-							
-							<Label>Goal for 2030 and beyond</Label>
-							<TextArea placeholder="E.g Building better infrastructure for food distribution in the future" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
-						{/* end of section 3 */}
-							<Label>Name of founding organisation</Label>
-							<Text placeholder="E.g. Future of Humanity" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
-							
-							<Label>Contact email</Label>
-							<Text placeholder="E.g info@futureofhumanity.com" value={this.state.project.founder.email} onChange={(ev) => this.handleFounderPropertyChanged('email', ev)}/>
-							<Label>Country of origin</Label>
-							<Select
-								options={countries}
-								onChange={(ev) => this.handlePropertyChanged('countryOfOrigin', ev)}
-								className="selector"
-								placeholder="E.g Switzerland"
-								styles={colourStyles}
-							/>
-
-							<Label>Short description of founding organisation</Label>
-							<Text placeholder="E.g Future of Humanity is a decentralized and distributed communities and technology stack for the United Nations SDG’s." value={this.state.project.founder.shortDescription} onChange={(ev) => this.handleFounderPropertyChanged('shortDescription', ev)}/>
-
-							<Label>Website URL of Organisation</Label>
-							<Text placeholder="E.g https://www.futureofhumanity.com" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
-							
-							<Label>Add link to the logo of the founding Organisation</Label>
-							<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
-							{this.state.project.founder.logoLink.length > 0 && <LogoThumb src={this.state.project.founder.logoLink} alt=" invalid image URL" />}
-							<br/>
-							<Submit onClick={this.handleCreateProject}>SUBMIT VENTURE</Submit>
-						</InnerSection>
+								<Label>Website URL of Organisation</Label>
+								<Text placeholder="E.g https://www.futureofhumanity.com" value={this.state.project.founder.websiteURL} onChange={(ev) => this.handleFounderPropertyChanged('websiteURL', ev)}/>
+								
+								<Label>Add link to the logo of the founding Organisation</Label>
+								<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
+								{this.state.project.founder.logoLink.length > 0 && <LogoThumb src={this.state.project.founder.logoLink} alt=" invalid image URL" />}
+							</InnerSection>
+						}
+							<ButtonContainer>
+								<div>
+									{this.state.currentStep > 1 && <Back onClick={() => this.changeStep(-1)}>BACK</Back>}
+								</div>
+								<div>
+									{this.state.currentStep < 4 && <Next onClick={() => this.changeStep(1)}>NEXT</Next>}
+									{this.state.currentStep === 4 && <Submit onClick={this.handleCreateProject}>SUBMIT VENTURE</Submit>}
+								</div>
+							</ButtonContainer>
 					</FormSection>
 				</SDGForm>
 			</React.Fragment>

@@ -255,10 +255,15 @@ export interface ParentProps {
 	toggleModal: (data?: any, modalStatus?: boolean) => void;
 	hasCapability: (Role: [AgentRoles]) => boolean;
 	imageLink: string;
+	featured: boolean;
 }
 
 export const ProjectOverview: React.SFC<ParentProps> = (props) => {
 	
+	if (props.featured === true) {
+		console.log('yipee');
+	}
+
 	const submitAgent = (role: string, agentData: any) => {
 
 		let agentCreateJson: any = {...agentData, role: role};

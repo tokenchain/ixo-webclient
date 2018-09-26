@@ -11,7 +11,7 @@ const BottomBar = styled.footer`
 	background:black;
 
 	&& {
-		width:100vw;
+		width:100%;
 	}
 `;
 

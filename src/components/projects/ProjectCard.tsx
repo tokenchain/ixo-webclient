@@ -35,7 +35,7 @@ const Description = styled.div`
 `;
 
 const Excerpt = styled.p`
-	color: #8B8B8B;
+	color: #282828;
 	font-size: 15px;
 	font-weight: 100;
 `;

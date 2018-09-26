@@ -453,6 +453,10 @@ export class ProjectContainer extends React.Component<Props, State> {
 			return <Spinner info="ProjectContainer: Loading Project"/>;
 		} else {
 			const project = this.state.projectPublic;
+			let isFeatured = false;
+			if (this.props.location.state.featured! && this.props.location.state.featured === true) {
+				isFeatured = true;
+			}
 			switch (this.props.contentType) {
 				case contentType.overview:
 				return (
@@ -470,6 +474,7 @@ export class ProjectContainer extends React.Component<Props, State> {
 							modalData={this.state.modalData}
 							hasCapability={this.handleHasCapability}
 							imageLink={this.state.imageLink}
+							featured={isFeatured}
 						/>
 					</Fragment>
 				);
