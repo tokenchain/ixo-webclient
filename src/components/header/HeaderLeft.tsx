@@ -45,7 +45,7 @@ const HeaderLink = styled(NavLink)`
 	:hover {
  		text-decoration:none;
  		&&{color: #A11C43;}}
- 	}
+	}
 `;
 
 const HeaderBorderLink = HeaderLink.extend`
@@ -57,7 +57,7 @@ const HeaderBorderLink = HeaderLink.extend`
 
 	&.active {
 		background: #A11C43;
-		color: white;
+		color: #FCBBCE;
 		font-weight: 300;
 	}
 

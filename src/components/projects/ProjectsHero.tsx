@@ -3,26 +3,13 @@ import styled from 'styled-components';
 import { deviceWidth } from '../../lib/commonData';
 
 const DaysContainer = styled.div`
-	justify-content: flex-start;
 	display: flex;
-
-	p {
-		top: 20px;
-	}
+	flex-direction: row-reverse;
+	justify-content: flex-end;
 
 	@media (min-width: ${deviceWidth.mobile}px) {
 		padding-top: 20px;
-		padding-left: 250px;
-		div {
-			display: inline-block;
-			justify-content: flex-start;
-			display: grid;
-			p {
-				top: 0px;
-				left: 5px;
-			}
-		}
-		
+		flex-direction: row;
 	}
 `;
 
@@ -44,7 +31,9 @@ const HeroInner = styled.div`
 	h3 {
 		font-weight: 300;
 		display: block;
-		font-size: 22px;
+		margin-top: -3px;
+		font-size: 44px;
+		margin-right: 15px;
 		color: #A11C43;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 	}
@@ -53,7 +42,6 @@ const HeroInner = styled.div`
 		font-size: 16px;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 		display: inline-block;
-		right: auto;
 		margin-bottom:0;
 	}
 
@@ -69,19 +57,19 @@ const HeroInner = styled.div`
 		h3 {
 			font-size: 44px;
 			display: inline-block;
+			margin-right: 0;
 		}
 
 		p {
 			position: relative;
-			top: -20px;
-			right: 10px;
+			text-align: right;
+			margin-right: 12px	
 		}
 	}
 `;
 
 const HeroContainer = styled.div`
 	margin:0 10px;
-	width: 100vw;
 	position: relative;
 
 	${HeroInner}:before {
@@ -129,10 +117,8 @@ export class ProjectsHero extends React.Component<Props, State> {
 						<div className="col-xl-6 col-lg-8">
 							<h2>Technology ventures for the <strong>future of humanity.</strong></h2>
 							<DaysContainer>
-								<div>
+									<p>DAYS TO ACHIEVE THE<br/>2030 GLOBAL GOALS</p>
 									<h3>{this.state.daysTo2030.toLocaleString()}</h3>
-									<p>DAYS TO ACHIEVE THE <strong>2030 GLOBAL GOALS</strong></p>
-								</div>
 							</DaysContainer>
 						</div>
 					</div>
