@@ -8,13 +8,12 @@ import MediaQuery from 'react-responsive';
 // const bannerBg = require('../../assets/images/404/404-bg.jpg');
 // const walrusImg = require('../../assets/images/404/walrus-image.png');
 
-const Banner = styled.div`
+const AboutContainer = styled.div`
 	background: inherit;
-	background-size: cover;
-	width: 100%;
 	display: flex;
-	flex: 1 1 auto;
-	margin: 0px 20% 10px;
+	flex: 1;
+	flex-direction: column;
+	justify-content: center;
 `;
 // const BannerLeft = styled.div`
 // 	width: 100%;
@@ -34,85 +33,34 @@ const Banner = styled.div`
 // 		}
 // 	}
 // `;
-const BannerRight = styled.div`
-	width: 100%;
+const AboutInner = styled.div`
+	display: flex;
+	align-items: center;
 	color: #282828;
-	margin-top: 22%;
-	margin-right: 10%;
+	
+	@media (min-width: ${deviceWidth.mobile}px) {
+		margin-top: -74px;
+	}
 
-	@media (max-width: 992px) {
-		margin-top: 0;
-	}
-	@media (max-width: ${deviceWidth.tablet}px){
-		margin-top: -20px;
-	}
 	h2 {
 		font-size: 45px;
 		font-family: ${props => props.theme.fontRobotoCondensed};
-		margin-bottom: 5px;
 		width: 100%;
+		margin-bottom: 25px;
 	}
-	@media (max-width: 1240px) {
-		h2 {
-			margin-bottom: 20px;
-		}
-	}
-	@media (max-width: ${deviceWidth.tablet}px){
-		h2 {
-			line-height: 60px;
-			margin-bottom: 15px;
-		}
-	}
+
 	h5 {
 		font-size: 23px;
 		font-weight: 300;
 	}
 	p {
-		padding-top: 30px;
 		position: relative;
 		box-sizing: border-box;
 		font-weight: 300;
-		padding-right: 55%;
-		margin-bottom: 0;
+		max-width: 540px;
+		margin-bottom: 25px;
 	}
-	@media (max-width: 1240px) {
-		p {
-			padding-top: 18px;
-		}
-	}
-	@media (max-width: 1024px){
-		p {
-			padding-top: 20px;
-			padding-right: 35%;
-		}
-	}
-	@media (max-width: ${deviceWidth.tablet}px){
-		p {
-			padding-top: 30px;
-			padding-right: 25%;
-		}
-	}
-	@media (max-width: ${deviceWidth.mobile}px){
-		p {
-			padding-top: 20px;
-			padding-right: 18%;
-		}
-	}
-	@media (max-width: 1024px){
-		p::before {
-			top: -2%;
-		}
-	}
-	@media (max-width: ${deviceWidth.tablet}px){
-		p::before {
-			top: 14%;
-		}
-	}
-	@media (max-width: ${deviceWidth.mobile}px){
-		p::before {
-			top: 5%;
-		}
-	}
+
 	button {
 		background: none;
 		color: white;
@@ -135,27 +83,25 @@ export interface ParentProps { }
 
 export const About: React.SFC<ParentProps> = (props) => {
 	return (
-		<Banner className="row">
-		{tracking.fireTracker('/about-sdg-futures')}
-			{/* <div className="col-lg-4">
-				<BannerLeft>
-					<img src={walrusImg} alt="" />
-				</BannerLeft>
-			</div> */}
-			<div className="col-lg-8 col-md-12">
-				<BannerRight>
-					<div className="container">
+		<AboutContainer className="container">
+			<div className="row">
+				{tracking.fireTracker('/about-sdg-futures')}
+				<AboutInner className="col-lg-8 col-md-12">
+					<div>
 						<h2>About SDG Futures</h2>
 						<p>SDG Futures is an initiative of Future of Humanity, a decentralized and distributed communities 
-							and technology stack for the United Nations SDG’s. SDG Futures is partnering with the best in 
+							and technology stack for the United Nations SDG’s.
+						</p>
+						<p> SDG Futures is partnering with the best in 
 							technology, philanthropy, and ethical business to form open-sourced decentralized communities to 
-							accomplish the United Nation's Sustainable Development Goals globally.</p>
+							accomplish the United Nation's Sustainable Development Goals globally.
+						</p>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
 								{/* <ButtonContainer><Button type={ButtonTypes.dark} href="/create-project">Launch a Venture</Button></ButtonContainer> */}
 							</MediaQuery>
 					</div>
-				</BannerRight>
+				</AboutInner>
 			</div>
-		</Banner>
+		</AboutContainer>
 	);
 };
