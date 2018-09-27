@@ -12,7 +12,6 @@ const TopBar = styled.header`
 	position: sticky;
 	top: 0;
 	padding: 0 15px;
-	overflow: hidden;
 	z-index: 9;
 	color: #282828;
 	background: #D6D6D6;

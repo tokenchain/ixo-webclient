@@ -340,6 +340,9 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 
 	busyLedgering = false;
 
+	componenDidMount() {
+		console.log(this.state);
+	}
 	toggleModal = () => {
 		this.setState({isModalOpen: !this.state.isModalOpen});
 	}
@@ -444,7 +447,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 	handleCreateProject = () => {
 		let newProject = this.state.project;
 		newProject.longDescription = this.createMarkup();
-
+		console.log('2', newProject);
 		if (this.props.keysafe === null) {
 		errorToast('Please install IXO Credential Manager first.');
 		} else {
@@ -460,6 +463,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 				);
 				Promise.all(promises).then((results) => {
 					let projectObj: string = this.state.projectJson;
+					console.log('2', projectObj);
 					this.props.keysafe.requestSigning(projectObj, (error: any, signature: any) => {
 						
 						this.props.ixo.project.createProject(JSON.parse(projectObj), signature, this.state.project.serviceEndpoint).then((res: any) => {

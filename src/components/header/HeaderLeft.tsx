@@ -76,15 +76,12 @@ const Main = styled.div`
 	padding:15px 20px;
 	justify-content: space-between;
 	height: 74px;
+	position: relative;
+	z-index: 2;
+	background: #D6D6D6;
 
 	a {
 		text-decoration: none;
-	}
-
-	.openMenu {
-		right: 0;
-		opacity: 1;
-		pointer-events: auto;
 	}
 `;
 
@@ -93,17 +90,6 @@ const IXOLogo = styled.img`
 `;
 
 const Menu = styled.div`
-
-	transition: all 0.8s ease;
-    position: absolute;
-	top: 74px;
-	opacity: 0;
-    right: -20%;
-    background: white;
-    width: 100%;
-	padding: 15px;
-	pointer-events: none;
-	max-width: 600px;
 
 	${HeaderLink} {
 		display: block;
@@ -122,6 +108,28 @@ const Menu = styled.div`
 			display: inline;
 		}
 	}
+`;
+
+const MobileMenu = Menu.extend`
+
+	&.openMenu {
+		top: 74px;
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	transition: all 0.8s ease;
+	position: absolute;
+	top: -100%;
+	opacity: 0;
+	right: 0;
+	background: white;
+	width: 100%;
+	padding: 15px;
+	pointer-events: none;
+	max-width: 600px;
+	z-index: 1;
+	border-radius: 5px 0 0 5px;
 `;
 
 const Burger = styled.div`
@@ -176,6 +184,21 @@ export class HeaderLeft extends React.Component<ParentProps> {
 		});
 	}
 
+	getMenuItems = () => {
+		/* <HeaderBorderLink exact={true} to={{ pathname: `/projects/did:ixo:fGcCu1UjtSB9XXVAcHtou/overview`, state: {featured: true} }}>Apply</HeaderBorderLink> */
+		/* {process.env.REACT_APP_FEATURED_PROJECT && <HeaderBorderLink exact={true} to={`/projects/${process.env.REACT_APP_FEATURED_PROJECT}/overview`}>Apply</HeaderBorderLink>} */
+		return (
+			<Fragment>
+				<HeaderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderLink>
+				<HeaderLink exact={true} to="/about">About</HeaderLink>
+				<HeaderLink exact={true} onClick={() => { this.trackEventClick('Clicked Imapacts Navigation'); }}  to="/global-statistics">Impacts</HeaderLink>
+				<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
+					<HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Apply</HeaderBorderLink>
+				</MediaQuery>
+			</Fragment>
+		);
+	}
+
 	render() {
 		return (
 			<Fragment>
@@ -191,18 +214,18 @@ export class HeaderLeft extends React.Component<ParentProps> {
 								<div className="bar3"/>
 							</div>
 						</Burger>
-						<Menu className={this.state.menuOpen === true ? 'openMenu' : ''}>
-							{/* <HeaderBorderLink exact={true} to={{ pathname: `/projects/did:ixo:fGcCu1UjtSB9XXVAcHtou/overview`, state: {featured: true} }}>Apply</HeaderBorderLink> */}
-							{/* {process.env.REACT_APP_FEATURED_PROJECT && <HeaderBorderLink exact={true} to={`/projects/${process.env.REACT_APP_FEATURED_PROJECT}/overview`}>Apply</HeaderBorderLink>} */}
-							<HeaderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderLink>
-							<HeaderLink exact={true} to="/about">About</HeaderLink>
-							<HeaderLink exact={true} onClick={() => { this.trackEventClick('Clicked Imapacts Navigation'); }}  to="/global-statistics">Impacts</HeaderLink>
-							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
-								<HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Apply</HeaderBorderLink>
-							</MediaQuery>
-						</Menu>
+						<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
+							<Menu>
+								{this.getMenuItems()}
+							</Menu>
+						</MediaQuery>
 					</div>
 				</Main> 
+				<MediaQuery maxWidth={`991px`}>
+					<MobileMenu className={this.state.menuOpen === true ? 'openMenu' : ''}>
+								{this.getMenuItems()}
+					</MobileMenu>
+				</MediaQuery>
 			</Fragment>
 		);
 	}
