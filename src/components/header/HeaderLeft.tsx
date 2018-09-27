@@ -194,11 +194,11 @@ export class HeaderLeft extends React.Component<ParentProps> {
 						<Menu className={this.state.menuOpen === true ? 'openMenu' : ''}>
 							{/* <HeaderBorderLink exact={true} to={{ pathname: `/projects/did:ixo:fGcCu1UjtSB9XXVAcHtou/overview`, state: {featured: true} }}>Apply</HeaderBorderLink> */}
 							{/* {process.env.REACT_APP_FEATURED_PROJECT && <HeaderBorderLink exact={true} to={`/projects/${process.env.REACT_APP_FEATURED_PROJECT}/overview`}>Apply</HeaderBorderLink>} */}
-							<HeaderBorderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderBorderLink>
+							<HeaderLink exact={true} onClick={() => this.props.refreshProjects} to="/">Ventures</HeaderLink>
 							<HeaderLink exact={true} to="/about">About</HeaderLink>
 							<HeaderLink exact={true} onClick={() => { this.trackEventClick('Clicked Imapacts Navigation'); }}  to="/global-statistics">Impacts</HeaderLink>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
-								<HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
+								<HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Apply</HeaderBorderLink>
 							</MediaQuery>
 						</Menu>
 					</div>
