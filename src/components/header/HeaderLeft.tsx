@@ -198,7 +198,7 @@ export class HeaderLeft extends React.Component<ParentProps> {
 							<HeaderLink exact={true} to="/about">About</HeaderLink>
 							<HeaderLink exact={true} onClick={() => { this.trackEventClick('Clicked Imapacts Navigation'); }}  to="/global-statistics">Impacts</HeaderLink>
 							<MediaQuery minWidth={`${deviceWidth.desktop}px`}>
-								{/* <HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Launch a Venture</HeaderBorderLink> */}
+								<HeaderBorderLink onClick={() => { this.trackEventClick('Launch New Venture Header Button'); }} exact={true} to="/create-project">Launch a Venture</HeaderBorderLink>
 							</MediaQuery>
 						</Menu>
 					</div>

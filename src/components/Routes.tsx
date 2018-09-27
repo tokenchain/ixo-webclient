@@ -14,6 +14,7 @@ import { About } from './public/About';
 import { Spinner } from './common/Spinner';
 import { ProjectSignAndCreateConnected } from './project/curation/ProjectSignAndCreate';
 import { ProjectCreateUploadPublicDocsConnected } from './project/curation/ProjectCreateUploadPublicDocs';
+import { VerificationConnected } from './verification/Verification';
 export namespace Routes {
 	export interface StateProps {
 	}
@@ -32,6 +33,7 @@ export const Routes: React.SFC<Routes.RouteProps> = props => {
 				<Route exact={true} path="/json" component={ProjectForm} />
 				<Route exact={true} path="/icons" component={Icons} />
 				<Route exact={true} path="/register" component={RegisterConnected} />
+				<Route exact={true} path="/verification" component={VerificationConnected} />
 				<Route
 					exact={true}
 					path="/"

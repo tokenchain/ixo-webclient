@@ -709,8 +709,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 				</Container>
 				<SDGForm>
 					<FormSection>
-						{this.state.currentStep === 1 &&
-							<InnerSection>
+							<InnerSection style={{ display: this.state.currentStep === 1 ? 'block' : 'none'}}>
 								<h3>Step {this.state.currentStep}<span>/4</span>: Your venture</h3>
 								<Text className="hidden" placeholder="Project datastore url example: http://104.155.142.57:5000/ or http://beta.elysian.ixo.world:5000/" value={this.state.project.serviceEndpoint} onChange={this.handlePdsUrlChange} />
 								<Text className="hidden" placeholder="Impact Action" value={this.state.project.impactAction} onChange={(ev) => this.handlePropertyChanged('impactAction', ev)}/>
@@ -738,9 +737,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								<Label>A picture is worth a thousand words. Upload a picture that represents your venture <span>(recommended size 1080x720)</span></Label>
 								<ImageWrapper><ImageLoader quality={imageQuality.medium} styleType={styleTypes.sdgFutures} placeholder="Add file" imageWidth={960} aspect={16 / 9} imageCallback={this.handleImage}/></ImageWrapper>
 							</InnerSection>
-						}
-						{this.state.currentStep === 2 &&
-							<InnerSection>
+							<InnerSection  style={{ display: this.state.currentStep === 2 ? 'block' : 'none'}}>
 								<h3>Step {this.state.currentStep}<span>/4</span>: Your venture (continued)</h3>
 								<Label>Describe your venture in full detail</Label>
 								<TextArea placeholder="Venture detail" value={this.state.lngDescr} onChange={(ev) => this.setState({lngDescr: ev.target.value})}/>
@@ -763,9 +760,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								<Label>Youtube</Label>
 								<Text placeholder="https://www.youtube.com/venture" value={this.state.youtube} onChange={(ev) => this.setState({youtube: ev.target.value})}/>
 							</InnerSection>
-						}
-						{this.state.currentStep === 3 &&
-							<InnerSection>
+							<InnerSection  style={{ display: this.state.currentStep === 3 ? 'block' : 'none'}}>
 								<h3>Step {this.state.currentStep}<span>/4</span>: SDGs</h3>
 								<Label>Select one or more SDGs that apply to your venture</Label>
 								<ProjectsFilter handleFilter={(filter, idxs) => this.handleSDGs(filter, idxs)} exclude18th={true}/> <br/>
@@ -776,9 +771,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								<Label>Goal for 2030 and beyond</Label>
 								<TextArea placeholder="E.g Building better infrastructure for food distribution in the future" value={this.state.goals} onChange={(ev) => this.setState({goals: ev.target.value})}/>
 							</InnerSection>
-						}
-						{this.state.currentStep === 4 &&
-							<InnerSection>
+							<InnerSection  style={{ display: this.state.currentStep === 4 ? 'block' : 'none'}}>
 								<h3>Step {this.state.currentStep}<span>/4</span>: Founding Organization</h3>
 								<Label>Name of founding organisation</Label>
 								<Text placeholder="E.g. Future of Humanity" value={this.state.project.founder.name} onChange={(ev) => this.handleFounderPropertyChanged('name', ev)}/>
@@ -804,7 +797,6 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 								<Text placeholder="Founder logoLink" value={this.state.project.founder.logoLink} onChange={(ev) => this.handleFounderPropertyChanged('logoLink', ev)}/>
 								{this.state.project.founder.logoLink.length > 0 && <LogoThumb src={this.state.project.founder.logoLink} alt=" invalid image URL" />}
 							</InnerSection>
-						}
 							<ButtonContainer>
 								<div>
 									{this.state.currentStep > 1 && <Back onClick={() => this.changeStep(-1)}>BACK</Back>}
