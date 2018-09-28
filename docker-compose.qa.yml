@@ -8,4 +8,4 @@ services:
       - REACT_APP_PINNED_PROJECTS=''
       - REACT_APP_HIDDEN_PROJECTS=''
       - REACT_APP_FEATURED_PROJECT=''
-s
+      - REACT_APP_GA_UA_CODE=''
