@@ -30,7 +30,7 @@ const GreyI = Icon.extend`
 
 const CheckItem = styled.p`
 	line-height: 1.5;
-	margin: 5px 0;
+	margin: 5px 0 15px;
 	padding-left: 35px;
 	position: relative;
 	transition: color 0.3s ease;
@@ -93,6 +93,37 @@ const Exclamation = styled.span`
 	text-align: center;
 	border-radius: 50%;
 	margin: 0 auto 25px;
+`;
+
+const ValidationSection = styled.div`
+	background: white;
+	width: 580px;
+	max-width: 100%;
+	margin: 40px auto 125px;
+	padding: 30px 45px 50px;
+
+	h3 {
+		font-size: 26px;
+		font-family: ${props => props.theme.fontRobotoCondensed};
+	}
+
+	img {
+		margin: 10px 0 30px;
+		max-width: 100%;
+	}
+`;
+
+const Row = styled.div`
+
+	h1 {
+		font-size: 45px;
+		font-family: ${props => props.theme.fontRobotoCondensed};
+		margin-top: 100px;
+	}
+`;
+
+const Intro = styled.p`
+	max-width: 580px;
 `;
 
 export interface State {
@@ -210,7 +241,6 @@ export class Verification extends React.Component<ParentProps, State> {
 	}
 
 	ledgerDid = () => {
-		console.log(this.state.didDoc);
 		if (this.props.ixo && this.state.didDoc && !this.state.isDidLedgered && !this.busyLedgering) {
 			let payload = {didDoc: this.state.didDoc};
 			this.busyLedgering = true;
@@ -263,14 +293,19 @@ export class Verification extends React.Component<ParentProps, State> {
 							<p>Applying to launch a venture requires <a href="https://web3.foundation/" target="_blank">Web 3.0</a> technology integration. This is currently only supported on <a href="https://www.google.com/chrome/" target="_blank">Chrome</a> and <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Firefox.</a> </p>
 						</ModalContainer>
 					</ModalWrapper>
-					<div className="row">
+					<Row className="row">
 						<div className="col-md-12">
-							<img src={verificationImg} alt="Verification image" />
-							{this.getKeysafeInstalledText()}
-							{this.getKeysafeStateText()}
-							{this.getLedgeredText()}
+						<h1>Launch a Venture</h1>
+						<Intro>Launch your venture for all to see the positive impact you’re making on the world. Remember that your venture should have the intention of achieving one of the 18 Sustainable Development Goals. </Intro>
+							<ValidationSection>
+								<h3>Make sure to complete the steps below to launch your SDG Futures venture</h3>
+								<img src={verificationImg} alt="Verification image" />
+								{this.getKeysafeInstalledText()}
+								{this.getKeysafeStateText()}
+								{this.getLedgeredText()}
+							</ValidationSection>
 						</div>
-					</div>
+					</Row>
 				</div>
 			</React.Fragment>
 		);

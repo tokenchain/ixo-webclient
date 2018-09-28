@@ -78,6 +78,7 @@ const Container = styled.div`
 	background: ${theme.bg.lightGrey};
 	
 	h1, h2, h3, h4, h5, p, a {
+		color: ${theme.fontDarkGrey};
 	}
 	font-weight: 300;
 `;
