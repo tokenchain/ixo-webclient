@@ -51,7 +51,7 @@ const HeaderLink = styled(NavLink)`
 const HeaderBorderLink = HeaderLink.extend`
 	border-radius: 3px;
 	font-weight: 300;
-	color: white;
+	&{color: white;}
 	background: #A11C43;
 	border-bottom: 1px solid #A11C43;
 

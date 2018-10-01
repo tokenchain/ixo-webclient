@@ -100,11 +100,15 @@ const Container = styled.div`
 `;
 
 const Intro = styled.div`
-	margin-top: 80px;
+
+	h1 {
+		font-size: 45px;
+		font-family: ${props => props.theme.fontRobotoCondensed};
+		margin-top: 100px;
+	}
 
 	p {
-		width: 600px;
-		max-width: 100%;
+		max-width: 580px;
 	}
 `;
 
@@ -707,7 +711,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 					<Intro className="row">
 						<div className="col-md-12">
 							<h1>Launch a Venture</h1>
-							<p>Launch your venture for all to see the positive impact you’re making on the world. Remember that your venture should have the intention of achieving one of the 18 Sustainable Development Goals.</p>
+							<p>Launch your venture for all to see the positive impact you’re making on the world. Remember that your venture should have the intention of achieving one of the 18 Sustainable Development Goals. </p>
 						</div>
 					</Intro>
 				</Container>

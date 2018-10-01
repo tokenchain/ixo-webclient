@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { PublicSiteStoreState } from '../../redux/public_site_reducer';
 import { successToast, errorToast, warningToast } from '../helpers/Toast';
 import { ModalWrapper } from '../common/ModalWrapper';
+import { validateEmail } from '../../utils/formatters';
+import { Spinner } from '../common/Spinner';
 
 const verificationImg = require('../../assets/images/verification/verification.svg');
 const Icon = styled.i`
@@ -97,20 +99,21 @@ const Exclamation = styled.span`
 
 const ValidationSection = styled.div`
 	background: white;
-	width: 580px;
-	max-width: 100%;
-	margin: 40px auto 125px;
+    padding: 40px 50px 0;
+    width: 640px;
+    max-width: 100%;
+	margin: 66px auto 125px;
 	padding: 30px 45px 50px;
 
 	h3 {
 		font-size: 26px;
 		font-family: ${props => props.theme.fontRobotoCondensed};
 	}
+`;
 
-	img {
-		margin: 10px 0 30px;
-		max-width: 100%;
-	}
+const VerifyImage = styled.img`
+	margin: 10px 0 30px;
+	max-width: 100%;
 `;
 
 const Row = styled.div`
@@ -126,6 +129,55 @@ const Intro = styled.p`
 	max-width: 580px;
 `;
 
+const Label = styled.label`
+	color: #333C4E;
+	font-weight: 400;
+
+	span {
+		font-weight: 300;
+	}
+`;
+
+const Error = Label.extend`
+	color: red;
+	font-size: 12px;
+`;
+
+const Text = styled.input`
+	margin: 0 0 20px;
+	padding: 15px;
+	display: block;
+	width: 100%;
+	border-radius: 3px;
+	border: 1px solid ${props => props.theme.lightGrey};
+	color: #333C4E;
+
+	::placeholder {
+		color: ${props => props.theme.lightGrey};
+		font-weight: 300;
+	}
+	
+`;
+
+const Button = styled.button`
+	width: 100%;
+	border: 1px solid #A11C43;
+	background: #A11C43;
+	color: white;
+	height: 40px;
+	font-family: ${props => props.theme.fontRobotoCondensed};
+	cursor: pointer;
+	margin-bottom: 20px;
+
+	:focus {
+		outline: none;
+	}
+
+	:hover {
+		background: #a11c4354;
+	}
+`;
+
 export interface State {
 	hasKeySafe: boolean;
 	hasDid: boolean;
@@ -133,6 +185,10 @@ export interface State {
 	isDidLedgered: boolean;
 	toastShown: boolean;
 	isModalOpen: boolean;
+	allChecksPassed: boolean;
+	email: string;
+	emailValid: boolean;
+	checkingLedgered: boolean;
 }
 
 export interface ParentProps {
@@ -149,7 +205,11 @@ export class Verification extends React.Component<ParentProps, State> {
 		didDoc: null,
 		isDidLedgered: false,
 		toastShown: false,
-		isModalOpen: false
+		isModalOpen: false,
+		allChecksPassed: false,
+		checkingLedgered: false,
+		email: '',
+		emailValid: true
 	};
 
 	busyLedgering = false;
@@ -176,14 +236,16 @@ export class Verification extends React.Component<ParentProps, State> {
 			});
 		} 
 		if (this.props.ixo && this.state.didDoc && !this.state.isDidLedgered) {
+			this.setState({checkingLedgered: true});
 			this.props.ixo.user.getDidDoc(this.state.didDoc.did).then((didResponse: any) => {
 				if (didResponse.did) {
-						this.setState({isDidLedgered: true, didDoc: didResponse});
+						this.setState({isDidLedgered: true, didDoc: didResponse, allChecksPassed: true});
 				}
+				this.setState({checkingLedgered: false});
+			}).catch((err) => {
+				this.setState({checkingLedgered: false});
 			});
-		} else if (this.props.ixo && this.state.didDoc && !this.state.isDidLedgered) {
-			this.setState({isDidLedgered: true});
-		}
+		} 
 	}
 
 	getIcon = (condition) => {
@@ -208,14 +270,14 @@ export class Verification extends React.Component<ParentProps, State> {
 		if (keysafeDownloadURL === '') {
 			return (
 				<CheckItem>
-					{this.getIcon(this.state.hasKeySafe)} <strong><a onClick={() => this.toggleModal(true)} target="_blank">Install ixo Keysafe</a> and refresh your browser</strong>
+					{this.getIcon(this.state.hasKeySafe)} <strong><a onClick={() => this.toggleModal(true)} target="_blank">Install ixo Keysafe</a></strong>
 					<span>ixo Keysafe is your connection to the ixo blockchain. It is a secure identity vault that allows you to manage your profile and sign transactions on your ventures.</span>
 				</CheckItem>
 			);
 		} else {
 			return (
 				<CheckItem>
-					{this.getIcon(this.state.hasKeySafe)} <strong><a href={keysafeDownloadURL} target="_blank">Install ixo Keysafe</a> and refresh your browser</strong>
+					{this.getIcon(this.state.hasKeySafe)} <strong><a href={keysafeDownloadURL} target="_blank">Install ixo Keysafe</a></strong>
 					<span>ixo Keysafe is your connection to the ixo blockchain. It is a secure identity vault that allows you to manage your profile and sign transactions on your ventures.</span>
 				</CheckItem>
 			);
@@ -231,7 +293,6 @@ export class Verification extends React.Component<ParentProps, State> {
 	}
 
 	getLedgeredText = () => {
-		
 		return (
 			<CheckItem>
 				{this.getIcon(this.state.isDidLedgered)} <strong>{this.state.isDidLedgered === true ? 'Register your identity' : <a onClick={this.ledgerDid} target="_blank">Register your identity</a>} on the ixo blockchain</strong>
@@ -249,7 +310,7 @@ export class Verification extends React.Component<ParentProps, State> {
 					this.props.ixo.user.registerUserDid(payload, signature).then((response: any) => {
 						if (response.code === 0) {
 							successToast('Did document was ledgered successfully');
-							this.setState({isDidLedgered: true});
+							this.setState({isDidLedgered: true, allChecksPassed: true});
 						} else {
 							errorToast('Unable to ledger did at this time');
 						}
@@ -279,6 +340,62 @@ export class Verification extends React.Component<ParentProps, State> {
 		};
 	}
 
+	handleCreateAgent = () => {
+
+		if (this.state.email.length === 0 || validateEmail(this.state.email) === false) {
+			this.setState({emailValid: false});
+		} else {
+			this.setState({emailValid: true});
+		}
+		// const agentData = {
+		// 	email: agentFormData.email,
+		// 	name: agentFormData.name,
+		// 	role: agentFormData.role,
+		// 	agentDid: this.props.userInfo.didDoc.did,
+		// 	projectDid: this.state.projectDid
+		// };
+		// this.props.keysafe.requestSigning(JSON.stringify(agentData), (error: any, signature: any) => {
+		// 	if (!error) {
+		// 		this.props.ixo.agent.createAgent(agentData, signature, this.state.projectPublic.serviceEndpoint).then((res) => {
+		// 			if (res.error !== undefined) {
+		// 				Toast.errorToast(res.error.message);
+		// 			} else {
+		// 				Toast.successToast(`Successfully registered as ${agentData.role}`);
+		// 			}
+		// 		});
+		// 	} else {
+		// 		Toast.errorToast('PDS is not responding');
+		// 	}
+		// });
+	}
+
+	handleEmailChange = (e) => {
+		const val = e.target.value;
+
+		this.setState({email: val});
+	}
+
+	handleFinalSection = () => {
+		if (this.state.allChecksPassed) {
+			return (
+				<React.Fragment>
+				<p>You're all set! One final step before you can apply for your Venture. When clicking below, a popup will appear that prompts you to sign a request to access the Venture-creation page</p>
+				<p>This ensures that your new decentralized identity is linked to your Venture</p>
+				<Label>Your Email</Label>
+				<Text placeholder="john@gmail.com" value={this.state.email} onChange={this.handleEmailChange} />
+				<Error>{this.state.emailValid === false &&  'Please fill in a valid email'}</Error>
+				<Button onClick={() => this.handleCreateAgent}>Apply now</Button>
+			</React.Fragment>
+			);
+		} else if (this.state.checkingLedgered === true) {
+			return (
+				<Spinner info="Checking registered status..." />
+			);
+		} else {
+			return '';
+		}
+	}
+
 	render() {
 		return (
 			<React.Fragment>
@@ -295,14 +412,17 @@ export class Verification extends React.Component<ParentProps, State> {
 					</ModalWrapper>
 					<Row className="row">
 						<div className="col-md-12">
-						<h1>Launch a Venture</h1>
-						<Intro>Launch your venture for all to see the positive impact you’re making on the world. Remember that your venture should have the intention of achieving one of the 18 Sustainable Development Goals. </Intro>
+							<h1>Launch a Venture</h1>
+							<Intro>Launch your venture for all to see the positive impact you’re making on the world. Remember that your venture should have the intention of achieving one of the 18 Sustainable Development Goals. </Intro>
 							<ValidationSection>
 								<h3>Make sure to complete the steps below to launch your SDG Futures venture</h3>
-								<img src={verificationImg} alt="Verification image" />
+								<VerifyImage src={verificationImg} alt="Verification image" />
+								<p>* Please refresh your browser after each step</p>
 								{this.getKeysafeInstalledText()}
 								{this.getKeysafeStateText()}
 								{this.getLedgeredText()}
+								<hr/>
+								{this.handleFinalSection()}
 							</ValidationSection>
 						</div>
 					</Row>

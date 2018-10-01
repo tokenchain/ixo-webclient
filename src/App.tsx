@@ -77,7 +77,7 @@ const Container = styled.div`
 	font-family: roboto;
 	background: ${theme.bg.lightGrey};
 	
-	h1, h2, h3, h4, h5, p, a {
+	h1, h2, h3, h4, h5, p{
 		color: ${theme.fontDarkGrey};
 	}
 	font-weight: 300;
