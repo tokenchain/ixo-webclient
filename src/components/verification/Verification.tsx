@@ -9,6 +9,7 @@ import { ModalWrapper } from '../common/ModalWrapper';
 import { validateEmail } from '../../utils/formatters';
 import { Spinner } from '../common/Spinner';
 import { Redirect } from 'react-router-dom';
+import Project from 'ixo-module/dist/src/project';
 
 const verificationImg = require('../../assets/images/verification/verification.svg');
 const Icon = styled.i`
@@ -192,6 +193,7 @@ export interface State {
 	emailValid: boolean;
 	checkingLedgered: boolean;
 	shouldRedirect: boolean;
+	projectData: Object;
 }
 
 export interface ParentProps {
@@ -213,14 +215,27 @@ export class Verification extends React.Component<ParentProps, State> {
 		checkingLedgered: false,
 		email: '',
 		emailValid: true,
-		shouldRedirect: false
+		shouldRedirect: false,
+		projectData: null
 	};
 
 	busyLedgering = false;
 
 	componentDidMount() {
+		this.getProjectData();
 		this.checkState();
 		setTimeout(() => this.checkState(), 2000);
+	}
+
+	getProjectData = () => {
+		this.props.ixo.project.getProjectByProjectDid(process.env.REACT_APP_FEATURED_PROJECT).then((response: any) => {
+			const project: Project = response.data;
+			this.setState({
+				projectData: project
+			});
+		}).catch((result: Error) => {
+			errorToast(result.message);
+		});
 	}
 
 	checkState = () => {
@@ -360,11 +375,12 @@ export class Verification extends React.Component<ParentProps, State> {
 			};
 			this.props.keysafe.requestSigning(JSON.stringify(agentData), (error: any, signature: any) => {
 				if (!error) {
-					this.props.ixo.agent.createAgent(agentData, signature, process.env.REACT_APP_DEFAULT_PDS).then((res) => {
+					// PDS URL NEEDS TO BE THAT OF THE FEATURED PROJECT
+					this.props.ixo.agent.createAgent(agentData, signature, this.state.projectData.serviceEndpoint).then((res) => {
 						if (res.error !== undefined) {
 							errorToast(res.error.message);
 						} else {
-							successToast(`Successfully registered as ${agentData.role}`);
+							successToast(`Successfully registered`);
 							this.setState({shouldRedirect: true});
 						}
 					});
@@ -377,20 +393,46 @@ export class Verification extends React.Component<ParentProps, State> {
 
 	handleEmailChange = (e) => {
 		const val = e.target.value;
-
 		this.setState({email: val});
 	}
 
+	handleIsServiceAgent = () => {
+		for (let agent of this.state.projectData.agents) {
+			if (agent.did === this.state.didDoc.did) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	handleFinalSection = () => {
 		if (this.state.allChecksPassed) {
+
+			let ButtonSection = null;
+			if (this.state.projectData !== null) {
+				if (this.handleIsServiceAgent() === false) {
+					ButtonSection = (
+						<React.Fragment>
+							<Label>Your Email</Label>
+							<Text placeholder="john@gmail.com" value={this.state.email} onChange={this.handleEmailChange} />
+							{this.state.emailValid === false && <Error>Please fill in a valid email</Error>}
+							<Button onClick={this.handleCreateAgent}>Apply now</Button>	
+						</React.Fragment>
+						);
+				} else {
+					ButtonSection = (
+						<React.Fragment>
+							<p><strong>You are registered already. You can proceed below</strong></p>
+							<Button onClick={() => this.setState({shouldRedirect: true})}>Apply now</Button>	
+						</React.Fragment>
+					);
+				}
+			}
 			return (
 				<React.Fragment>
 				<p>You're all set! One final step before you can apply for your Venture. When clicking below, a popup will appear that prompts you to sign a request to access the Venture-creation page</p>
 				<p>This ensures that your new decentralized identity is linked to your Venture</p>
-				<Label>Your Email</Label>
-				<Text placeholder="john@gmail.com" value={this.state.email} onChange={this.handleEmailChange} />
-				{this.state.emailValid === false && <Error>Please fill in a valid email</Error>}
-				<Button onClick={this.handleCreateAgent}>Apply now</Button>
+				{ButtonSection}
 			</React.Fragment>
 			);
 		} else if (this.state.checkingLedgered === true) {

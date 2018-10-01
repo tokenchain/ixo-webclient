@@ -326,7 +326,6 @@ export class Projects extends React.Component<Props, State> {
 	}
 
 	render() {
-		console.log(this.state.projectList);
 		tracking.fireTracker('/sdgfutures.ixo.world');
 		return (        
 			<Container>

@@ -184,7 +184,6 @@ export class ProjectContainer extends React.Component<Props, State> {
 								claimsObj = [...this.state.claims];
 							}
 							claimsObj = response.result;
-							console.log('private claims: ', claimsObj);
 							this.setState({ claims: [...claimsObj]});
 						}
 					}).catch((result: Error) => {
@@ -261,7 +260,6 @@ export class ProjectContainer extends React.Component<Props, State> {
 					this.props.ixo.agent.listAgentsForProject(ProjectDIDPayload, signature, this.state.projectPublic.serviceEndpoint).then((response: any) => {
 						if (response.error) {
 							Toast.errorToast(response.error.message, ErrorTypes.goBack);
-							console.log('error occured', response.error);
 						} else {
 							let agentsObj = [];
 							if (this.state[agentRole] !== null) {
