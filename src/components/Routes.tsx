@@ -15,6 +15,7 @@ import { Spinner } from './common/Spinner';
 import { ProjectSignAndCreateConnected } from './project/curation/ProjectSignAndCreate';
 import { ProjectCreateUploadPublicDocsConnected } from './project/curation/ProjectCreateUploadPublicDocs';
 import { VerificationConnected } from './verification/Verification';
+import { VentureCreateConnected } from './project/VentureCreate';
 export namespace Routes {
 	export interface StateProps {
 	}
@@ -83,6 +84,11 @@ export const Routes: React.SFC<Routes.RouteProps> = props => {
 					exact={true}
 					path="/projects/:projectDID/detail/claims/:claimID"
 					render={() => (<ProjectContainerConnected contentType={contentType.singleClaim}/>)}
+				/>
+				<Route
+					exact={true}
+					path="/create-venture"
+					render={routeProps => (<VentureCreateConnected {...routeProps} {...props} />)}
 				/>
 				<Route
 					exact={true}

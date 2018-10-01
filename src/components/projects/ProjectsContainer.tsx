@@ -294,6 +294,7 @@ export class Projects extends React.Component<Props, State> {
 	}
 
 	handleRenderProjectList() {
+		console.log(this.state.projectList);
 		if (this.state.projectList === null) {
 			return <Spinner info="Loading Ventures" />;
 		} else {

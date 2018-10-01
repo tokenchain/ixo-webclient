@@ -307,7 +307,7 @@ let defaultProject = {
 	}
 };
 
-export class ProjectCreate extends React.Component<StateProps, State> {
+export class VentureCreate extends React.Component<StateProps, State> {
 
 	state = {
 		currentStep: 1,
@@ -469,7 +469,7 @@ export class ProjectCreate extends React.Component<StateProps, State> {
 					let projectObj: string = this.state.projectJson;
 					this.props.keysafe.requestSigning(projectObj, (error: any, signature: any) => {
 						// PDS URL NEEDS TO BE THAT OF THE FEATURED PROJECT
-						this.props.ixo.project.createClaim(JSON.parse(projectObj), signature, this.state.project.serviceEndpoint).then((res: any) => {
+						this.props.ixo.claim.createClaim(JSON.parse(projectObj), signature, this.state.project.serviceEndpoint).then((res: any) => {
 							if (res.error) {
 								errorToast(res.error.message, ErrorTypes.message);
 							} else {
@@ -827,6 +827,6 @@ function mapStateToProps(state: PublicSiteStoreState): StateProps {
 	};
 }
 
-export const ProjectCreateConnected = (connect(
+export const VentureCreateConnected = (connect(
 	mapStateToProps
-)(ProjectCreate));
+)(VentureCreate));

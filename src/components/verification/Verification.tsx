@@ -446,7 +446,7 @@ export class Verification extends React.Component<ParentProps, State> {
 
 	render() {
 		if (this.state.shouldRedirect === true) {
-			return <Redirect to="/create-project" />;
+			return <Redirect to="/create-venture" />;
 		}
 		return (
 			<React.Fragment>
