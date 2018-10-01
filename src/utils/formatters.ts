@@ -90,6 +90,6 @@ export function isFeatured(projectDid: string) {
 
 export function validateEmail(email: string) {
 	const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	console.log(re.test(String(email).toLowerCase()));
+	// console.log(re.test(String(email).toLowerCase()));
 	return re.test(String(email).toLowerCase());
 }

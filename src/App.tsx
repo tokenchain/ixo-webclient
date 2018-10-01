@@ -77,9 +77,8 @@ const Container = styled.div`
 	font-family: roboto;
 	background: ${theme.bg.lightGrey};
 	
-	h1, h2, h3, h4, h5, p{
-		color: ${theme.fontDarkGrey};
-	}
+	color: ${theme.fontDarkGrey};
+	
 	font-weight: 300;
 `;
 
@@ -158,15 +157,6 @@ class App extends React.Component<App.Props, App.State> {
 			this.setState({onLoginInitCalled: true});
 		}
 	}
-
-	// static getDerivedStateFromProps(nextProps: any) {
-	// 	if (nextProps.userInfo && !nextProps.userInfo.ledgered) {
-	// 		if (!(nextProps.location.pathname === '/register')) {
-	// 			nextProps.history.push('/register');
-	// 		}
-	// 	}
-	// 	return null;
-	// }
 
 	componentDidMount() {
 		this.props.onIxoInit();

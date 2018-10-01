@@ -8,6 +8,7 @@ import { successToast, errorToast, warningToast } from '../helpers/Toast';
 import { ModalWrapper } from '../common/ModalWrapper';
 import { validateEmail } from '../../utils/formatters';
 import { Spinner } from '../common/Spinner';
+import { Redirect } from 'react-router-dom';
 
 const verificationImg = require('../../assets/images/verification/verification.svg');
 const Icon = styled.i`
@@ -141,10 +142,11 @@ const Label = styled.label`
 const Error = Label.extend`
 	color: red;
 	font-size: 12px;
+	margin: 0;
 `;
 
 const Text = styled.input`
-	margin: 0 0 20px;
+	margin: 0;
 	padding: 15px;
 	display: block;
 	width: 100%;
@@ -167,7 +169,7 @@ const Button = styled.button`
 	height: 40px;
 	font-family: ${props => props.theme.fontRobotoCondensed};
 	cursor: pointer;
-	margin-bottom: 20px;
+	margin: 30px 0;
 
 	:focus {
 		outline: none;
@@ -189,6 +191,7 @@ export interface State {
 	email: string;
 	emailValid: boolean;
 	checkingLedgered: boolean;
+	shouldRedirect: boolean;
 }
 
 export interface ParentProps {
@@ -209,7 +212,8 @@ export class Verification extends React.Component<ParentProps, State> {
 		allChecksPassed: false,
 		checkingLedgered: false,
 		email: '',
-		emailValid: true
+		emailValid: true,
+		shouldRedirect: false
 	};
 
 	busyLedgering = false;
@@ -346,27 +350,29 @@ export class Verification extends React.Component<ParentProps, State> {
 			this.setState({emailValid: false});
 		} else {
 			this.setState({emailValid: true});
+			const agentData = {
+				email: this.state.email,
+				// @ts-ignore
+				name: this.props.userInfo.didDoc.name,
+				role: 'SA',
+				agentDid: this.props.userInfo.didDoc.did,
+				projectDid: process.env.REACT_APP_FEATURED_PROJECT
+			};
+			this.props.keysafe.requestSigning(JSON.stringify(agentData), (error: any, signature: any) => {
+				if (!error) {
+					this.props.ixo.agent.createAgent(agentData, signature, process.env.REACT_APP_DEFAULT_PDS).then((res) => {
+						if (res.error !== undefined) {
+							errorToast(res.error.message);
+						} else {
+							successToast(`Successfully registered as ${agentData.role}`);
+							this.setState({shouldRedirect: true});
+						}
+					});
+				} else {
+					errorToast('PDS is not responding');
+				}
+			});
 		}
-		// const agentData = {
-		// 	email: agentFormData.email,
-		// 	name: agentFormData.name,
-		// 	role: agentFormData.role,
-		// 	agentDid: this.props.userInfo.didDoc.did,
-		// 	projectDid: this.state.projectDid
-		// };
-		// this.props.keysafe.requestSigning(JSON.stringify(agentData), (error: any, signature: any) => {
-		// 	if (!error) {
-		// 		this.props.ixo.agent.createAgent(agentData, signature, this.state.projectPublic.serviceEndpoint).then((res) => {
-		// 			if (res.error !== undefined) {
-		// 				Toast.errorToast(res.error.message);
-		// 			} else {
-		// 				Toast.successToast(`Successfully registered as ${agentData.role}`);
-		// 			}
-		// 		});
-		// 	} else {
-		// 		Toast.errorToast('PDS is not responding');
-		// 	}
-		// });
 	}
 
 	handleEmailChange = (e) => {
@@ -383,8 +389,8 @@ export class Verification extends React.Component<ParentProps, State> {
 				<p>This ensures that your new decentralized identity is linked to your Venture</p>
 				<Label>Your Email</Label>
 				<Text placeholder="john@gmail.com" value={this.state.email} onChange={this.handleEmailChange} />
-				<Error>{this.state.emailValid === false &&  'Please fill in a valid email'}</Error>
-				<Button onClick={() => this.handleCreateAgent}>Apply now</Button>
+				{this.state.emailValid === false && <Error>Please fill in a valid email</Error>}
+				<Button onClick={this.handleCreateAgent}>Apply now</Button>
 			</React.Fragment>
 			);
 		} else if (this.state.checkingLedgered === true) {
@@ -397,6 +403,9 @@ export class Verification extends React.Component<ParentProps, State> {
 	}
 
 	render() {
+		if (this.state.shouldRedirect === true) {
+			return <Redirect to="/create-project" />;
+		}
 		return (
 			<React.Fragment>
 				<div className="container">
