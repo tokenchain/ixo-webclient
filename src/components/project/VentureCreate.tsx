@@ -344,9 +344,6 @@ export class VentureCreate extends React.Component<StateProps, State> {
 
 	busyLedgering = false;
 
-	componenDidMount() {
-		console.log(this.state);
-	}
 	toggleModal = () => {
 		this.setState({isModalOpen: !this.state.isModalOpen});
 	}
@@ -451,6 +448,7 @@ export class VentureCreate extends React.Component<StateProps, State> {
 	handleCreateProject = () => {
 		let newProject = this.state.project;
 		newProject.longDescription = this.createMarkup();
+		newProject['projectDid'] = process.env.REACT_APP_FEATURED_PROJECT;
 		console.log('2', newProject);
 		if (this.props.keysafe === null) {
 		errorToast('Please install IXO Credential Manager first.');
@@ -498,9 +496,7 @@ export class VentureCreate extends React.Component<StateProps, State> {
 	}
 	
 	uploadImage = (event) => {
-		console.log(this.state.croppedImg);
 		this.props.ixo.project.createPublic(this.state.croppedImg, this.state.project.serviceEndpoint).then((res: any) => {
-			console.log('Uploaded: ', res);
 			let newProject = this.state.project;
 			newProject.imageLink = res.result;
 			this.setState({project: newProject, projectJson: JSON.stringify(newProject)});
@@ -509,7 +505,6 @@ export class VentureCreate extends React.Component<StateProps, State> {
 
 	fetchImage = (event) => {
 		this.props.ixo.project.fetchPublic(this.state.project.imageLink, this.state.project.serviceEndpoint).then((res: any) => {
-			console.log('Fetched: ', res);
 			let imageSrc = 'data:' + res.contentType + ';base64,' + res.data;
 			this.setState({fetchedImage: imageSrc});
 		});
@@ -534,7 +529,6 @@ export class VentureCreate extends React.Component<StateProps, State> {
 		}
 
 		this.props.ixo.project.createPublic(fileToUpload, this.state.project.serviceEndpoint).then((res: any) => {
-			console.log('Uploaded: ', res);
 			let newProject = this.state.project;
 			if (type === 'schema') {
 				newProject.templates.claim.schema = res.result;
