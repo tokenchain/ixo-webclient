@@ -4,7 +4,7 @@ import * as Web3 from 'web3';
 
 export function connectWeb3() {
 	return dispatch => {
-		let { web3 }: Web3 = window;
+		let { web3 }: any = window;
 		// @ts-ignore
 		if (window.ethereum) { // Modern dapp browsers...
 			// @ts-ignore
