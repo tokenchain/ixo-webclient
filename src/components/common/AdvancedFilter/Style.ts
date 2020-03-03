@@ -38,8 +38,9 @@ export const ButtonWrapper = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
-    background: transparent;
+    background: black;
     z-index: -1;
+    opacity: 20%;
   }
   &.active:after {
     content: '';

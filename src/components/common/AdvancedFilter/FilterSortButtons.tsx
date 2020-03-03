@@ -33,12 +33,13 @@ class FilterSortButtons extends React.Component<
     })
   }
 
-  setId = (title): void => {
+  setId = (e, title): void => {
+    console.log(title)
     this.setState({
       checkTitle: title,
       showDatePicker: false,
     })
-    if (this.state.checkTitle === title) {
+    if (this.state.checkTitle === title && !e.target.reset) {
       this.setState({
         checkTitle: ' ',
       })
@@ -52,7 +53,7 @@ class FilterSortButtons extends React.Component<
     if (filterModal.contains(e.target)) {
       return
     }
-    this.setId(title)
+    this.setId(e, title)
   }
 
   handleMultipleSelect = (button): void => {
@@ -67,6 +68,12 @@ class FilterSortButtons extends React.Component<
         selectedButtons: tmp,
       })
     }
+  }
+
+  resetFilters = (): void => {
+    this.setState({
+      selectedButtons: [],
+    })
   }
 
   render(): JSX.Element {
@@ -90,7 +97,9 @@ class FilterSortButtons extends React.Component<
                 this.handleClose(e, filterCategory['title'])
               }
             >
-              <Button onClick={(): void => this.setId(filterCategory['title'])}>
+              <Button
+                onClick={(e): void => this.setId(e, filterCategory['title'])}
+              >
                 {filterCategory.title}
               </Button>
               <FilterModal
@@ -131,7 +140,7 @@ class FilterSortButtons extends React.Component<
             </ButtonWrapper>
           )
         })}
-        <Button>
+        <Button className="reset" onClick={this.resetFilters}>
           <i className="icon-reset" style={{ padding: 6 }}></i>
           Reset
         </Button>
