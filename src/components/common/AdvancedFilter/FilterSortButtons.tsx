@@ -33,13 +33,12 @@ class FilterSortButtons extends React.Component<
     })
   }
 
-  setId = (e, title): void => {
-    console.log(title)
+  setId = (title): void => {
     this.setState({
       checkTitle: title,
       showDatePicker: false,
     })
-    if (this.state.checkTitle === title && !e.target.reset) {
+    if (this.state.checkTitle === title) {
       this.setState({
         checkTitle: ' ',
       })
@@ -53,7 +52,7 @@ class FilterSortButtons extends React.Component<
     if (filterModal.contains(e.target)) {
       return
     }
-    this.setId(e, title)
+    this.setId(title)
   }
 
   handleMultipleSelect = (button): void => {
@@ -97,9 +96,7 @@ class FilterSortButtons extends React.Component<
                 this.handleClose(e, filterCategory['title'])
               }
             >
-              <Button
-                onClick={(e): void => this.setId(e, filterCategory['title'])}
-              >
+              <Button onClick={(): void => this.setId(filterCategory['title'])}>
                 {filterCategory.title}
               </Button>
               <FilterModal
