@@ -211,6 +211,7 @@ class FilterSortButtons extends React.Component<{}, State> {
       startDate: null,
       endDate: null,
     })
+    this.toggleShowDatePicker()
   }
   resetDateDisplay = (): void => {
     this.setState({
